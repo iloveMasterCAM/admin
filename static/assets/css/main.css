@@ -321,7 +321,9 @@ html.fullscreen-bg #wrapper {
   margin-right: 8px; }
 
 ul.notifications > li {
-  border-bottom: 1px solid #F0F0F0; }
+  border-bottom: 1px solid #F0F0F0; 
+  cursor: pointer;
+}
   ul.notifications > li:last-child {
     border-bottom: none; }
   ul.notifications > li > .more {

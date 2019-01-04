@@ -35,8 +35,33 @@
             <span>UPGRADE TO PRO</span>
           </a>
         </div>
+        
         <div id="navbar-menu">
           <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="lnr  lnr-shirt"></i>
+                <span>换肤</span>
+                <i class="icon-submenu lnr lnr-chevron-down"></i>
+              </a>
+              <ul class="dropdown-menu notifications">
+                <li @click="day">
+                  <a class="notification-item">
+                    <span class="dot bg-warning"></span>白天
+                  </a>
+                </li>
+                <li @click="evening">
+                  <a class="notification-item">
+                    <span class="dot bg-danger"></span>夜晚
+                  </a>
+                </li>
+               <li @click="blue">
+                  <a class="notification-item">
+                    <span class="dot bg-danger"></span>蓝色
+                  </a>
+                </li>
+              </ul>
+            </li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
                 <i class="lnr lnr-alarm"></i>
@@ -76,7 +101,7 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="lnr lnr-question-circle"></i>
-                <span>Help</span>
+                <span>帮助</span>
                 <i class="icon-submenu lnr lnr-chevron-down"></i>
               </a>
               <ul class="dropdown-menu">
@@ -97,32 +122,32 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <img src="../static/assets/img/user.png" class="img-circle" alt="Avatar">
-                <span>Samuel</span>
+                <span>LLLLLL</span>
                 <i class="icon-submenu lnr lnr-chevron-down"></i>
               </a>
               <ul class="dropdown-menu">
                 <li>
                   <a href="#">
                     <i class="lnr lnr-user"></i>
-                    <span>My Profile</span>
+                    <span>我的资料</span>
                   </a>
                 </li>
                 <li>
                   <a href="#">
                     <i class="lnr lnr-envelope"></i>
-                    <span>Message</span>
+                    <span>消息</span>
                   </a>
                 </li>
                 <li>
                   <a href="#">
                     <i class="lnr lnr-cog"></i>
-                    <span>Settings</span>
+                    <span>设置</span>
                   </a>
                 </li>
                 <li>
                   <a href="#">
                     <i class="lnr lnr-exit"></i>
-                    <span>Logout</span>
+                    <span>退出登录</span>
                   </a>
                 </li>
               </ul>
@@ -162,25 +187,24 @@
                 <span>notifications</span>
               </a>
             </router-link>
-            <router-link to="/Pages" tag="li">
-               <a href="#subPages" data-toggle="collapse" class="collapsed">
+            <router-link to="/lockscreen" tag="li">
+               <a >
                 <i class="lnr lnr-file-empty"></i>
                 <span>Pages</span>
-                <i class="icon-submenu lnr lnr-chevron-left"></i>
+              
               </a>
-              <div id="subPages" class="collapse">
-                <ul class="nav">
-                  <li>
-                    <a href="page-profile.html" class>Profile</a>
-                  </li>
-                  <li>
-                    <a href="page-login.html" class>Login</a>
-                  </li>
-                  <li>
-                    <a href="page-lockscreen.html" class>Lockscreen</a>
-                  </li>
-                </ul>
-              </div>
+            </router-link>
+             <router-link to="/profile" tag="li">
+              <a href class>
+                <i class="lnr lnr-home"></i>
+                <span>profile</span>
+              </a>
+            </router-link>
+             <router-link to="/login" tag="li">
+              <a href class>
+                <i class="lnr lnr-home"></i>
+                <span>login</span>
+              </a>
             </router-link>
            <router-link to="/tables" tag="li">
               <a href class>
@@ -211,7 +235,26 @@
 
 <script>
 export default {
-  name: "App"
+  name: "App",
+  methods:{
+    day(){
+       localStorage['skin'] = ''
+      $('#skin').attr({'href':''})
+    },
+  evening(){
+    localStorage['skin'] = './static/assets/css/skin.css'
+    $('#skin').attr({'href':'./static/assets/css/skin.css'})
+  },
+   blue(){
+     localStorage['skin'] = './static/assets/css/blue.css'
+    $('#skin').attr({'href':'./static/assets/css/blue.css'})
+  }
+  },
+  mounted(){
+    $("head").append(' <link rel="stylesheet" href="'+ localStorage['skin']+'" id="skin">')
+  },
+ 
+
 };
 </script>
 

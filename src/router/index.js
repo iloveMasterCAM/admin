@@ -27,6 +27,7 @@ export default new Router({
       path: '/charts',
       name: 'charts',
       component: charts
+      
     },
     {
       path: '/elements',
@@ -40,8 +41,6 @@ export default new Router({
       component: icons
     }
     ,
-    
-    
     {
       path: '/notifications',
       name: 'notifications',
@@ -67,27 +66,19 @@ export default new Router({
       component: typography
     },
     {
-      path:'/page',
-      name:'page',
-      children:[
-        {
-          path: 'login',
-          name: 'login',
-          component: login
-        },
-         {
-          path: 'profile',
-          name: 'profile',
-          component: profile
-        },
-        {
-          path: 'lockscreen',
-          name: 'lockscreen',
-          component: lockscreen
-        }
-
-      ]
+      path: '/login',
+      name: 'login',
+      component: login
+    },
+     {
+      path: '/profile',
+      name: 'profile',
+      component: profile
+    },
+    {
+      path: '/lockscreen',
+      name: 'lockscreen',
+      component: lockscreen
     }
-    //notifications
   ]
 })

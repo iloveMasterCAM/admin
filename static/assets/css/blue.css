@@ -1,0 +1,3 @@
+.sidebar .nav > li > a:focus, .sidebar .nav > li > a.active{
+    background-color: #00AAFF;
+}

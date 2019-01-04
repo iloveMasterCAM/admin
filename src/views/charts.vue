@@ -169,5 +169,6 @@ export default {
 
     new Chartist.Line("#multiple-chart", data, options);
   }
+
 };
 </script>

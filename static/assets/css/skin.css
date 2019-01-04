@@ -1,0 +1,31 @@
+#wrapper .main,.form-control,.navbar-nav .dropdown-menu > li > a:hover, .navbar-nav .dropdown-menu > li > a:focus{
+    background-color: #2c2e34;
+    border-color:#2c2e34
+
+}
+.navbar-nav .dropdown-menu > li > a:hover{
+    color: #ccc;
+}
+.panel,.table-striped > tbody > tr:nth-of-type(odd),.navbar-default,.navbar-default .brand,.dropdown-menu{
+    background-color: #32343c;
+
+}
+.table > tbody > tr > td,.table > thead > tr > th{
+    border-top: 1px solid #32343c;
+    border-bottom: 2px solid #32343c;
+}
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus{
+    color: #ccc;
+}
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus{
+    background-color: #2c2e34;
+}
+ul.notifications > li{
+    border-bottom: 1px solid #2c2e34;
+}
+.dropdown-menu{
+    border-color: #2c2e34
+}
+.panel-footer{
+    background-color: #32343c;
+}
