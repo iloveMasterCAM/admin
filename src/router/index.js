@@ -11,6 +11,9 @@ import panels from '@/views/panels'
 import profile from '@/views/profile'
 import tables from '@/views/tables'
 import typography from '@/views/typography'
+import specifications from '@/views/specifications'
+import addSpec from '@/views/addSpec'
+import modifySpec from '@/views/modifySpec'
 
 Vue.use(Router)
 
@@ -27,7 +30,7 @@ export default new Router({
       path: '/charts',
       name: 'charts',
       component: charts
-      
+
     },
     {
       path: '/elements',
@@ -53,7 +56,7 @@ export default new Router({
       component: panels
     }
     ,
-    
+
     {
       path: '/tables',
       name: 'tables',
@@ -79,6 +82,21 @@ export default new Router({
       path: '/lockscreen',
       name: 'lockscreen',
       component: lockscreen
+    },
+    {
+      path: '/specifications',
+      name: 'specifications',
+      component: specifications
+    },
+    {
+      path: '/specifications/addSpec',
+      name: 'addSpec',
+      component: addSpec
+    },
+    {
+      path: '/specifications/modifySpec',
+      name: 'modifySpec',
+      component: modifySpec
     }
   ]
 })

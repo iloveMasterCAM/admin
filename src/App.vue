@@ -35,7 +35,7 @@
             <span>UPGRADE TO PRO</span>
           </a>
         </div>
-        
+
         <div id="navbar-menu">
           <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
@@ -169,6 +169,14 @@
                 <span>看板</span>
               </a>
             </router-link>
+
+            <router-link to="/specifications" exact tag="li">
+              <a href class>
+                <i class="lnr lnr-home"></i>
+                <span>规格管理</span>
+              </a>
+            </router-link>
+
             <router-link to="/charts" tag="li">
               <a href class>
                 <i class="lnr lnr-home"></i>
@@ -191,7 +199,7 @@
                <a >
                 <i class="lnr lnr-file-empty"></i>
                 <span>Pages</span>
-              
+
               </a>
             </router-link>
              <router-link to="/profile" tag="li">
@@ -224,7 +232,7 @@
                 <span>icons</span>
               </a>
             </router-link>
-           
+
           </ul>
         </nav>
       </div>
@@ -253,7 +261,7 @@ export default {
   mounted(){
     $("head").append(' <link rel="stylesheet" href="'+ localStorage['skin']+'" id="skin">')
   },
- 
+
 
 };
 </script>
