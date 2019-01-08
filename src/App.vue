@@ -38,9 +38,9 @@
 
         <div id="navbar-menu">
           <ul class="nav navbar-nav navbar-right">
-              <li class="dropdown">
+            <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <i class="lnr  lnr-shirt"></i>
+                <i class="lnr lnr-shirt"></i>
                 <span>换肤</span>
                 <i class="icon-submenu lnr lnr-chevron-down"></i>
               </a>
@@ -55,7 +55,7 @@
                     <span class="dot bg-danger"></span>夜晚
                   </a>
                 </li>
-               <li @click="blue">
+                <li @click="blue">
                   <a class="notification-item">
                     <span class="dot bg-danger"></span>蓝色
                   </a>
@@ -163,6 +163,7 @@
       <div class="sidebar-scroll">
         <nav>
           <ul class="nav">
+<<<<<<< HEAD
             <router-link to="/" exact tag="li">
               <a href class>
                 <i class="lnr lnr-home"></i>
@@ -233,6 +234,23 @@
               </a>
             </router-link>
 
+<<<<<<< HEAD
+=======
+=======
+            <router-link v-for="(itme, index) in nav"  :key="index"  :to="itme.path"  tag="li">
+               <a v-if="itme.name == 'tables'" data-toggle="collapse" class="collapsed">
+                <i :class="itme.icon"></i>
+                <span v-text="itme.name"></span>
+                <i class="icon-submenu lnr lnr-chevron-left"></i>
+              </a> 
+               
+              <a v-else>
+                <i :class="itme.icon"></i>
+                <span v-text="itme.name"></span>
+              </a>
+            </router-link>
+>>>>>>> 7a5589ec758a3347813da9cc4e9aa460fdb007f1
+>>>>>>> dea8acc958a5042f0a6864731488d23bfe7f49f7
           </ul>
         </nav>
       </div>
@@ -243,27 +261,63 @@
 
 <script>
 export default {
-  name: "App",
-  methods:{
-    day(){
-       localStorage['skin'] = ''
-      $('#skin').attr({'href':''})
-    },
-  evening(){
-    localStorage['skin'] = './static/assets/css/skin.css'
-    $('#skin').attr({'href':'./static/assets/css/skin.css'})
+  data(){
+    return{
+      nav:[
+        {path:'/',name:'index',icon:'lnr lnr-home'},
+        {path:'/icons',name:'icons',icon:'lnr lnr-home'},
+        {path:'/tables',name:'tables',icon:'lnr lnr-home'},
+        {path:'/login',name:'login',icon:'lnr lnr-home'},
+        {path:'/profile',name:'profile',icon:'lnr lnr-home'},
+        {path:'/panels',name:'panels',icon:'lnr lnr-home'},
+        
+      ]
+    }
   },
-   blue(){
-     localStorage['skin'] = './static/assets/css/blue.css'
-    $('#skin').attr({'href':'./static/assets/css/blue.css'})
+  name: "App",
+  methods: {
+    day() {
+      localStorage["skin"] = "";
+      $("#skin").attr({ href: "" });
+    },
+    evening() {
+      localStorage["skin"] = "./static/assets/css/skin.css";
+      $("#skin").attr({ href: "./static/assets/css/skin.css" });
+    },
+    blue() {
+      localStorage["skin"] = "./static/assets/css/blue.css";
+      $("#skin").attr({ href: "./static/assets/css/blue.css" });
+    }
+  },
+  mounted() {
+    $("head").append(
+      ' <link rel="stylesheet" href="' + localStorage["skin"] + '" id="skin">'
+    );
   }
+<<<<<<< HEAD
   },
   mounted(){
     $("head").append(' <link rel="stylesheet" href="'+ localStorage['skin']+'" id="skin">')
   },
+<<<<<<< HEAD
+
+=======
+>>>>>>> dea8acc958a5042f0a6864731488d23bfe7f49f7
 
 
+=======
+>>>>>>> 7a5589ec758a3347813da9cc4e9aa460fdb007f1
 };
+
+// $.post("<%=basePath%>merchant/regist.do",{"PHONE":rphone,"code":rcode,"PASSWORD":rpassword},function(data){
+// 			if(data.msg==1){
+// 				//跳转到登陆页面
+// 				location.reload();
+// 			}else if(data.msg==0){
+// 				alert("验证码错误");
+// 			}
+// 		});
+
 </script>
 
 <style>
