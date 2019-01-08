@@ -15,6 +15,7 @@ import specifications from '@/views/specifications'
 import addSpec from '@/views/addSpec'
 import modifySpec from '@/views/modifySpec'
 
+
 Vue.use(Router)
 
 export default new Router({
@@ -27,7 +28,7 @@ export default new Router({
       component: index
     },
     {
-      path: '/charts',
+      path: '/manage/charts',
       name: 'charts',
       component: charts
 
@@ -83,6 +84,7 @@ export default new Router({
       name: 'lockscreen',
       component: lockscreen
     },
+<<<<<<< HEAD
     {
       path: '/specifications',
       name: 'specifications',
@@ -98,5 +100,8 @@ export default new Router({
       name: 'modifySpec',
       component: modifySpec
     }
+=======
+   
+>>>>>>> 7a5589ec758a3347813da9cc4e9aa460fdb007f1
   ]
 })

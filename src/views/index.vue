@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <!-- MAIN CONTENT -->
-    <div class="main-content">
+    <div class="main-content" v-show="isShow">
       <div class="container-fluid">
         <!-- OVERVIEW -->
         <div class="panel panel-headline">
@@ -554,11 +554,156 @@
         </div>
       </div>
     </div>
+    <div id="Authentication" class="main-content container-fluid " v-show="!isShow">
+      <!-- 
+          公司名称
+          地址
+          人数
+          法人名称
+          营业执照 正反面
+          提交
+      -->
+      <div class="wrap input-group">
+        <p class="title">企业认证</p>
+        <div class="list row">
+          <div class="col-md-2 name">
+            <span>*</span> 公司名称:
+          </div>
+
+          <div class="col-md-5">
+            <input
+              type="text"
+              class="form-control"
+              aria-describedby="basic-addon2"
+              placeholder="输入公司名称"
+            >
+          </div>
+        </div>
+        <div class="list row">
+          <div class="col-md-2 name">
+            <span>*</span>公司地址:
+          </div>
+          <div class="col-md-10" id="city">
+            <div class="col-md-3 bor ">
+              <select name id> </select>
+            </div>
+             <div class="col-md-3 bor col-xs-offset-1">
+              <select name id> </select>
+            </div>
+             <div class="col-md-3 bor  col-xs-offset-1">
+              <select name id> </select>
+            </div>
+          </div>
+        </div>
+        <div class="list row">
+          <div class="col-md-2 name">
+            <span>*</span>人数:
+          </div>
+          <div class="col-md-10 ">
+            <div class="col-md-3 bor">
+               <select name id>
+              <option value>10-50人</option>
+            </select>
+            </div>
+          </div>
+        </div>
+        <div class="list row">
+          <div class="col-md-2 name">
+            <span>*</span>法人名称:
+          </div>
+          <div class="col-md-10">
+            <input type="text" placeholder="输入法人名称">
+          </div>
+        </div>
+        <div class="list row">
+          <div class="col-md-2 name">
+            <span>*</span>营业执照正面:
+          </div>
+          <div class="col-md-10">
+            <input type="file" id="FileUpload" @change="file" value>
+            <!-- <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1140234855,611391524&fm=27&gp=0.jpg" alt=""> -->
+          </div>
+        </div>
+        <div class="list row">
+          <div class="col-md-2 name">
+            <span>*</span>营业执照背面:
+          </div>
+          <div class="col-md-10">
+            <img
+              src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1140234855,611391524&fm=27&gp=0.jpg"
+              alt
+            >
+          </div>
+        </div>
+        <div class="list row">
+          <div class="col-md-2"></div>
+          <div class="col-md-10">
+            <p class="confrim">提交审核</p>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- END MAIN CONTENT -->
   </div>
 </template>
+<style>
+#Authentication {
+  margin-top: 20px;
+  margin-left: 20px;
+
+  background: #fff;
+}
+#Authentication .wrap {
+  width: 60%;
+  padding: 20px;
+  margin: 50px auto;
+}
+#Authentication .list {
+  margin-top: 20px;
+}
+#Authentication .confrim {
+  width: 270px;
+  line-height: 45px;
+  background: #41b314;
+  text-align: center;
+  color: #fff;
+}
+#Authentication .name {
+  font-size: 16px;
+  color: #484747;
+}
+#Authentication .name span {
+  color: red;
+}
+#Authentication .title {
+  font-size: 20px;
+  font-weight: 500;
+  color: #000;
+}
+#Authentication option{
+
+}
+#Authentication select,#Authentication option{
+  line-height: 34px;
+  height: 34px;
+  padding-left: 10px;
+}
+#Authentication .bor{
+  border:1px solid #ccc;
+  padding: 0;
+  
+}
+</style>
+
 <script>
+
+  import cityJson from '../assets/city/city.json'
 export default {
+  data: function() {
+    return {
+      isShow: false
+    };
+  },
   mounted: function() {
     console.log("index");
     var data, options;
@@ -686,6 +831,19 @@ export default {
 
     function getRandomInt(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+  },
+  methods: {
+    file: function() {
+      var fileObj = document.getElementById("FileUpload").files[0]; // js 获取文件对象
+      if (typeof fileObj == "undefined" || fileObj.size <= 0) {
+        alert("请选择图片");
+        return;
+      }
+      var formFile = new FormData();
+      formFile.append("action", "UploadVMKImagePath");
+      formFile.append("file", fileObj); //加入文件对象
+      console.log(fileObj);
     }
   }
 };
