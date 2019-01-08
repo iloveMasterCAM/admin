@@ -14,10 +14,7 @@ import typography from '@/views/typography'
 import specifications from '@/views/specifications'
 import addSpec from '@/views/addSpec'
 import modifySpec from '@/views/modifySpec'
-<<<<<<< HEAD
-=======
 
->>>>>>> dea8acc958a5042f0a6864731488d23bfe7f49f7
 
 Vue.use(Router)
 
@@ -87,10 +84,7 @@ export default new Router({
       name: 'lockscreen',
       component: lockscreen
     },
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> dea8acc958a5042f0a6864731488d23bfe7f49f7
+
     {
       path: '/specifications',
       name: 'specifications',
@@ -106,8 +100,5 @@ export default new Router({
       name: 'modifySpec',
       component: modifySpec
     }
-=======
-   
->>>>>>> 7a5589ec758a3347813da9cc4e9aa460fdb007f1
   ]
 })

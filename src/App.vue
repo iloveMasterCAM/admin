@@ -163,94 +163,20 @@
       <div class="sidebar-scroll">
         <nav>
           <ul class="nav">
-<<<<<<< HEAD
-            <router-link to="/" exact tag="li">
-              <a href class>
-                <i class="lnr lnr-home"></i>
-                <span>看板</span>
-              </a>
-            </router-link>
 
-            <router-link to="/specifications" exact tag="li">
-              <a href class>
-                <i class="lnr lnr-home"></i>
-                <span>规格管理</span>
-              </a>
-            </router-link>
-
-            <router-link to="/charts" tag="li">
-              <a href class>
-                <i class="lnr lnr-home"></i>
-                <span>折线图</span>
-              </a>
-            </router-link>
-           <router-link to="/panels" tag="li">
-              <a href class>
-                <i class="lnr lnr-home"></i>
-                <span>Panels</span>
-              </a>
-            </router-link>
-           <router-link to="/notifications" tag="li">
-              <a href class>
-                <i class="lnr lnr-home"></i>
-                <span>notifications</span>
-              </a>
-            </router-link>
-            <router-link to="/lockscreen" tag="li">
-               <a >
-                <i class="lnr lnr-file-empty"></i>
-                <span>Pages</span>
-
-              </a>
-            </router-link>
-             <router-link to="/profile" tag="li">
-              <a href class>
-                <i class="lnr lnr-home"></i>
-                <span>profile</span>
-              </a>
-            </router-link>
-             <router-link to="/login" tag="li">
-              <a href class>
-                <i class="lnr lnr-home"></i>
-                <span>login</span>
-              </a>
-            </router-link>
-           <router-link to="/tables" tag="li">
-              <a href class>
-                <i class="lnr lnr-home"></i>
-                <span>tables</span>
-              </a>
-            </router-link>
-            <router-link to="/typography" tag="li">
-              <a href class>
-                <i class="lnr lnr-text-format"></i>
-                <span>typography</span>
-              </a>
-            </router-link>
-            <router-link to="/icons" tag="li">
-              <a href class>
-                <i class="lnr lnr-linearicons"></i>
-                <span>icons</span>
-              </a>
-            </router-link>
-
-<<<<<<< HEAD
-=======
-=======
             <router-link v-for="(itme, index) in nav"  :key="index"  :to="itme.path"  tag="li">
                <a v-if="itme.name == 'tables'" data-toggle="collapse" class="collapsed">
                 <i :class="itme.icon"></i>
                 <span v-text="itme.name"></span>
                 <i class="icon-submenu lnr lnr-chevron-left"></i>
-              </a> 
-               
+              </a>
+
               <a v-else>
                 <i :class="itme.icon"></i>
                 <span v-text="itme.name"></span>
               </a>
             </router-link>
->>>>>>> 7a5589ec758a3347813da9cc4e9aa460fdb007f1
->>>>>>> dea8acc958a5042f0a6864731488d23bfe7f49f7
+
           </ul>
         </nav>
       </div>
@@ -270,7 +196,7 @@ export default {
         {path:'/login',name:'login',icon:'lnr lnr-home'},
         {path:'/profile',name:'profile',icon:'lnr lnr-home'},
         {path:'/panels',name:'panels',icon:'lnr lnr-home'},
-        
+
       ]
     }
   },
@@ -294,19 +220,6 @@ export default {
       ' <link rel="stylesheet" href="' + localStorage["skin"] + '" id="skin">'
     );
   }
-<<<<<<< HEAD
-  },
-  mounted(){
-    $("head").append(' <link rel="stylesheet" href="'+ localStorage['skin']+'" id="skin">')
-  },
-<<<<<<< HEAD
-
-=======
->>>>>>> dea8acc958a5042f0a6864731488d23bfe7f49f7
-
-
-=======
->>>>>>> 7a5589ec758a3347813da9cc4e9aa460fdb007f1
 };
 
 // $.post("<%=basePath%>merchant/regist.do",{"PHONE":rphone,"code":rcode,"PASSWORD":rpassword},function(data){

@@ -16,16 +16,14 @@
                   <el-input-number v-model="form.sortNum" @change="handleChange" :min="1" :max="999" label="描述文字" size="small"></el-input-number>
                 </el-form-item>
                 <el-form-item label="规格选项">
-<<<<<<< HEAD
+
                   <el-button plain icon="el-icon-circle-plus-outline" @click="addSel()" size="small">添加选项</el-button>
-=======
-                  <el-button plain icon="el-icon-circle-plus-outline" @click="dialogFormVisible = true" size="small">添加选项</el-button>
->>>>>>> dea8acc958a5042f0a6864731488d23bfe7f49f7
+
                 </el-form-item>
               </el-form>
             </div>
 
-<<<<<<< HEAD
+
 
           <div class="table" style="width:800px;margin-left:116px;">
             <el-table
@@ -98,19 +96,13 @@
           sortNum:99
         },
         dialogFormVisible: false,
-<<<<<<< HEAD
+
         dialogData:[],
         dialogForm: {
           name: '',
           sortNum:99,
           imgURl:''
-=======
-        dialogForm: {
-          name: '',
-          remarks:'',
-          sortNum:99,
-          imgURl:[]
->>>>>>> dea8acc958a5042f0a6864731488d23bfe7f49f7
+
          },
          formLabelWidth: '120px'
       }
@@ -129,7 +121,6 @@
           var oimg = this.$refs.img;
         //fileObj.files[0]   FormData
           dataURL = windowURL.createObjectURL(fileObj.files[0]);//图片临时路径
-<<<<<<< HEAD
           this.dialogForm.imgURl=dataURL;
 
       },
@@ -143,15 +134,7 @@
           // this.dialogData.push(this.dialogForm);
           this.dialogData=this.dialogData.concat(arr);
           console.log(this.dialogData);
-=======
-          var obj={};
-          obj["src"]=dataURL;
-          this.dialogForm.imgURl.push(obj);
-          console.log(this.dialogForm.imgURl)
-      },
-      diaSubmit(){
-          this.dialogFormVisible = false
->>>>>>> dea8acc958a5042f0a6864731488d23bfe7f49f7
+
       }
     }
   }
