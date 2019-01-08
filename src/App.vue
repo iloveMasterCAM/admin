@@ -35,12 +35,12 @@
             <span>UPGRADE TO PRO</span>
           </a>
         </div>
-        
+
         <div id="navbar-menu">
           <ul class="nav navbar-nav navbar-right">
-              <li class="dropdown">
+            <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <i class="lnr  lnr-shirt"></i>
+                <i class="lnr lnr-shirt"></i>
                 <span>换肤</span>
                 <i class="icon-submenu lnr lnr-chevron-down"></i>
               </a>
@@ -55,7 +55,7 @@
                     <span class="dot bg-danger"></span>夜晚
                   </a>
                 </li>
-               <li @click="blue">
+                <li @click="blue">
                   <a class="notification-item">
                     <span class="dot bg-danger"></span>蓝色
                   </a>
@@ -163,68 +163,18 @@
       <div class="sidebar-scroll">
         <nav>
           <ul class="nav">
-            <router-link to="/" exact tag="li">
-              <a href class>
-                <i class="lnr lnr-home"></i>
-                <span>看板</span>
+            <router-link v-for="(itme, index) in nav"  :key="index"  :to="itme.path"  tag="li">
+               <a v-if="itme.name == 'tables'" data-toggle="collapse" class="collapsed">
+                <i :class="itme.icon"></i>
+                <span v-text="itme.name"></span>
+                <i class="icon-submenu lnr lnr-chevron-left"></i>
+              </a> 
+               
+              <a v-else>
+                <i :class="itme.icon"></i>
+                <span v-text="itme.name"></span>
               </a>
             </router-link>
-            <router-link to="/charts" tag="li">
-              <a href class>
-                <i class="lnr lnr-home"></i>
-                <span>折线图</span>
-              </a>
-            </router-link>
-           <router-link to="/panels" tag="li">
-              <a href class>
-                <i class="lnr lnr-home"></i>
-                <span>Panels</span>
-              </a>
-            </router-link>
-           <router-link to="/notifications" tag="li">
-              <a href class>
-                <i class="lnr lnr-home"></i>
-                <span>notifications</span>
-              </a>
-            </router-link>
-            <router-link to="/lockscreen" tag="li">
-               <a >
-                <i class="lnr lnr-file-empty"></i>
-                <span>Pages</span>
-              
-              </a>
-            </router-link>
-             <router-link to="/profile" tag="li">
-              <a href class>
-                <i class="lnr lnr-home"></i>
-                <span>profile</span>
-              </a>
-            </router-link>
-             <router-link to="/login" tag="li">
-              <a href class>
-                <i class="lnr lnr-home"></i>
-                <span>login</span>
-              </a>
-            </router-link>
-           <router-link to="/tables" tag="li">
-              <a href class>
-                <i class="lnr lnr-home"></i>
-                <span>tables</span>
-              </a>
-            </router-link>
-            <router-link to="/typography" tag="li">
-              <a href class>
-                <i class="lnr lnr-text-format"></i>
-                <span>typography</span>
-              </a>
-            </router-link>
-            <router-link to="/icons" tag="li">
-              <a href class>
-                <i class="lnr lnr-linearicons"></i>
-                <span>icons</span>
-              </a>
-            </router-link>
-           
           </ul>
         </nav>
       </div>
@@ -235,27 +185,50 @@
 
 <script>
 export default {
+  data(){
+    return{
+      nav:[
+        {path:'/',name:'index',icon:'lnr lnr-home'},
+        {path:'/icons',name:'icons',icon:'lnr lnr-home'},
+        {path:'/tables',name:'tables',icon:'lnr lnr-home'},
+        {path:'/login',name:'login',icon:'lnr lnr-home'},
+        {path:'/profile',name:'profile',icon:'lnr lnr-home'},
+        {path:'/panels',name:'panels',icon:'lnr lnr-home'},
+        
+      ]
+    }
+  },
   name: "App",
-  methods:{
-    day(){
-       localStorage['skin'] = ''
-      $('#skin').attr({'href':''})
+  methods: {
+    day() {
+      localStorage["skin"] = "";
+      $("#skin").attr({ href: "" });
     },
-  evening(){
-    localStorage['skin'] = './static/assets/css/skin.css'
-    $('#skin').attr({'href':'./static/assets/css/skin.css'})
+    evening() {
+      localStorage["skin"] = "./static/assets/css/skin.css";
+      $("#skin").attr({ href: "./static/assets/css/skin.css" });
+    },
+    blue() {
+      localStorage["skin"] = "./static/assets/css/blue.css";
+      $("#skin").attr({ href: "./static/assets/css/blue.css" });
+    }
   },
-   blue(){
-     localStorage['skin'] = './static/assets/css/blue.css'
-    $('#skin').attr({'href':'./static/assets/css/blue.css'})
+  mounted() {
+    $("head").append(
+      ' <link rel="stylesheet" href="' + localStorage["skin"] + '" id="skin">'
+    );
   }
-  },
-  mounted(){
-    $("head").append(' <link rel="stylesheet" href="'+ localStorage['skin']+'" id="skin">')
-  },
- 
-
 };
+
+// $.post("<%=basePath%>merchant/regist.do",{"PHONE":rphone,"code":rcode,"PASSWORD":rpassword},function(data){
+// 			if(data.msg==1){
+// 				//跳转到登陆页面
+// 				location.reload();
+// 			}else if(data.msg==0){
+// 				alert("验证码错误");
+// 			}
+// 		});
+
 </script>
 
 <style>

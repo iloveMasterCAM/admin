@@ -12,6 +12,7 @@ import profile from '@/views/profile'
 import tables from '@/views/tables'
 import typography from '@/views/typography'
 
+
 Vue.use(Router)
 
 export default new Router({
@@ -24,7 +25,7 @@ export default new Router({
       component: index
     },
     {
-      path: '/charts',
+      path: '/manage/charts',
       name: 'charts',
       component: charts
       
@@ -79,6 +80,7 @@ export default new Router({
       path: '/lockscreen',
       name: 'lockscreen',
       component: lockscreen
-    }
+    },
+   
   ]
 })
