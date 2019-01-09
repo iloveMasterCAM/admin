@@ -555,96 +555,134 @@
       </div>
     </div>
     <div id="Authentication" class="main-content container-fluid" v-show="!isShow">
-      <!-- 
-          公司名称
-          地址
-          人数
-          法人名称
-          营业执照 正反面
-          提交
-      -->
       <div class="wrap">
         <p class="title">企业认证</p>
-        <div class="list row">
-          <div class="col-md-2 name">
-            <span>*</span> 公司名称:
-          </div>
+        <el-row>
+          <el-col :span="4">
+            <div class="name">
+              <span>*</span> 公司名称:
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <div class>
+              <el-input v-model="company" placeholder="输入公司名称"></el-input>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="4">
+            <div class="name">
+              <span>*</span> 公司地址:
+            </div>
+          </el-col>
+          <el-col :span="20" class="address">
+            <div class>
+              <el-row>
+                <el-col :span="6">
+                  <el-select v-model="sheng" @change="choseProvince" placeholder="省级地区">
+                    <el-option
+                      v-for="item in province"
+                      :key="item.id"
+                      :label="item.value"
+                      :value="item.id"
+                    ></el-option>
+                  </el-select>
+                </el-col>
+                <el-col :span="6">
+                  <el-select v-model="shi" @change="choseCity" placeholder="市级地区">
+                    <el-option
+                      v-for="item in shi1"
+                      :key="item.id"
+                      :label="item.value"
+                      :value="item.id"
+                    ></el-option>
+                  </el-select>
+                </el-col>
+                <el-col :span="6">
+                  <el-select v-model="qu" @change="choseBlock" placeholder="区级地区">
+                    <el-option
+                      v-for="item in qu1"
+                      :key="item.id"
+                      :label="item.value"
+                      :value="item.id"
+                    ></el-option>
+                  </el-select>
+                </el-col>
+                  <el-col :span="6">
+                        <el-input v-model="address" placeholder="输入公司地址"></el-input>
+                </el-col>
+              </el-row>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="4">
+            <div class="name">
+              <span>*</span> 人数:
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <div class>
+              <el-select v-model="value" placeholder="请选择">
+                <el-option
+                  v-for="item in pole"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                ></el-option>
+              </el-select>
+            </div>
+          </el-col>
+        </el-row>
 
-          <div class="col-md-5">
-            <input type="text" placeholder="输入公司名称">
-          </div>
-        </div>
-        <div class="list row">
-          <div class="col-md-2 name">
-            <span>*</span>公司地址:
-          </div>
-          <div class="col-md-10" id="city">
-            <div class="col-md-3 bor">
-              <select name id></select>
+        <el-row>
+          <el-col :span="4">
+            <div class="name">
+              <span>*</span> 法人名称:
             </div>
-            <div class="col-md-3 bor col-xs-offset-1">
-              <select name id></select>
+          </el-col>
+          <el-col :span="10">
+            <div class>
+              <el-input v-model="name" placeholder="输入法人名称"></el-input>
             </div>
-            <div class="col-md-3 bor col-xs-offset-1">
-              <select name id></select>
-            </div>
-          </div>
-        </div>
-        <div class="list row">
-          <div class="col-md-2 name">
-            <span>*</span>人数:
-          </div>
-          <div class="col-md-10">
-            <div class="col-md-3 bor">
-              <select name id>
-                <option value>10-50人</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="list row">
-          <div class="col-md-2 name">
-            <span>*</span>法人名称:
-          </div>
-          <div class="col-md-10">
-            <input type="text" placeholder="输入法人名称">
-          </div>
-        </div>
-        <div class="list row">
-          <div class="col-md-2 name">
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="4" class="name">
             <span>*</span>营业执照正面:
-          </div>
-          <div class="col-md-5 Authentication_box">
-            <input type="file"  id="FileUpload" @change="file" value>
-            <img
-              src="../assets/Authentication.png"
-              alt
-            >
-          </div>
-        </div>
-        <div class="list row">
-          <div class="col-md-2 name">
+          </el-col>
+          <el-col :span="10">
+            <div class="Authentication_box">
+              <input type="file" id="pv" @change="fileImg($event)" value>
+              <img  src="../assets/Authentication.png" ref="pv_img" alt>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="4" class="name">
             <span>*</span>营业执照背面:
-          </div>
-          <div class="col-md-5 Authentication_box">
-            <input type="file" id="" value="">
-            <img
-              src="../assets/Authentication.png"
-              alt
-            >
-          </div>
-        </div>
-        <div class="list row">
-          <div class="col-md-2"></div>
-          <div class="col-md-10">
+          </el-col>
+          <el-col :span="10">
+            <div class="Authentication_box">
+              <input type="file" id="back" @change="fileImg($event)" >
+              <img src="../assets/Authentication.png" ref="back_img"  alt>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="4" class="name">
+              <div>&nbsp;</div>
+          </el-col>
+          <el-col :span="20" class="name">
             <p class="confrim">提交审核</p>
-          </div>
-        </div>
+          </el-col>
+        </el-row>
       </div>
     </div>
     <!-- END MAIN CONTENT -->
-    <div id="left_bg"  v-show="isShow"></div>
-    <div id="top_bg"  v-show="isShow"></div>
+    <div id="left_bg" v-show="!isShow"></div>
+    <div id="top_bg" v-show="!isShow"></div>
   </div>
 </template>
 <style>
@@ -665,7 +703,6 @@
   left: 260px;
   background: rgba(0, 0, 0, 0.3);
   z-index: 1035;
-
 }
 #Authentication {
   margin-top: 20px;
@@ -678,7 +715,7 @@
   padding: 20px;
   margin: 50px auto;
 }
-#Authentication .list {
+#Authentication .wrap>.el-row {
   margin-top: 20px;
 }
 #Authentication .confrim {
@@ -689,7 +726,7 @@
   color: #fff;
 }
 #Authentication .name {
-  font-size: 16px;
+  font-size: 15px;
   color: #616161;
 }
 #Authentication .name span {
@@ -714,29 +751,67 @@
   padding: 0;
   border-radius: 3px;
 }
- #Authentication  input[type="file"]{
-   background: transparent;
-   position: absolute;
-   left: 0;
-   right: 0;
-   top: 0;
-   bottom: 0;
-   opacity: 0;
- }
- #Authentication img{
-   width: 100%;
- }
- #Authentication .Authentication_box{
-   background: #f5f5f5;
- }
+#Authentication input[type="file"] {
+  background: transparent;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  opacity: 0;
+}
+#Authentication img {
+  width: 100%;
+}
+#Authentication .Authentication_box {
+  background: #f5f5f5;
+  position: relative;
+}
+#Authentication .address .el-col-6{
+  padding-right: 10px;
+}
 </style>
 
 <script>
-import cityJson from "../assets/city/city.json";
+import axios from "axios";
 export default {
   data: function() {
     return {
-      isShow: false
+      isShow: false,
+      company:'',
+      address:'',
+      name:'',
+      pv:null,
+      back:null,
+      pole: [
+        {
+          value: "1",
+          label: "1-50人"
+        },{
+          value: "1",
+          label: "1-50人"
+        }
+        ,{
+          value: "1",
+          label: "1-50人"
+        },{
+          value: "1",
+          label: "1-50人"
+        },{
+          value: "1",
+          label: "1-50人"
+        }
+      ],
+      value: "",
+      mapJson: "../static/ctiy/map.json",
+      province: "",
+      sheng: "",
+      shi: "",
+      shi1: [],
+      qu: "",
+      qu1: [],
+      city: "",
+      block: ""
     };
   },
   mounted: function() {
@@ -797,6 +872,7 @@ export default {
       height: "270px",
       low: 0,
       high: "auto",
+
       series: {
         "series-projection": {
           showArea: true,
@@ -868,17 +944,134 @@ export default {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
   },
+  created() {
+    this.getCtiyData();
+  },
   methods: {
-    file: function() {
-      var fileObj = document.getElementById("FileUpload").files[0]; // js 获取文件对象
+    fileImg(o) {
+    
+      var fileObj = o.target.files[0]; // js 获取文件对象
+      var url = this.getObjectURL(fileObj)
+      var formFile = new FormData();
+      formFile.append("action", "UploadVMKImagePath");
+      formFile.append("file", fileObj); //加入文件对象
+      
+      if(o.target.id == 'pv'){
+        this.$refs.pv_img.src = url;
+        this.pv = formFile;
+      }else{
+         this.$refs.back_img.src = url
+         this.back = formFile;
+      }
+
+     
       if (typeof fileObj == "undefined" || fileObj.size <= 0) {
         alert("请选择图片");
         return;
       }
-      var formFile = new FormData();
-      formFile.append("action", "UploadVMKImagePath");
-      formFile.append("file", fileObj); //加入文件对象
-      console.log(fileObj);
+      
+    },
+    getCtiyData() {
+      var that = this;
+      axios
+        .get(this.mapJson)
+        .then(function(response) {
+          if (response.status == 200) {
+            var data = response.data;
+            that.province = [];
+            that.city = [];
+            that.block = [];
+            // 省市区数据分类
+            for (var item in data) {
+              if (item.match(/0000$/)) {
+                //省
+                that.province.push({
+                  id: item,
+                  value: data[item],
+                  children: []
+                });
+              } else if (item.match(/00$/)) {
+                //市
+                that.city.push({ id: item, value: data[item], children: [] });
+              } else {
+                //区
+                that.block.push({ id: item, value: data[item] });
+              }
+            }
+            // 分类市级
+            for (var index in that.province) {
+              for (var index1 in that.city) {
+                if (
+                  that.province[index].id.slice(0, 2) ===
+                  that.city[index1].id.slice(0, 2)
+                ) {
+                  that.province[index].children.push(that.city[index1]);
+                }
+              }
+            }
+            // 分类区级
+            for (var item1 in that.city) {
+              for (var item2 in that.block) {
+                if (
+                  that.block[item2].id.slice(0, 4) ===
+                  that.city[item1].id.slice(0, 4)
+                ) {
+                  that.city[item1].children.push(that.block[item2]);
+                }
+              }
+            }
+          } else {
+            console.log(res.status);
+          }
+        })
+        .catch(function(error) {
+          console.log(typeof +error);
+        });
+    }, // 选省
+    choseProvince: function(e) {
+      for (var index2 in this.province) {
+        if (e === this.province[index2].id) {
+          this.shi1 = this.province[index2].children;
+          this.shi = this.province[index2].children[0].value;
+          this.qu1 = this.province[index2].children[0].children;
+          this.qu = this.province[index2].children[0].children[0].value;
+          this.E = this.qu1[0].id;
+        }
+      }
+    },
+    // 选市
+    choseCity: function(e) {
+      for (var index3 in this.city) {
+        if (e === this.city[index3].id) {
+          this.qu1 = this.city[index3].children;
+          this.qu = this.city[index3].children[0].value;
+          this.E = this.qu1[0].id;
+          // console.log(this.E)
+        }
+      }
+    },
+    // 选区
+    choseBlock: function(e) {
+      this.E = e;
+      // console.log(this.E)
+    },
+    //图片路径转换
+      getObjectURL(file) {
+        var url = null;
+        if (window.createObjectURL != undefined) {
+            
+            url = window.createObjectURL(file)
+            
+        } else if (window.URL != undefined) {
+            
+            url = window.URL.createObjectURL(file)
+            
+        } else if (window.webkitURL != undefined) {
+            
+            url = window.webkitURL.createObjectURL(file)
+            
+        }
+        return url
     }
   }
 

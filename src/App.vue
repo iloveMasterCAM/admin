@@ -163,6 +163,7 @@
       <div class="sidebar-scroll">
         <nav>
           <ul class="nav">
+
             <router-link v-for="(itme, index) in nav" :key="index" :to="itme.path" tag="li">
               <a v-if="itme.name == 'tables'" class="collapsed">
                 <i :class="itme.icon"></i>
@@ -174,6 +175,7 @@
                 <span v-text="itme.name"></span>
               </a>
             </router-link>
+
           </ul>
         </nav>
       </div>
@@ -184,15 +186,19 @@
 
 <script>
 export default {
-  data() {
-    return {
-      nav: [
-        { path: "/", name: "index", icon: "lnr lnr-home" },
-        { path: "/icons", name: "icons", icon: "lnr lnr-home" },
-        { path: "/tables", name: "tables", icon: "lnr lnr-home" },
-        { path: "/login", name: "login", icon: "lnr lnr-home" },
-        { path: "/profile", name: "profile", icon: "lnr lnr-home" },
-        { path: "/panels", name: "panels", icon: "lnr lnr-home" }
+
+  data(){
+    return{
+      nav:[
+        {path:'/',name:'index',icon:'lnr lnr-home'},
+        {path:'/icons',name:'icons',icon:'lnr lnr-home'},
+        {path:'/tables',name:'tables',icon:'lnr lnr-home'},
+        {path:'/login',name:'login',icon:'lnr lnr-home'},
+        {path:'/profile',name:'profile',icon:'lnr lnr-home'},
+        {path:'/panels',name:'panels',icon:'lnr lnr-home'},
+        {path:'/panels',name:'panels',icon:'lnr lnr-home'},
+        {path:'/specifications',name:'specifications',icon:'lnr lnr-home'}
+
       ]
     };
   },
