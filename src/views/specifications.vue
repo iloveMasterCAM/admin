@@ -16,7 +16,7 @@
                 </el-table-column>
                 <el-table-column
                   fixed
-                  prop="date"
+                  prop="Title"
                   label="名称"
                   width="300">
                 </el-table-column>
@@ -24,9 +24,13 @@
                   prop="name"
                   label="	规格值"
                   width="900">
+                  <template scope="scope">
+                    <span  v-show="!item.src" :title="item.text" v-html="item.text" v-for="item in scope.row.name" class="span"></span>
+                    <img   v-show="img.src"   :src="img.src" :title="img.text" v-for="img in scope.row.name" class="img">
+                  </template>
                 </el-table-column>
                 <el-table-column
-                  prop="zip"
+                  prop="sort"
                   label="排序"
                   width="200">
                 </el-table-column>
@@ -39,67 +43,72 @@
                   </template>
                 </el-table-column>
               </el-table>
-
-
-              <!--<el-dialog title="修改规格" :visible.sync="dialogFormVisible">-->
-                <!--<el-form :model="form">-->
-                  <!--<el-form-item label="规格名称" :label-width="formLabelWidth">-->
-                    <!--<el-input v-model="form.name" autocomplete="off" style="width:600px;"></el-input>-->
-                  <!--</el-form-item>-->
-                  <!--<el-form-item label="备注说明" :label-width="formLabelWidth">-->
-                    <!--<el-input type="textarea" v-model="form.remarks" autocomplete="off" style="width:600px;"></el-input>-->
-                  <!--</el-form-item>-->
-                  <!--<el-form-item label="排序数字" :label-width="formLabelWidth">-->
-                    <!--<el-input v-model="form.sortNum" autocomplete="off" style="width:120px;"></el-input>-->
-                  <!--</el-form-item>-->
-                <!--</el-form>-->
-                <!--<div slot="footer" class="dialog-footer">-->
-                  <!--<el-button @click="dialogFormVisible = false">取 消</el-button>-->
-                  <!--<el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>-->
-                <!--</div>-->
-              <!--</el-dialog>-->
             </div>
+          <!--分页-->
+        <div class="block">
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="currentPage"
+            :page-sizes="[100, 200, 300, 400]"
+            :page-size="100"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="400">
+          </el-pagination>
+        </div>
+
       </div>
     </div>
-
   </div>
 </template>
 
 
 <script>
+  import axios from 'axios'
   export default {
       data(){
         return{
           tableData: [{
-            date: '衣服规格',
-            name: '1213',
-            zip: 10
+            Title: '衣服规格',
+            name: [{text:'S'},{text:"M"},{text:"L"}],
+            sort: 10
           }, {
-            date: '颜色',
-            name: '1',
-            zip: 20
+            Title: '颜色',
+            name: [{text:"女神粉",src:"http://img.hb.aicdn.com/80500376fb2aeb15f7aa506cfef58ff8c32772c815b972-tYqZCj_fw658"},{text:"莲花白",src:"http://img.hb.aicdn.com/ddacc34690a462613d414a694f242cbf8d339cdcab77-ZIqxx0_fw658"},{text:"基佬紫",src:"http://img.hb.aicdn.com/2c75864a8488647d569d5cfe1391c22161f31ad2411f0-xAh884_fw658"}],
+            sort: 20
           }, {
-            date: '版本',
-            name: '王小虎',
-            zip: 200
+            Title: '版本',
+            name: [{text:'移动4G'},{text:"联通4G"},{text:"电信4G"},{text:"全网通"}],
+            sort: 200
           }],
-          // dialogFormVisible: false,
-          // form: {
-          //   name: '',
-          //   remarks:'',
-          //   sortNum:''
-          // },
-          // formLabelWidth: '120px'
+          currentPage:1,
         }
       },
-    methods: {
-      handleClick(row) {
-        this.$router.push({name: 'modifySpec'});
-        console.log(row);
+      mounted() {
+        axios.post('http://192.168.1.2:8080/goods/goodsSizeList.do').then(
+          (res)=>{
+            //this.tableData=res.data.goodsSizeList;
+            console.log(res.data.goodsSizeList);
+          }
+        ).catch((err)=>{
+          console.log(err);
+        });
       },
-      goAdd(){
-        this.$router.push({name: 'addSpec'});
-      }
+      methods: {
+        handleClick(row) {
+          this.$router.push({name: 'modifySpec'});
+          console.log(row);
+        },
+        goAdd(){
+          this.$router.push({name: 'addSpec'});
+        },
+        //分页
+        handleSizeChange(val) {
+          console.log(`每页 ${val} 条`);
+        },
+        handleCurrentChange(val) {
+          console.log(`当前页: ${val}`);
+        }
 
     }
   }
@@ -109,5 +118,19 @@
 <style scoped>
   .page-title{
     font-size:18px;
+  }
+  .span{
+    border:1px solid #eee;
+    display:inline-block;
+    text-align:center;
+    padding:0 10px;
+    margin-right:10px;
+  }
+  .img{
+    display:inline-block;
+    width:34px;
+    height:34px;
+    border:1px solid #ddd;
+    margin-right:10px;
   }
 </style>
