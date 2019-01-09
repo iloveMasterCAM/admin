@@ -61,8 +61,7 @@
             </el-table>
             </div>
 
-=======
->>>>>>> dea8acc958a5042f0a6864731488d23bfe7f49f7
+
           <el-dialog title="商品规格" :visible.sync="dialogFormVisible">
           <el-form :model="dialogForm">
           <el-form-item label="标题文字" :label-width="formLabelWidth">

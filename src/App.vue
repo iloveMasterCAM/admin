@@ -196,6 +196,9 @@ export default {
         {path:'/login',name:'login',icon:'lnr lnr-home'},
         {path:'/profile',name:'profile',icon:'lnr lnr-home'},
         {path:'/panels',name:'panels',icon:'lnr lnr-home'},
+        {path:'/panels',name:'panels',icon:'lnr lnr-home'},
+        {path:'/specifications',name:'specifications',icon:'lnr lnr-home'}
+
 
       ]
     }
