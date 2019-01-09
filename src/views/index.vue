@@ -554,7 +554,7 @@
         </div>
       </div>
     </div>
-    <div id="Authentication" class="main-content container-fluid " v-show="!isShow">
+    <div id="Authentication" class="main-content container-fluid" v-show="!isShow">
       <!-- 
           公司名称
           地址
@@ -563,7 +563,7 @@
           营业执照 正反面
           提交
       -->
-      <div class="wrap input-group">
+      <div class="wrap">
         <p class="title">企业认证</p>
         <div class="list row">
           <div class="col-md-2 name">
@@ -571,12 +571,7 @@
           </div>
 
           <div class="col-md-5">
-            <input
-              type="text"
-              class="form-control"
-              aria-describedby="basic-addon2"
-              placeholder="输入公司名称"
-            >
+            <input type="text" placeholder="输入公司名称">
           </div>
         </div>
         <div class="list row">
@@ -584,14 +579,14 @@
             <span>*</span>公司地址:
           </div>
           <div class="col-md-10" id="city">
-            <div class="col-md-3 bor ">
-              <select name id> </select>
+            <div class="col-md-3 bor">
+              <select name id></select>
             </div>
-             <div class="col-md-3 bor col-xs-offset-1">
-              <select name id> </select>
+            <div class="col-md-3 bor col-xs-offset-1">
+              <select name id></select>
             </div>
-             <div class="col-md-3 bor  col-xs-offset-1">
-              <select name id> </select>
+            <div class="col-md-3 bor col-xs-offset-1">
+              <select name id></select>
             </div>
           </div>
         </div>
@@ -599,11 +594,11 @@
           <div class="col-md-2 name">
             <span>*</span>人数:
           </div>
-          <div class="col-md-10 ">
+          <div class="col-md-10">
             <div class="col-md-3 bor">
-               <select name id>
-              <option value>10-50人</option>
-            </select>
+              <select name id>
+                <option value>10-50人</option>
+              </select>
             </div>
           </div>
         </div>
@@ -619,18 +614,22 @@
           <div class="col-md-2 name">
             <span>*</span>营业执照正面:
           </div>
-          <div class="col-md-10">
-            <input type="file" id="FileUpload" @change="file" value>
-            <!-- <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1140234855,611391524&fm=27&gp=0.jpg" alt=""> -->
+          <div class="col-md-5 Authentication_box">
+            <input type="file"  id="FileUpload" @change="file" value>
+            <img
+              src="../assets/Authentication.png"
+              alt
+            >
           </div>
         </div>
         <div class="list row">
           <div class="col-md-2 name">
             <span>*</span>营业执照背面:
           </div>
-          <div class="col-md-10">
+          <div class="col-md-5 Authentication_box">
+            <input type="file" id="" value="">
             <img
-              src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1140234855,611391524&fm=27&gp=0.jpg"
+              src="../assets/Authentication.png"
               alt
             >
           </div>
@@ -644,9 +643,30 @@
       </div>
     </div>
     <!-- END MAIN CONTENT -->
+    <div id="left_bg"  v-show="isShow"></div>
+    <div id="top_bg"  v-show="isShow"></div>
   </div>
 </template>
 <style>
+#left_bg {
+  width: 260px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1035;
+  bottom: 0;
+}
+#top_bg {
+  height: 82px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 260px;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1035;
+
+}
 #Authentication {
   margin-top: 20px;
   margin-left: 20px;
@@ -670,34 +690,49 @@
 }
 #Authentication .name {
   font-size: 16px;
-  color: #484747;
+  color: #616161;
 }
 #Authentication .name span {
   color: red;
 }
 #Authentication .title {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 500;
   color: #000;
 }
-#Authentication option{
-
+#Authentication option {
 }
-#Authentication select,#Authentication option{
+#Authentication select,
+#Authentication option {
   line-height: 34px;
   height: 34px;
   padding-left: 10px;
 }
-#Authentication .bor{
-  border:1px solid #ccc;
+
+#Authentication .bor {
+  border: 1px solid #ccc;
   padding: 0;
-  
+  border-radius: 3px;
 }
+ #Authentication  input[type="file"]{
+   background: transparent;
+   position: absolute;
+   left: 0;
+   right: 0;
+   top: 0;
+   bottom: 0;
+   opacity: 0;
+ }
+ #Authentication img{
+   width: 100%;
+ }
+ #Authentication .Authentication_box{
+   background: #f5f5f5;
+ }
 </style>
 
 <script>
-
-  import cityJson from '../assets/city/city.json'
+import cityJson from "../assets/city/city.json";
 export default {
   data: function() {
     return {
@@ -846,5 +881,48 @@ export default {
       console.log(fileObj);
     }
   }
+
+  /* 
+  
+   $(function() {
+        $(".filepath").on("change",function() {
+        
+            var srcs = getObjectURL(this.files[0]);   //获取路径
+            $(this).nextAll(".img1").hide();   //this指的是input
+            $(this).nextAll(".img2").show();  //fireBUg查看第二次换图片不起做用
+            $(this).nextAll('.close').show();   //this指的是input
+            $(this).nextAll(".img2").attr("src",srcs);    //this指的是input
+			$(this).val('');    //必须制空
+            $(".close").on("click",function() {
+                $(this).hide();     //this指的是span
+                $(this).nextAll(".img2").hide();
+                $(this).nextAll(".img1").show();
+            })
+        })
+    })
+
+
+
+
+    function getObjectURL(file) {
+        var url = null;
+        if (window.createObjectURL != undefined) {
+            
+            url = window.createObjectURL(file)
+            
+        } else if (window.URL != undefined) {
+            
+            url = window.URL.createObjectURL(file)
+            
+        } else if (window.webkitURL != undefined) {
+            
+            url = window.webkitURL.createObjectURL(file)
+            
+        }
+        return url
+    };
+
+
+  */
 };
 </script>

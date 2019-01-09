@@ -163,13 +163,12 @@
       <div class="sidebar-scroll">
         <nav>
           <ul class="nav">
-            <router-link v-for="(itme, index) in nav"  :key="index"  :to="itme.path"  tag="li">
-               <a v-if="itme.name == 'tables'" data-toggle="collapse" class="collapsed">
+            <router-link v-for="(itme, index) in nav" :key="index" :to="itme.path" tag="li">
+              <a v-if="itme.name == 'tables'" class="collapsed">
                 <i :class="itme.icon"></i>
                 <span v-text="itme.name"></span>
                 <i class="icon-submenu lnr lnr-chevron-left"></i>
-              </a> 
-               
+              </a>
               <a v-else>
                 <i :class="itme.icon"></i>
                 <span v-text="itme.name"></span>
@@ -185,18 +184,17 @@
 
 <script>
 export default {
-  data(){
-    return{
-      nav:[
-        {path:'/',name:'index',icon:'lnr lnr-home'},
-        {path:'/icons',name:'icons',icon:'lnr lnr-home'},
-        {path:'/tables',name:'tables',icon:'lnr lnr-home'},
-        {path:'/login',name:'login',icon:'lnr lnr-home'},
-        {path:'/profile',name:'profile',icon:'lnr lnr-home'},
-        {path:'/panels',name:'panels',icon:'lnr lnr-home'},
-        
+  data() {
+    return {
+      nav: [
+        { path: "/", name: "index", icon: "lnr lnr-home" },
+        { path: "/icons", name: "icons", icon: "lnr lnr-home" },
+        { path: "/tables", name: "tables", icon: "lnr lnr-home" },
+        { path: "/login", name: "login", icon: "lnr lnr-home" },
+        { path: "/profile", name: "profile", icon: "lnr lnr-home" },
+        { path: "/panels", name: "panels", icon: "lnr lnr-home" }
       ]
-    }
+    };
   },
   name: "App",
   methods: {
@@ -217,18 +215,17 @@ export default {
     $("head").append(
       ' <link rel="stylesheet" href="' + localStorage["skin"] + '" id="skin">'
     );
+  },
+  beforeCreate() {
+    console.log("A页面 beforeCreate");
+  },
+  created() {
+    console.log("A页面 created");
+  },
+  mounted() {
+    console.log("A页面 mounted");
   }
 };
-
-// $.post("<%=basePath%>merchant/regist.do",{"PHONE":rphone,"code":rcode,"PASSWORD":rpassword},function(data){
-// 			if(data.msg==1){
-// 				//跳转到登陆页面
-// 				location.reload();
-// 			}else if(data.msg==0){
-// 				alert("验证码错误");
-// 			}
-// 		});
-
 </script>
 
 <style>

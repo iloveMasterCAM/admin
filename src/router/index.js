@@ -22,7 +22,11 @@ export default new Router({
     {
       path: '/',
       name: 'index',
-      component: index
+      component: index,
+      meta:{
+        title:'',
+        requireAuth:true
+      }
     },
     {
       path: '/manage/charts',
@@ -39,7 +43,10 @@ export default new Router({
     {
       path: '/icons',
       name: 'icons',
-      component: icons
+      component: icons,
+      meta:{
+        title:'login'
+      }
     }
     ,
     {
@@ -51,7 +58,10 @@ export default new Router({
     {
       path: '/panels',
       name: 'panels',
-      component: panels
+      component: panels,
+      meta:{
+        title:'login'
+      }
     }
     ,
     
