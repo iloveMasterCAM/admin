@@ -777,7 +777,7 @@ import axios from "axios";
 export default {
   data: function() {
     return {
-      isShow: false,
+      isShow: true,
       company:'',
       address:'',
       name:'',
@@ -949,13 +949,13 @@ export default {
   },
   methods: {
     fileImg(o) {
-    
+
       var fileObj = o.target.files[0]; // js 获取文件对象
       var url = this.getObjectURL(fileObj)
       var formFile = new FormData();
       formFile.append("action", "UploadVMKImagePath");
       formFile.append("file", fileObj); //加入文件对象
-      
+
       if(o.target.id == 'pv'){
         this.$refs.pv_img.src = url;
         this.pv = formFile;
@@ -964,12 +964,12 @@ export default {
          this.back = formFile;
       }
 
-     
+
       if (typeof fileObj == "undefined" || fileObj.size <= 0) {
         alert("请选择图片");
         return;
       }
-      
+
     },
     getCtiyData() {
       var that = this;
@@ -1059,27 +1059,27 @@ export default {
       getObjectURL(file) {
         var url = null;
         if (window.createObjectURL != undefined) {
-            
+
             url = window.createObjectURL(file)
-            
+
         } else if (window.URL != undefined) {
-            
+
             url = window.URL.createObjectURL(file)
-            
+
         } else if (window.webkitURL != undefined) {
-            
+
             url = window.webkitURL.createObjectURL(file)
-            
+
         }
         return url
     }
   }
 
-  /* 
-  
+  /*
+
    $(function() {
         $(".filepath").on("change",function() {
-        
+
             var srcs = getObjectURL(this.files[0]);   //获取路径
             $(this).nextAll(".img1").hide();   //this指的是input
             $(this).nextAll(".img2").show();  //fireBUg查看第二次换图片不起做用
@@ -1100,17 +1100,17 @@ export default {
     function getObjectURL(file) {
         var url = null;
         if (window.createObjectURL != undefined) {
-            
+
             url = window.createObjectURL(file)
-            
+
         } else if (window.URL != undefined) {
-            
+
             url = window.URL.createObjectURL(file)
-            
+
         } else if (window.webkitURL != undefined) {
-            
+
             url = window.webkitURL.createObjectURL(file)
-            
+
         }
         return url
     };
