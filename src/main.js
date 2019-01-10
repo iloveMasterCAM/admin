@@ -3,13 +3,18 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-
-Vue.use(ElementUI);
-
+import './assets/iconfont/iconfont.css'
+import $ from 'jquery'
 import '../static/assets/scripts/klorofil-common'
-// 在 index.vue  里做  默认 上传营业执照  router 控制跳转
-// Vue.config.productionTip = false
-// honest honesthonesthonest
+import axios from 'axios';
+Vue.use(ElementUI);
+// axios.defaults.timeout = 5000;// 在超时前，所有请求都会等待 5 秒
+// axios.defaults.headers.post['Content-Type']= 'application/x-www-form-urlencoded;';
+// axios.defaults.baseURL = 'http://192.168.1.8:8080/FH-WEB/shops/';// 配置接口地址
+// axios.defaults.withCredentials = false;
+ 
+Vue.prototype.$axios = axios;
+
 new Vue({
   el: '#wrapper',
   router,
@@ -17,41 +22,3 @@ new Vue({
   template: '<App/>'
 })
 
-
-
-
-router.beforeEach((to, from, next) => {
-
-
-  if (to.meta.title) {
-    document.title = to.meta.title
-  }
-  const type = to.meta.title
-  console.log( to.meta)
-  // 判断该路由是否需要登录权限
-  if (type === 'login') {
-    if (window.localStorage.getItem('login')) {
-      next()
-    } else {
-      next('/login')
-    }
-  } else {
-    next()  // 确保一定要有next()被调用
-  }
-
- console.log(to.matched)
-// if (to.matched.some(record => record.meta.requireAuth)){  // 判断该路由是否需要登录权限
-//     if (token) {  // 判断当前的token是否存在
-//       next();
-//     }
-//     else {
-//       next({
-//         path: '/login',
-//         query: {redirect: to.fullPath}  // 将跳转的路由path作为参数，登录成功后跳转到该路由
-//       })
-//     }
-//   }
-//   else {
-//     next();
-//   } 
-});

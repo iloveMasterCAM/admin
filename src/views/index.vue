@@ -609,7 +609,7 @@
                   </el-select>
                 </el-col>
                   <el-col :span="6">
-                        <el-input v-model="address" placeholder="输入公司地址"></el-input>
+                        <el-input v-model="addressDetail" placeholder="输入公司地址"></el-input>
                 </el-col>
               </el-row>
             </div>
@@ -623,7 +623,7 @@
           </el-col>
           <el-col :span="10">
             <div class>
-              <el-select v-model="value" placeholder="请选择">
+              <el-select v-model="poleNumber" placeholder="请选择">
                 <el-option
                   v-for="item in pole"
                   :key="item.value"
@@ -654,7 +654,7 @@
           </el-col>
           <el-col :span="10">
             <div class="Authentication_box">
-              <input type="file" id="pv" @change="fileImg($event)" value>
+              <input type="file" id="pv" @change="fileImg($event)" >
               <img  src="../assets/Authentication.png" ref="pv_img" alt>
             </div>
           </el-col>
@@ -675,7 +675,7 @@
               <div>&nbsp;</div>
           </el-col>
           <el-col :span="20" class="name">
-            <p class="confrim">提交审核</p>
+            <p class="confrim" @click="submitFun">提交审核</p>
           </el-col>
         </el-row>
       </div>
@@ -777,32 +777,32 @@ import axios from "axios";
 export default {
   data: function() {
     return {
-      isShow: false,
+      isShow: true,
       company:'',
-      address:'',
+      addressDetail:'',
       name:'',
       pv:null,
       back:null,
       pole: [
         {
-          value: "1",
+          value: "1-50",
           label: "1-50人"
         },{
-          value: "1",
+         value: "1-50",
           label: "1-50人"
         }
         ,{
-          value: "1",
+         value: "1-50",
           label: "1-50人"
         },{
-          value: "1",
+         value: "1-50",
           label: "1-50人"
         },{
-          value: "1",
+          value: "1-50",
           label: "1-50人"
         }
       ],
-      value: "",
+      poleNumber: "",
       mapJson: "../static/ctiy/map.json",
       province: "",
       sheng: "",
@@ -811,11 +811,13 @@ export default {
       qu: "",
       qu1: [],
       city: "",
-      block: ""
+      block: "",
+      address:[],
+     
     };
   },
   mounted: function() {
-    console.log("index");
+
     var data, options;
 
     // headline charts
@@ -971,6 +973,14 @@ export default {
       }
       
     },
+    submitFun(){
+      console.log(this.address)
+      console.log(this.company)
+      console.log(this.poleNumber)
+      console.log(this.back)
+      console.log(this.pv)
+      console.log(this.name)
+    },
     getCtiyData() {
       var that = this;
       axios
@@ -1029,6 +1039,7 @@ export default {
         });
     }, // 选省
     choseProvince: function(e) {
+     
       for (var index2 in this.province) {
         if (e === this.province[index2].id) {
           this.shi1 = this.province[index2].children;
@@ -1036,6 +1047,7 @@ export default {
           this.qu1 = this.province[index2].children[0].children;
           this.qu = this.province[index2].children[0].children[0].value;
           this.E = this.qu1[0].id;
+           this.address = [this.province[index2].value,this.shi,this.qu]
         }
       }
     },
@@ -1046,14 +1058,19 @@ export default {
           this.qu1 = this.city[index3].children;
           this.qu = this.city[index3].children[0].value;
           this.E = this.qu1[0].id;
-          // console.log(this.E)
+           this.address[1] = this.city[index3].value
+           this.address[2] =  this.qu
         }
       }
     },
     // 选区
     choseBlock: function(e) {
+      for(var index in this.block){
+         if(e == this.block[index].id){
+           this.address[2] = this.block[index].value
+         }
+      }
       this.E = e;
-      // console.log(this.E)
     },
     //图片路径转换
       getObjectURL(file) {
@@ -1074,48 +1091,5 @@ export default {
         return url
     }
   }
-
-  /* 
-  
-   $(function() {
-        $(".filepath").on("change",function() {
-        
-            var srcs = getObjectURL(this.files[0]);   //获取路径
-            $(this).nextAll(".img1").hide();   //this指的是input
-            $(this).nextAll(".img2").show();  //fireBUg查看第二次换图片不起做用
-            $(this).nextAll('.close').show();   //this指的是input
-            $(this).nextAll(".img2").attr("src",srcs);    //this指的是input
-			$(this).val('');    //必须制空
-            $(".close").on("click",function() {
-                $(this).hide();     //this指的是span
-                $(this).nextAll(".img2").hide();
-                $(this).nextAll(".img1").show();
-            })
-        })
-    })
-
-
-
-
-    function getObjectURL(file) {
-        var url = null;
-        if (window.createObjectURL != undefined) {
-            
-            url = window.createObjectURL(file)
-            
-        } else if (window.URL != undefined) {
-            
-            url = window.URL.createObjectURL(file)
-            
-        } else if (window.webkitURL != undefined) {
-            
-            url = window.webkitURL.createObjectURL(file)
-            
-        }
-        return url
-    };
-
-
-  */
 };
 </script>

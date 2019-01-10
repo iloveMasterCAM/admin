@@ -17,8 +17,7 @@ import modifySpec from '@/views/modifySpec'
 
 
 Vue.use(Router)
-
-export default new Router({
+let Routers = new Router({
   linkActiveClass: 'active',
   mode:'history',
   routes: [
@@ -27,8 +26,8 @@ export default new Router({
       name: 'index',
       component: index,
       meta:{
-        title:'',
-        requireAuth:true
+        title:'index',
+       
       }
     },
     {
@@ -48,7 +47,8 @@ export default new Router({
       name: 'icons',
       component: icons,
       meta:{
-        title:'login'
+        title:'icons',
+        requireAuth:true
       }
     }
     ,
@@ -112,3 +112,13 @@ export default new Router({
     }
   ]
 })
+Routers.beforeEach(function(to,form,next){
+  // console.log(to.meta)
+  if(to.meta.title) window.document.title = to.meta.title
+ // if(to.meta.requireAuth) window.location.href = 'http://www.baidu.com'
+  next()
+})
+
+
+
+export default Routers
