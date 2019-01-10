@@ -4,11 +4,13 @@
       <div class="container-fluid">
         <h3 class="page-title">规格管理</h3>
         <el-button plain icon="el-icon-plus" style="margin-bottom: 8px" @click="goAdd">新增</el-button>
+        <el-button plain icon="el-icon-delete" style="margin-bottom: 8px" @click="delSel">删除</el-button>
             <div class="table">
               <el-table
                 :data="tableData"
                 border
                 tooltip-effect="dark"
+                @selection-change="handleSelectionChange"
                 style="width: 100%">
                 <el-table-column
                   type="selection"
@@ -37,23 +39,24 @@
                 <el-table-column
                   fixed="right"
                   label="操作"
-                  width="150">
+                  width="120">
                   <template slot-scope="scope">
-                    <el-button @click="handleClick(scope.row)" type="text" size="small">修改</el-button>
+                    <el-button @click="handleClick(scope.row)" type="primary" size="mini">编辑</el-button>
                   </template>
                 </el-table-column>
               </el-table>
             </div>
           <!--分页-->
-        <div class="block">
+        <div class="block" style="float:right;margin-right:40px;">
           <el-pagination
+            background
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="currentPage"
-            :page-sizes="[100, 200, 300, 400]"
+            :page-sizes="[10, 20, 40]"
             :page-size="100"
             layout="total, sizes, prev, pager, next, jumper"
-            :total="400">
+            :total="100">
           </el-pagination>
         </div>
 
@@ -61,7 +64,6 @@
     </div>
   </div>
 </template>
-
 
 <script>
   import axios from 'axios'
@@ -82,23 +84,38 @@
             sort: 200
           }],
           currentPage:1,
+          //复选框 选中数据
+          multipleSelection: [],
+          //复选框 选中id
+          multipleSelectionId:[],
         }
       },
       mounted() {
-        axios.post('http://192.168.1.2:8080/goods/goodsSizeList.do').then(
+        axios.post('http://192.168.1.2:8080/shops/goodsSpecList.do').then(
           (res)=>{
-            //this.tableData=res.data.goodsSizeList;
-            console.log(res.data.goodsSizeList);
+            this.tableData=res.data.goodsSpecList;
+            console.log(res.data.goodsSpecList);
           }
         ).catch((err)=>{
           console.log(err);
         });
       },
       methods: {
+        //选中数组
+        handleSelectionChange(val) {
+          this.multipleSelection = val;
+          console.log(this.multipleSelection)
+        },
+        //批量删除
+        delSel(){
+            //this.multipleSelectionId
+        },
+        //跳转 修改页面
         handleClick(row) {
-          this.$router.push({name: 'modifySpec'});
+          this.$router.push({name: 'modifySpec',params: {data:row}});
           console.log(row);
         },
+        //跳转 添加页面
         goAdd(){
           this.$router.push({name: 'addSpec'});
         },
@@ -109,8 +126,17 @@
         handleCurrentChange(val) {
           console.log(`当前页: ${val}`);
         }
-
-    }
+    },
+    watch: {
+      multipleSelection: function () {
+        let arr = [];
+        for (let i in this.multipleSelection) {
+          arr.push(this.multipleSelection[i].Title);
+        }
+        this.multipleSelectionId=arr;
+        console.log(this.multipleSelectionId);
+      }
+    },
   }
 </script>
 
@@ -132,5 +158,10 @@
     height:34px;
     border:1px solid #ddd;
     margin-right:10px;
+  }
+  .container-fluid{
+      background-color:#fff;
+      padding:20px;
+      margin-left: 12px;
   }
 </style>

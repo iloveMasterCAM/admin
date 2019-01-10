@@ -951,13 +951,13 @@ export default {
   },
   methods: {
     fileImg(o) {
-    
+
       var fileObj = o.target.files[0]; // js 获取文件对象
       var url = this.getObjectURL(fileObj)
       var formFile = new FormData();
       formFile.append("action", "UploadVMKImagePath");
       formFile.append("file", fileObj); //加入文件对象
-      
+
       if(o.target.id == 'pv'){
         this.$refs.pv_img.src = url;
         this.pv = formFile;
@@ -966,12 +966,12 @@ export default {
          this.back = formFile;
       }
 
-     
+
       if (typeof fileObj == "undefined" || fileObj.size <= 0) {
         alert("请选择图片");
         return;
       }
-      
+
     },
     submitFun(){
       console.log(this.address)
@@ -1076,20 +1076,19 @@ export default {
       getObjectURL(file) {
         var url = null;
         if (window.createObjectURL != undefined) {
-            
+
             url = window.createObjectURL(file)
-            
+
         } else if (window.URL != undefined) {
-            
+
             url = window.URL.createObjectURL(file)
-            
+
         } else if (window.webkitURL != undefined) {
-            
+
             url = window.webkitURL.createObjectURL(file)
-            
+
         }
         return url
     }
-  }
-};
+  }};
 </script>
