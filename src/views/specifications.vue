@@ -18,7 +18,7 @@
                 </el-table-column>
                 <el-table-column
                   fixed
-                  prop="Title"
+                  prop="title"
                   label="名称"
                   width="300">
                 </el-table-column>
@@ -71,15 +71,15 @@
       data(){
         return{
           tableData: [{
-            Title: '衣服规格',
+            title: '衣服规格',
             name: [{text:'S'},{text:"M"},{text:"L"}],
             sort: 10
           }, {
-            Title: '颜色',
+            title: '颜色',
             name: [{text:"女神粉",src:"http://img.hb.aicdn.com/80500376fb2aeb15f7aa506cfef58ff8c32772c815b972-tYqZCj_fw658"},{text:"莲花白",src:"http://img.hb.aicdn.com/ddacc34690a462613d414a694f242cbf8d339cdcab77-ZIqxx0_fw658"},{text:"基佬紫",src:"http://img.hb.aicdn.com/2c75864a8488647d569d5cfe1391c22161f31ad2411f0-xAh884_fw658"}],
             sort: 20
           }, {
-            Title: '版本',
+            title: '版本',
             name: [{text:'移动4G'},{text:"联通4G"},{text:"电信4G"},{text:"全网通"}],
             sort: 200
           }],

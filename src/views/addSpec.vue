@@ -139,8 +139,8 @@
       return{
         //上面form数据
         form: {
-          name: '',
-          remark: '',
+          name: "",
+          remark: "",
           sortNum:99
         },
         dialogFormVisible: false,
@@ -148,9 +148,9 @@
         dialogData:[],
 
         dialogForm: {
-          name: '',
+          name: "",
           sortNum:99,
-          imgURl:'',
+          imgURl:"",
           formData:null
 
          },
@@ -160,9 +160,9 @@
         imgSrc:'',
         dialogFormVisibleEdit:false,
         dialogFormEdit: {
-          name: '',
+          name: "",
           sortNum:99,
-          imgURl:'',
+          imgURl:"",
           formData:null
       },
 
@@ -272,8 +272,13 @@
           type: 'success'
         });
           var data = new FormData();
-          data.append("title",this.form);
-          data.append("remark",this.dialogData);
+          data.append("title",this.form.name);
+          data.append("remark",this.form.remark);
+          data.append("sort",this.form.sortNum);
+
+          data.append("subSpec",JSON.stringify(this.dialogData));
+          console.log(this.dialogData);
+          console.log(data);
         axios.post('http://192.168.1.2:8080/shops/addGoodsSpec.do',
           data)
           .then((res)=>{
@@ -285,6 +290,7 @@
         this.$router.push({name: 'specifications'})      }
     }
   }
+
 </script>
 
 
