@@ -145,7 +145,7 @@
                   </a>
                 </li>
                 <li>
-                  <a href="#">
+                  <a @click="exit">
                     <i class="lnr lnr-exit"></i>
                     <span>退出登录</span>
                   </a>
@@ -193,7 +193,7 @@ export default {
         {path:'/',name:'index',icon:'lnr lnr-home'},
         {path:'/icons',name:'icons',icon:'lnr lnr-home'},
         {path:'/tables',name:'tables',icon:'lnr lnr-home'},
-        {path:'/login',name:'login',icon:'lnr lnr-home'},
+       
         {path:'/profile',name:'profile',icon:'lnr lnr-home'},
         {path:'/panels',name:'panels',icon:'lnr lnr-home'},
         {path:'/panels',name:'panels',icon:'lnr lnr-home'},
@@ -204,6 +204,7 @@ export default {
   },
   name: "App",
   methods: {
+    /* 切换皮肤 */
     day() {
       localStorage["skin"] = "";
       $("#skin").attr({ href: "" });
@@ -215,21 +216,33 @@ export default {
     blue() {
       localStorage["skin"] = "./static/assets/css/blue.css";
       $("#skin").attr({ href: "./static/assets/css/blue.css" });
+    },
+      /* 切换皮肤 */
+    exit(){
+      
+      if(this.delCookie('token')){
+        this.$router.push('/login')
+      }
     }
   },
+
   mounted() {
     $("head").append(
       ' <link rel="stylesheet" href="' + localStorage["skin"] + '" id="skin">'
     );
   },
   beforeCreate() {
-    console.log("A页面 beforeCreate");
+   // console.log("A页面 beforeCreate");
   },
   created() {
-    console.log("A页面 created");
+  //  console.log("A页面 created");
   },
   mounted() {
-    console.log("A页面 mounted");
+      if(!this.getCookie("token")){
+        this.$router.push('/login')
+      }
+      console.log(this.getCookie("token"));
+   // console.log("A页面 mounted");
   }
 };
 </script>

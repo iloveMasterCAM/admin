@@ -785,20 +785,20 @@ export default {
       back:null,
       pole: [
         {
-          value: "1-50",
+          value: "1-51",
           label: "1-50人"
         },{
-         value: "1-50",
+         value: "1-52",
           label: "1-50人"
         }
         ,{
-         value: "1-50",
+         value: "1-53",
           label: "1-50人"
         },{
-         value: "1-50",
+         value: "1-54",
           label: "1-50人"
         },{
-          value: "1-50",
+          value: "1-55",
           label: "1-50人"
         }
       ],

@@ -15,6 +15,18 @@ import specifications from '@/views/specifications'
 import addSpec from '@/views/addSpec'
 import modifySpec from '@/views/modifySpec'
 
+ let getCookie = function (c_name) {
+  if (document.cookie.length > 0) {
+    var c_start = document.cookie.indexOf(c_name + "=")
+    if (c_start != -1) {
+      c_start = c_start + c_name.length + 1
+      var c_end = document.cookie.indexOf(";", c_start)
+      if (c_end == -1) c_end = document.cookie.length
+      return unescape(document.cookie.substring(c_start, c_end))
+    }
+  }
+  return ""
+};
 
 Vue.use(Router)
 let Routers = new Router({
@@ -112,12 +124,23 @@ let Routers = new Router({
     }
   ]
 })
-Routers.beforeEach(function(to,form,next){
-  // console.log(to.meta)
-  if(to.meta.title) window.document.title = to.meta.title
- // if(to.meta.requireAuth) window.location.href = 'http://www.baidu.com'
-  next()
-})
+Routers.beforeEach((to, from, next) => {
+
+
+   const isLogin = getCookie('token');
+  if (to.name !== "login") {
+    if (!isLogin) {
+      next({
+        path: "/login"
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  } 
+});
+
 
 
 

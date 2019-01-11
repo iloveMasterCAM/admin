@@ -1,5 +1,4 @@
 <template>
-
   <div id="main">
     <div id="main_box"></div>
     <div class="aui-row">
@@ -20,27 +19,32 @@
             <div class="account">
               <p class="userName">用户名</p>
               <div class="bor">
-                <input type="text" placeholder="请输入手机号码或邮箱">
+                <input type="text" v-model="phoneLogin" placeholder="请输入手机号码">
               </div>
             </div>
             <div class="password">
               <p class="userpassword">密码</p>
               <div class="bor">
-                <input type="password" class="aui-padded-r-15" placeholder="请输入6~12位密码">
+                <input
+                  type="password"
+                  v-model="passwordLongin"
+                  class="aui-padded-r-15"
+                  placeholder="请输入6~12位密码"
+                >
                 <i class="iconfont icon-kanjian icon"></i>
               </div>
             </div>
             <div class="aui-row jz">
               <div class="aui-pull-left">
                 <label for="jz">
-                  <input class="aui-checkbox" id="jz" type="checkbox"> 记住账号
+                  <el-checkbox id="jz" v-model="checkedjz">记住账号</el-checkbox>
                 </label>
               </div>
               <div class="aui-pull-right">忘记密码?</div>
             </div>
             <div class="login_btn_box aui-text-center">
               <p class="login_btn">
-                <input type="submit" value="立即登录">
+                <input type="submit" @click="login" value="立即登录">
               </p>
             </div>
             <div class="aui-text-center threeLogin">
@@ -78,20 +82,20 @@
             <div class="password code">
               <p class="userpassword">校验码</p>
               <div class="bor">
-                <input type="text" class="aui-padded-r-15" placeholder="请输入校验码">
+                <input type="text" v-model="code" class="aui-padded-r-15" placeholder="请输入校验码">
                 <span class="send" @click="sendCode" v-text="codeMsg"></span>
               </div>
             </div>
             <div class="aui-row jz">
               <div class="aui-pull-left">
                 <label for="zc">
-                  <input class="aui-checkbox" id="zc" type="checkbox"> 注册表示同意《注册协议》
+                  <el-checkbox id="zc" v-model="checked">注册表示同意《注册协议》</el-checkbox>
                 </label>
               </div>
             </div>
             <div class="login_btn_box aui-text-center">
               <p class="login_btn">
-                <input type="submit" value="立即注册">
+                <input type="submit" @click="register" value="立即注册">
               </p>
             </div>
             <!-- <div class="aui-text-center threeLogin">
@@ -105,138 +109,177 @@
   </div>
 </template>
 <script>
-/* 
-  $("#main .title li").on('click', function () {
-            if ($(this).hasClass('active')) return;
-            if ($(this).parents('.wrap').hasClass('register_box')) {
-                $("#login").removeClass('aui-hide')
-                $("#register").addClass('aui-hide')
-            } else {
-                $("#login").addClass('aui-hide')
-                $("#register").removeClass('aui-hide')
-            }
-        })
-*/
 export default {
   data() {
     return {
       codeMsg: "发送校验码",
+      code: "",
       active: true,
-      isRegister: null,
+      isRegister: false,
       passwordVal: "",
-      ispassword: true,
       tipsVal: "登录错误！",
       tipsShow: false,
-      phone: ""
+      phone: "",
+      checkedjz: false,
+      checked: false,
+      phoneLogin: "",
+      passwordLongin: "",
+      isclick: true
     };
   },
   methods: {
     isRegisterFun() {
-      /* 
-		 	{s:true,c:200,m:'登录成功',d:{val:'112'}} 
-		  */
-      //if (!this.isPhone(this.phone)) return;
-     /*  $.ajax({
-        url: "http://192.168.1.8:8080/FH-WEB/shops/regist/checkPhone.do",
-        data: { PHONE: "17750877003" },
-        type: "post",
-        success: function(reslut) {
-          if (reslut.s) {
-            if (reslut.d) {
-              this.isRegister = false;
-            }
-            this.isRegister = false;
-          }
-          console.log(reslut);
-        },
-        error: function(err) {
-          console.log(err);
+      if (!this.isPhone(this.phone)) return;
+
+      let that = this;
+      this.ajax.post("regist/checkPhone.do", { phone: this.phone }, function(
+        r
+      ) {
+        console.log(r);
+        if (r.s) {
+          that.isRegister = true;
+        } else {
+          that.isRegister = false;
+          that.tips("手机号已存在");
         }
-	  }); */
-	  console.log('2121')
-	  let data=new FormData();
-	  data.append("PHONE","17750877003");
-	 this.$axios.post('http://192.168.1.8:8080/FH-WEB/shops/regist/checkPhone.do',{'PHONE':'17750877003'}).then((reslut) =>{
-		  console.log(reslut)
-	  })
-	  /* 
-	  this.$axios({
-    method: 'post',
-    url:url,
-    params: {
-        is_iso:1,
-        goods_id:goods_id
-    }
-}).then((res)=>{
-
-}) 
-	  */
-	  
-
-
+      });
     },
     passwordFun() {
       var reg = /^[0-9|a-z|A-Z]{6,12}$/;
-      console.log(reg.test(this.passwordVal));
       if (!reg.test(this.passwordVal)) {
-        this.ispassword = false;
         this.tips("密码错误！");
         return false;
       } else {
         return true;
       }
     },
+    //发送验证码
     sendCode() {
       let that = this;
-      //if(!this.isPhone(this.phone)) return;
-
+      if (!this.isPhone(this.phone)) return;
+      if (!that.isRegister) {
+        this.tips("手机已被注册");
+        return;
+      }
+      //regist/sendMsg.do
       localStorage["now"] = parseInt(new Date().valueOf() / 1000);
       if (
         (!this.time && !localStorage["time"]) ||
         Math.abs(localStorage["now"]) - Math.abs(localStorage["time"]) > 10
       ) {
-        this.codeMsg = "09/S";
- 		localStorage['time'] = parseInt(new Date().valueOf()/1000)
-        clearInterval(that.time);
-        this.time = setInterval(() => {
-          var num = parseInt(that.codeMsg) - 1;
-          that.codeMsg = num + "/S";
-          if (num == 0) {
-            that.codeMsg = "重新发送";
-			clearInterval(that.time);
-			that.time = null
+        console.log(that.phone);
+        this.ajax.post(
+          "shops/regist/sendMsg.do",
+          { phone: that.phone },
+          function(r) {
+            // this.ajax.post('shops/regist/sendMsg.do',{'phone':'16607092387'},function(r){
+            console.log(r);
+            if (r && r.s) {
+              that.codeMsg = "09/S";
+              localStorage["time"] = parseInt(new Date().valueOf() / 1000);
+              clearInterval(that.time);
+              that.time = setInterval(() => {
+                var num = parseInt(that.codeMsg) - 1;
+                that.codeMsg = num + "/S";
+                if (num == 0) {
+                  that.codeMsg = "重新发送";
+                  clearInterval(that.time);
+                  that.time = null;
+                }
+              }, 1000);
+            }
           }
-        }, 1000);
-      }else{
-		  console.log(121)
-	  }
+        );
+      } else {
+        console.log("时间还没到");
+      }
+    },
+    //点击注册
+    register() {
+      if (!this.isclick) return;
+      that.isclick = false;
+      console.log("点击注册");
+      this.tipsShow = false;
+      if (!this.isPhone(this.phone)) return;
+      if (!this.passwordFun()) return;
+      if (this.code.length < 4) {
+        this.tips("校验码错误");
+        return;
+      }
+      if (!this.checked) {
+        this.tips("未同意协议");
+        return;
+      }
+
+      console.log(this.code);
+      console.log(this.phone);
+      console.log(this.passwordVal);
+      this.ajax.post(
+        "merchant/regist.do",
+        { username: this.phone, password: this.passwordVal, code: this.code },
+        function(r) {
+          //  this.ajax.post('shops/merchant/regist.do',{'username':'16607092387','password':this.passwordVal,'code':this.code},function(r){
+          console.log(r);
+          if (r.s) {
+            alert("注册成功");
+            // that.isRegister = true;
+          }
+          that.isclick = true;
+        }
+      );
+    },
+    login() {
+      let that = this;
+
+      if (!this.isclick) return;
+      that.isclick = false;
+      console.log("点击登录");
+      if (!this.phoneLogin) {
+        this.tips("手机号错误");
+        return;
+      }
+      if (!this.passwordLongin) {
+        this.tips("密码错误！");
+        return;
+      }
+      console.log(this.phoneLogin);
+      console.log(this.passwordLongin);
+
+      this.ajax.post(
+        "merchant/login.do",
+        { username: this.phoneLogin, password: this.passwordLongin },
+        function(r) {
+          console.log(r);
+          if (r.s) {
+            ///alert("登录成功");
+            // that.isRegister = true;
+            if (that.checkedjz) {
+              that.setCookie("token", r.d.token, 9);
+            } else {
+              that.setCookie("token", r.d.token, 1);
+            }
+            that.$router.push({
+                 path:'/'
+            });
+          }
+          that.isclick = true;
+        }
+      );
     },
     isPhone(v) {
       var reg = /^1[2,3,4,5,6,7,8,9][0-9]{9}$/;
       if (!reg.test(v)) {
         this.tips("手机号错误！");
-        return;
+        return false;
+      } else {
+        return true;
       }
     },
     tips(v) {
       this.tipsShow = true;
       this.tipsVal = v;
     },
-    /* 
-	 
-	   $.ajax({
-       
-            url: 'http://192.168.1.8:8080/FH-WEB/shops/regist/checkPhone.do',
-            data: { PHONE: '17750877003' },
-            type: 'post',
-            success: function (reslut) {
-                console.log(reslut)
-            },
-            error: function (err) {
-                console.log(err)
-            }
-        })
-	  */
+
     tabNav() {
       this.active = !this.active;
 
@@ -269,6 +312,23 @@ export default {
         that.tipsShow = false;
       }
     };
+    /*    var data = new FormData();
+    data.append('phone','17750877003')
+    this.axios({
+      method:'post',
+      url:'http://192.168.1.8:8080/FH-WEB/shops/regist/checkPhone.do',
+      data:data
+    }).then(function(r){
+      console.log(r)
+    }) */
+    //  this.ajax.post('shops/merchant/regist.do',{'PHONE':'17750877003','PASSWORD':'1511515','code':'51545'},function(r){
+    //       console.log(r)
+
+    //     })
+    if(that.getCookie("token")){
+      this.$router.push('/')
+    }
+   console.log(that.getCookie("token"));
   }
   //   beforeCreate: function() {
   //     console.log("2121245");
@@ -285,7 +345,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-
+  z-index: 1001;
   background-position: top center;
   background-repeat: no-repeat;
   background-image: url(../assets/login/500264184.jpg);
@@ -301,7 +361,7 @@ export default {
   left: 50%;
   width: 1100px;
   margin: -270px 0 0 -550px;
-  z-index: 10;
+  z-index: 1002;
   background: #f5f6f8;
 }
 #main .input_box {

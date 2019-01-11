@@ -341,6 +341,7 @@ ul.notifications > li {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   border-color: #eaeaea; }
   .dropdown-menu > li > a {
+    cursor: pointer;
     color: #676a6d; }
   .dropdown-menu > li i {
     margin-right: 6px; }

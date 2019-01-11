@@ -2,18 +2,52 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import ElementUI from 'element-ui';
+import sever from './assets/js/ajax'
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/iconfont/iconfont.css'
-import $ from 'jquery'
+import $axios from 'axios';
+
 import '../static/assets/scripts/klorofil-common'
-import axios from 'axios';
 Vue.use(ElementUI);
-// axios.defaults.timeout = 5000;// 在超时前，所有请求都会等待 5 秒
-// axios.defaults.headers.post['Content-Type']= 'application/x-www-form-urlencoded;';
-// axios.defaults.baseURL = 'http://192.168.1.8:8080/FH-WEB/shops/';// 配置接口地址
-// axios.defaults.withCredentials = false;
- 
-Vue.prototype.$axios = axios;
+/**/
+Vue.prototype.ajax = sever
+Vue.prototype.axios = $axios
+Vue.config.productionTip = false
+// 设置cookie
+Vue.prototype.setCookie = function (c_name, value, expiredays) {
+  var exdate = new Date()
+  exdate.setDate(exdate.getDate() + expiredays)
+  document.cookie = c_name + "=" + escape(value) +
+    ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString())
+};
+
+
+//获取cookie
+Vue.prototype.getCookie = function (c_name) {
+  if (document.cookie.length > 0) {
+    var c_start = document.cookie.indexOf(c_name + "=")
+    if (c_start != -1) {
+      c_start = c_start + c_name.length + 1
+      var c_end = document.cookie.indexOf(";", c_start)
+      if (c_end == -1) c_end = document.cookie.length
+      return unescape(document.cookie.substring(c_start, c_end))
+    }
+  }
+  return ""
+};
+
+Vue.prototype.delCookie = function (name) {
+  var exp = new Date();
+  exp.setTime(exp.getTime() - 1);
+  var cval = this.getCookie(name);
+  if (cval != null){
+    document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+    return true;
+  }else{
+    return false
+  }
+    
+}
 
 new Vue({
   el: '#wrapper',
