@@ -1,38 +1,58 @@
 import $ from 'jquery'
+function getcookie(c_name) {
+    if (document.cookie.length > 0) {
+        var c_start = document.cookie.indexOf(c_name + "=")
+        if (c_start != -1) {
+            c_start = c_start + c_name.length + 1
+            var c_end = document.cookie.indexOf(";", c_start)
+            if (c_end == -1) c_end = document.cookie.length
+            return unescape(document.cookie.substring(c_start, c_end))
+        }
+    }
+    return ""
+};
 
 const ajax = {
-    baseURL: 'http://192.168.1.8:8080/FH-WEB/shops/',
-    post(url,data,callback){
-       return $.ajax({
-            type:'post',
-            data:data,
-            timeout:3000,
-            url:this.baseURL+url,
-            complete:function(r){
+    baseURL: 'http://192.168.1.8:8080/shops/',
+    post(url, data, callback) {
+        console.log(getcookie('token'))
+        return $.ajax({
+            type: 'post',
+            data: data,
+            dataType: "json",
+            ContentType: "application/json",
+            timeout: 3000,
+            url: this.baseURL + url,
+            complete: function (r) {
                 console.log(r.status)
-                if(r.status == 200){
-                    r.done
+                if (r.status == 200) {
                     callback && callback(r.responseJSON)
-                }else{
-                 console.error('请求错误');
+                } else {
+                    console.error('请求错误');
                 }
-               
+
             }
         })
     },
-    get(){
+    get() {
+        console.log(getcookie('token'))
         $.ajax({
-            type:'get',
-            data:data,
-            timeout:3000,
-            url:this.baseURL+url,
-            complete:function(r){
+            type: 'get',
+            data: data,
+            timeout: 3000,
+            dataType: "json",
+            headers: {
+                'Access-Token': getcookie('token')
+            },
+            ContentType: "application/json",
+            url: this.baseURL + url,
+            complete: function (r) {
                 console.log(r.status)
-                if(r.status == 200){
+                if (r.status == 200) {
                     r.done
                     callback && callback(r.responseJSON)
-                }else{
-                 console.error('请求错误');
+                } else {
+                    console.error('请求错误');
                 }
             }
         })

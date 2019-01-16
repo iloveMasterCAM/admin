@@ -554,7 +554,13 @@
         </div>
       </div>
     </div>
-    <div id="Authentication" class="main-content container-fluid" v-show="!isShow">
+
+    <form  method="post" action="http://192.168.1.8:8080/shops/store/storeApplication.do"
+      id="Authentication" onsubmit="return doSubmitCheck();"
+      class="main-content container-fluid"
+      v-show="!isShow"
+      enctype="multipart/form-data"
+    >
       <div class="wrap">
         <p class="title">企业认证</p>
         <el-row>
@@ -565,7 +571,14 @@
           </el-col>
           <el-col :span="10">
             <div class>
-              <el-input v-model="company" placeholder="输入公司名称"></el-input>
+              <el-input name="storeName"   placeholder="输入公司名称"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <div class="pull-right">
+              <div class="logo" ref="logo_img">
+                <input type="file" name="LogoFile" id="logo">
+              </div>
             </div>
           </el-col>
         </el-row>
@@ -578,8 +591,8 @@
           <el-col :span="20" class="address">
             <div class>
               <el-row>
-                <el-col :span="6">
-                  <el-select v-model="sheng" @change="choseProvince" placeholder="省级地区">
+                <!-- <el-col :span="6">
+                  <el-select v-model="sheng" name="sheng" @change="choseProvince" placeholder="省级地区">
                     <el-option
                       v-for="item in province"
                       :key="item.id"
@@ -589,7 +602,7 @@
                   </el-select>
                 </el-col>
                 <el-col :span="6">
-                  <el-select v-model="shi" @change="choseCity" placeholder="市级地区">
+                  <el-select v-model="shi" name="shi" @change="choseCity" placeholder="市级地区">
                     <el-option
                       v-for="item in shi1"
                       :key="item.id"
@@ -599,7 +612,7 @@
                   </el-select>
                 </el-col>
                 <el-col :span="6">
-                  <el-select v-model="qu" @change="choseBlock" placeholder="区级地区">
+                  <el-select v-model="qu" name="qu" @change="choseBlock" placeholder="区级地区">
                     <el-option
                       v-for="item in qu1"
                       :key="item.id"
@@ -607,15 +620,15 @@
                       :value="item.id"
                     ></el-option>
                   </el-select>
-                </el-col>
-                  <el-col :span="6">
-                        <el-input v-model="addressDetail" placeholder="输入公司地址"></el-input>
+                </el-col> -->
+                <el-col :span="6">
+                  <el-input v-model="addressDetail" name='storeAddress' placeholder="输入公司地址"></el-input>
                 </el-col>
               </el-row>
             </div>
           </el-col>
         </el-row>
-        <el-row>
+        <!-- <el-row>
           <el-col :span="4">
             <div class="name">
               <span>*</span> 人数:
@@ -633,7 +646,7 @@
               </el-select>
             </div>
           </el-col>
-        </el-row>
+        </el-row> -->
 
         <el-row>
           <el-col :span="4">
@@ -643,19 +656,30 @@
           </el-col>
           <el-col :span="10">
             <div class>
-              <el-input v-model="name" placeholder="输入法人名称"></el-input>
+              <el-input name="storeBehalf"  placeholder="输入法人名称"></el-input>
             </div>
           </el-col>
         </el-row>
-
+        <el-row>
+          <el-col :span="4">
+            <div class="name">
+              <span>*</span> 企业介绍:
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <div class>
+              <el-input name="storeInfo" type="textarea" placeholder="输入企业介绍"></el-input>
+            </div>
+          </el-col>
+        </el-row>
         <el-row>
           <el-col :span="4" class="name">
             <span>*</span>营业执照正面:
           </el-col>
           <el-col :span="10">
             <div class="Authentication_box">
-              <input type="file" id="pv" @change="fileImg($event)" >
-              <img  src="../assets/Authentication.png" ref="pv_img" alt>
+              <input type="file" name="blicenseForntFile" id="pv" @change="fileImg($event)">
+              <img src="../assets/Authentication.png" ref="pv_img" alt>
             </div>
           </el-col>
         </el-row>
@@ -665,21 +689,21 @@
           </el-col>
           <el-col :span="10">
             <div class="Authentication_box">
-              <input type="file" id="back" @change="fileImg($event)" >
-              <img src="../assets/Authentication.png" ref="back_img"  alt>
+              <input type="file" name="blicenseBackFile" id="back" @change="fileImg($event)">
+              <img src="../assets/Authentication.png" ref="back_img" alt>
             </div>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="4" class="name">
-              <div>&nbsp;</div>
+            <div>&nbsp;</div>
           </el-col>
           <el-col :span="20" class="name">
-            <p class="confrim" @click="submitFun">提交审核</p>
+            <p class="confrim"> <el-input type="submit" value="提交表单"></el-input> </p>
           </el-col>
         </el-row>
       </div>
-    </div>
+    </form>
     <!-- END MAIN CONTENT -->
     <div id="left_bg" v-show="!isShow"></div>
     <div id="top_bg" v-show="!isShow"></div>
@@ -710,20 +734,35 @@
 
   background: #fff;
 }
+#Authentication .logo {
+  position: absolute;
+  right: 13px;
+  top: -20px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-image: url("../assets/add.png");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
 #Authentication .wrap {
   width: 60%;
   padding: 20px;
   margin: 50px auto;
 }
-#Authentication .wrap>.el-row {
+#Authentication .wrap > .el-row {
   margin-top: 20px;
 }
 #Authentication .confrim {
   width: 270px;
-  line-height: 45px;
+  /* line-height: 45px;
   background: #41b314;
   text-align: center;
-  color: #fff;
+  color: #fff; */
+}
+#Authentication .confrim input{
+  background: transparent;
 }
 #Authentication .name {
   font-size: 15px;
@@ -767,43 +806,31 @@
   background: #f5f5f5;
   position: relative;
 }
-#Authentication .address .el-col-6{
+#Authentication .address .el-col-6 {
   padding-right: 10px;
 }
 </style>
 
 <script>
-import axios from "axios";
 export default {
   data: function() {
     return {
-      isShow: true,
-      company:'',
-      addressDetail:'',
-      name:'',
-      pv:null,
-      back:null,
+      isShow: false,
+      company: "",
+      textarea: "",
+      addressDetail: "",
+      name: "",
+      pv: null,
+      back: null,
+      logo: null,
       pole: [
         {
           value: "1-51",
           label: "1-50人"
-        },{
-         value: "1-52",
-          label: "1-50人"
-        }
-        ,{
-         value: "1-53",
-          label: "1-50人"
-        },{
-         value: "1-54",
-          label: "1-50人"
-        },{
-          value: "1-55",
-          label: "1-50人"
         }
       ],
       poleNumber: "",
-      mapJson: "../static/ctiy/map.json",
+      mapJson: "/ctiy",
       province: "",
       sheng: "",
       shi: "",
@@ -812,12 +839,15 @@ export default {
       qu1: [],
       city: "",
       block: "",
-      address:[],
-     
+      address: [],
+      inputtext:{
+        company:'212'
+      }  
     };
   },
   mounted: function() {
-
+   // console.log(this.token.getCookie("token"));
+    console.log(this.token);
     var data, options;
 
     // headline charts
@@ -951,39 +981,35 @@ export default {
   },
   methods: {
     fileImg(o) {
-
       var fileObj = o.target.files[0]; // js 获取文件对象
-      var url = this.getObjectURL(fileObj)
+      var url = this.getObjectURL(fileObj);
       var formFile = new FormData();
       formFile.append("action", "UploadVMKImagePath");
       formFile.append("file", fileObj); //加入文件对象
-
-      if(o.target.id == 'pv'){
+      console.log(fileObj);
+      if (o.target.id == "pv") {
         this.$refs.pv_img.src = url;
-        this.pv = formFile;
-      }else{
-         this.$refs.back_img.src = url
-         this.back = formFile;
+        this.pv = fileObj;
+      } else if (o.target.id == "logo") {
+        this.$refs.logo_img.style.backgroundImage = "url(" + url + ")";
+        this.logo = fileObj;
+      } else {
+        this.$refs.back_img.src = url;
+        this.back = fileObj;
       }
-
 
       if (typeof fileObj == "undefined" || fileObj.size <= 0) {
         alert("请选择图片");
         return;
       }
-
     },
-    submitFun(){
-      console.log(this.address)
-      console.log(this.company)
-      console.log(this.poleNumber)
-      console.log(this.back)
-      console.log(this.pv)
-      console.log(this.name)
+    doSubmitCheck(e) {
+        console.log(this.inputtext); 
+        return false;
     },
     getCtiyData() {
       var that = this;
-      axios
+      this.axios
         .get(this.mapJson)
         .then(function(response) {
           if (response.status == 200) {
@@ -1039,7 +1065,6 @@ export default {
         });
     }, // 选省
     choseProvince: function(e) {
-     
       for (var index2 in this.province) {
         if (e === this.province[index2].id) {
           this.shi1 = this.province[index2].children;
@@ -1047,7 +1072,7 @@ export default {
           this.qu1 = this.province[index2].children[0].children;
           this.qu = this.province[index2].children[0].children[0].value;
           this.E = this.qu1[0].id;
-           this.address = [this.province[index2].value,this.shi,this.qu]
+          this.address = [this.province[index2].value, this.shi, this.qu];
         }
       }
     },
@@ -1058,37 +1083,32 @@ export default {
           this.qu1 = this.city[index3].children;
           this.qu = this.city[index3].children[0].value;
           this.E = this.qu1[0].id;
-           this.address[1] = this.city[index3].value
-           this.address[2] =  this.qu
+          this.address[1] = this.city[index3].value;
+          this.address[2] = this.qu;
         }
       }
     },
     // 选区
     choseBlock: function(e) {
-      for(var index in this.block){
-         if(e == this.block[index].id){
-           this.address[2] = this.block[index].value
-         }
+      for (var index in this.block) {
+        if (e == this.block[index].id) {
+          this.address[2] = this.block[index].value;
+        }
       }
       this.E = e;
     },
     //图片路径转换
-      getObjectURL(file) {
-        var url = null;
-        if (window.createObjectURL != undefined) {
-
-            url = window.createObjectURL(file)
-
-        } else if (window.URL != undefined) {
-
-            url = window.URL.createObjectURL(file)
-
-        } else if (window.webkitURL != undefined) {
-
-            url = window.webkitURL.createObjectURL(file)
-
-        }
-        return url
+    getObjectURL(file) {
+      var url = null;
+      if (window.createObjectURL != undefined) {
+        url = window.createObjectURL(file);
+      } else if (window.URL != undefined) {
+        url = window.URL.createObjectURL(file);
+      } else if (window.webkitURL != undefined) {
+        url = window.webkitURL.createObjectURL(file);
+      }
+      return url;
     }
-  }};
+  }
+};
 </script>

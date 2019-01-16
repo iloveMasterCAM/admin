@@ -277,7 +277,7 @@
           data.append("sort",this.form.sortNum);
 
           data.append("subSpec",JSON.stringify(this.dialogData));
-          console.log(this.dialogData);
+          console.log(this.dialogData[0].formData);
           console.log(data);
         axios.post('http://192.168.1.2:8080/shops/addGoodsSpec.do',
           data)

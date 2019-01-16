@@ -25,13 +25,14 @@
             <div class="password">
               <p class="userpassword">密码</p>
               <div class="bor">
-                <input
+                <input ref="password"
                   type="password"
+                
                   v-model="passwordLongin"
                   class="aui-padded-r-15"
                   placeholder="请输入6~12位密码"
                 >
-                <i class="iconfont icon-kanjian icon"></i>
+                <i class="iconfont icon-kanjian icon" :class="{'icon-kanjian':kanjian,'icon-bukejian':!kanjian}" @click="kj"></i>
               </div>
             </div>
             <div class="aui-row jz">
@@ -124,10 +125,13 @@ export default {
       checked: false,
       phoneLogin: "",
       passwordLongin: "",
-      isclick: true
+      isclick: true,
+      kanjian:true,
+     
     };
   },
   methods: {
+    // 判断手机
     isRegisterFun() {
       if (!this.isPhone(this.phone)) return;
 
@@ -144,6 +148,7 @@ export default {
         }
       });
     },
+    //密码验证
     passwordFun() {
       var reg = /^[0-9|a-z|A-Z]{6,12}$/;
       if (!reg.test(this.passwordVal)) {
@@ -232,7 +237,7 @@ export default {
       let that = this;
 
       if (!this.isclick) return;
-      that.isclick = false;
+    
       console.log("点击登录");
       if (!this.phoneLogin) {
         this.tips("手机号错误");
@@ -244,10 +249,8 @@ export default {
       }
       console.log(this.phoneLogin);
       console.log(this.passwordLongin);
-
-      this.ajax.post(
-        "merchant/login.do",
-        { username: this.phoneLogin, password: this.passwordLongin },
+      that.isclick = false;
+      this.ajax.post("merchant/login.do",  { username: this.phoneLogin, password: this.passwordLongin },
         function(r) {
           console.log(r);
           if (r.s) {
@@ -265,6 +268,14 @@ export default {
           that.isclick = true;
         }
       );
+    },
+    kj(){
+      this.kanjian = ! this.kanjian
+      if(this.kanjian){
+        this.$refs.password.type = 'text'
+      }else{
+         this.$refs.password.type = 'password'
+      }
     },
     isPhone(v) {
       var reg = /^1[2,3,4,5,6,7,8,9][0-9]{9}$/;
@@ -312,6 +323,7 @@ export default {
         that.tipsShow = false;
       }
     };
+    this.delCookie('token')
     /*    var data = new FormData();
     data.append('phone','17750877003')
     this.axios({
@@ -328,7 +340,7 @@ export default {
     if(that.getCookie("token")){
       this.$router.push('/')
     }
-   console.log(that.getCookie("token"));
+   
   }
   //   beforeCreate: function() {
   //     console.log("2121245");

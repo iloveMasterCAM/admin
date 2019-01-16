@@ -220,7 +220,7 @@ export default {
       /* 切换皮肤 */
     exit(){
       
-      if(this.delCookie('token')){
+      if(this.token.delCookie('token')){
         this.$router.push('/login')
       }
     }
@@ -238,10 +238,10 @@ export default {
   //  console.log("A页面 created");
   },
   mounted() {
-      if(!this.getCookie("token")){
+      if(!this.token.getCookie("token")){
         this.$router.push('/login')
       }
-      console.log(this.getCookie("token"));
+      console.log(this.token.getCookie("token"));
    // console.log("A页面 mounted");
   }
 };
