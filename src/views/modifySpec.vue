@@ -86,7 +86,7 @@
               </el-form-item>
               <el-form-item label="规格图片" :label-width="formLabelWidth">
                 <div class="file">
-                  <input type="file" value="" id="file" @change='onUpload($event)' ref="upload" class="fileInput">
+                  <input type="file" value="" id="file" @change='onUpload($event)' ref="upload" class="fileInput" name="file" accept="image/*">
                 </div>
 
                 <img src="" alt="" class="previewImg" ref="previewImg">
@@ -110,7 +110,7 @@
               </el-form-item>
               <el-form-item label="规格图片" :label-width="formLabelWidth">
                 <div class="file">
-                  <input type="file" value=""  @change='onUpload1' ref="upload1" class="fileInput">
+                  <input type="file" value=""  @change='onUpload1' ref="upload1" class="fileInput" name="file" accept="image/*">
                 </div>
 
                 <img :src="imgSrc" alt="" class="previewImg" ref="previewImg1" id="previewImg1">
@@ -137,6 +137,7 @@
   export default {
     data(){
       return{
+        id:-1,
         //上面form数据
         form: {
           name: '',
@@ -169,6 +170,9 @@
     },
     mounted(){
           console.log(this.$route.params.data);
+          this.form.name=this.$route.params.data.title;
+          this.form.sortNum=this.$route.params.data.sort;
+          this.id=this.$route.params.data.ID;
     },
     methods:{
       //编辑
@@ -204,13 +208,6 @@
         console.log(222);
         console.log(event.target);
         var fileObj=this.$refs.upload;
-        if(fileObj.files[0].type !== 'image/jpeg' && fileObj.files[0] !== 'image/png' && fileObj.files[0] !== 'image/gif') {
-          this.$message({
-            message: '请上传jpg/gif/png格式的图片',
-            type: 'warning'
-          });
-          return;
-        }
         var windowURL = window.URL || window.webkitURL;
         var dataURL;
         //fileObj.files[0]   FormData
@@ -218,18 +215,11 @@
         this.$refs.previewImg.src=dataURL;
         this.dialogForm.imgURl=dataURL;
         this.dialogForm.formData=new FormData();
-        this.dialogForm.formData.append("img", fileObj.files[0]);
+        this.dialogForm.formData.append("file", fileObj.files[0],fileObj.files[0].name);
         console.log(this.dialogForm);
       },
       onUpload1(){
         var fileObj=this.$refs.upload1;
-        if(fileObj.files[0].type !== 'image/jpeg' && fileObj.files[0] !== 'image/png' && fileObj.files[0] !== 'image/gif') {
-          this.$message({
-            message: '请上传jpg/gif/png格式的图片',
-            type: 'warning'
-          });
-          return;
-        }
         var windowURL = window.URL || window.webkitURL;
         var dataURL;
         //fileObj.files[0]   FormData
@@ -237,7 +227,7 @@
         this.$refs.previewImg1.src=dataURL;
         this.dialogFormEdit.imgURl=dataURL;
         this.dialogFormEdit.formData=new FormData();
-        this.dialogFormEdit.formData.append("img", fileObj.files[0]);
+        this.dialogFormEdit.formData.append("file", fileObj.files[0],fileObj.files[0].name);
       },
       addSel(){
         this.dialogForm.name='';
@@ -273,8 +263,12 @@
           message: '保存成功',
           type: 'success'
         });
-        axios.post('http://192.168.1.2:8080/shops/addGoodsSpec.do',
-          {"title":this.form.name,"remark":this.form.remark})
+        var data = new FormData();
+        data.append("title",this.form.name);
+        data.append("ID",this.id);
+
+        axios.post('http://192.168.1.2:8080/shops/updateGoodsSpec.do',
+          data)
           .then((res)=>{
               console.log(res)
             }

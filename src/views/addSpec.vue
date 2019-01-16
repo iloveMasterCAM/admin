@@ -86,7 +86,7 @@
           </el-form-item>
           <el-form-item label="规格图片" :label-width="formLabelWidth">
             <div class="file">
-              <input type="file" value="" id="file" @change='onUpload()' ref="upload" class="fileInput">
+              <input type="file" value="" id="file" name="file"  @change='onUpload()' ref="upload" class="fileInput" accept="image/*">
             </div>
 
             <img src="" alt="" class="previewImg" ref="previewImg">
@@ -98,7 +98,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="diaSubmit">确 定</el-button>
+          <el-button type="primary" @click="diaSubmit" >确 定</el-button>
           </div>
           </el-dialog>
 
@@ -110,7 +110,7 @@
               </el-form-item>
               <el-form-item label="规格图片" :label-width="formLabelWidth">
                 <div class="file">
-                  <input type="file" value=""  @change='onUpload1' ref="upload1" class="fileInput">
+                  <input type="file" value=""  @change='onUpload1' ref="upload1" class="fileInput" name="file" accept="image/*">
                 </div>
 
                 <img :src="imgSrc" alt="" class="previewImg" ref="previewImg1" id="previewImg1">
@@ -134,6 +134,7 @@
 </template>
 <script>
   import axios from 'axios'
+  axios.defaults.headers.common['Authorization'] = '18xTgOQ1DeMjhFHTgapQqlyt7ntBU+RrTDmDuM/7LUpg7Fu0R028DE4qWcbTRggU7EXU+VASrgEBofcDd/KmvA=='
   export default {
     data(){
       return{
@@ -165,7 +166,7 @@
           imgURl:"",
           formData:null
       },
-
+        token:"18xTgOQ1DeMjhFHTgapQqlyt7ntBU+RrTDmDuM/7LUpg7Fu0R028DE4qWcbTRggU7EXU+VASrgEBofcDd/KmvA=="
       }
     },
     methods:{
@@ -199,16 +200,14 @@
         console.log(value);
       },
       onUpload(){
-        console.log(222);
-          console.log(event.target);
           var fileObj=this.$refs.upload;
-          if(fileObj.files[0].type !== 'image/jpeg' && fileObj.files[0] !== 'image/png' && fileObj.files[0] !== 'image/gif') {
-          this.$message({
-            message: '请上传jpg/gif/png格式的图片',
-            type: 'warning'
-          });
-          return;
-        }
+        //   if(fileObj.files[0].type !== 'image/jpeg' && fileObj.files[0] !== 'image/png' && fileObj.files[0] !== 'image/gif') {
+        //   this.$message({
+        //     message: '请上传jpg/gif/png格式的图片',
+        //     type: 'warning'
+        //   });
+        //   return;
+        // }
           var windowURL = window.URL || window.webkitURL;
           var dataURL;
         //fileObj.files[0]   FormData
@@ -216,18 +215,12 @@
           this.$refs.previewImg.src=dataURL;
           this.dialogForm.imgURl=dataURL;
           this.dialogForm.formData=new FormData();
-          this.dialogForm.formData.append("img", fileObj.files[0]);
-          console.log(this.dialogForm);
+          this.dialogForm.formData.append("file", fileObj.files[0],fileObj.files[0].name);
+          console.log(1111);
+          console.log(fileObj.files[0]);
       },
       onUpload1(){
         var fileObj=this.$refs.upload1;
-        if(fileObj.files[0].type !== 'image/jpeg' && fileObj.files[0] !== 'image/png' && fileObj.files[0] !== 'image/gif') {
-          this.$message({
-            message: '请上传jpg/gif/png格式的图片',
-            type: 'warning'
-          });
-          return;
-        }
         var windowURL = window.URL || window.webkitURL;
         var dataURL;
         //fileObj.files[0]   FormData
@@ -235,7 +228,7 @@
         this.$refs.previewImg1.src=dataURL;
         this.dialogFormEdit.imgURl=dataURL;
         this.dialogFormEdit.formData=new FormData();
-        this.dialogFormEdit.formData.append("img", fileObj.files[0]);
+        this.dialogFormEdit.formData.append("file", fileObj.files[0],fileObj.files[0].name);
       },
       addSel(){
           this.dialogForm.name='';
@@ -248,46 +241,80 @@
       },
       //本地保存
       diaSubmit(){
-          this.dialogFormVisible = false;
-          // var arr=[];
-          // arr.push(this.dialogForm);
-          // // this.dialogData.push(this.dialogForm);
-          // this.dialogData=this.dialogData.concat(arr);
-          var str=JSON.stringify(this.dialogForm);
-          var data=JSON.parse(str);
-          this.dialogData=this.dialogData.concat([].concat(data));
-          console.log(this.dialogData);
+          if(this.dialogForm.name||this.dialogForm.formData){
+            this.dialogFormVisible = false;
+            // var str=JSON.stringify(this.dialogForm);
+            // var data=JSON.parse(str);
+            var data=[];
+            var json={};
+            for (let key in this.dialogForm) {
+              json[key]=this.dialogForm[key];
+            }
+            data.push(json);
+            this.dialogData=this.dialogData.concat(data);
+            //console.log(this.dialogData[0].formData.get('file'))
+            console.log('dialogData');
+            console.log(this.dialogData[0])
+          }else {
+            this.$message({
+              message: '请添加图片或者标题',
+              type: 'warning'
+            });
+            return false;
+          }
+
 
       },
       //取消保存回到上一层
       goSpecifications(){
-        this.$router .push({name: 'specifications'})
+        this.$router.push({name: 'specifications'})
       },
       //提交页面所有数据
       saveAll(){
-        console.log(this.form);
-        console.log(this.dialogData);
         this.$message({
           message: '保存成功',
           type: 'success'
         });
           var data = new FormData();
+          var file=new File(["",""],"");
           data.append("title",this.form.name);
           data.append("remark",this.form.remark);
           data.append("sort",this.form.sortNum);
+          console.log(this.token);
+          //console.log(this.dialogData[0].formData.get('file'));
+        //循环数组 单个append
+        console.log(this.dialogData);
+        if(this.dialogData.length>0){
+            for (var key in this.dialogData) {
+              data.append("titleName",this.dialogData[key].name);
+              data.append("sortNum",this.dialogData[key].sortNum);
+              if(this.dialogData[key].formData){
+                data.append("imgFile",this.dialogData[key].formData.get('file'));
+              }else {
+                data.append("imgFile",file);
+              }
 
-          data.append("subSpec",JSON.stringify(this.dialogData));
-          console.log(this.dialogData);
-          console.log(data);
-        axios.post('http://192.168.1.2:8080/shops/addGoodsSpec.do',
-          data)
-          .then((res)=>{
-            console.log(res)
-          }
+            }
+            console.log('eee');
+            console.log(data);
+            console.log(data.getAll("imgFile"));
+
+          }else {
+            data.append("titleName","");
+            data.append("sortNum","");
+            data.append("imgFile",file);
+        }
+          let config = {headers: {'Content-Type': 'multipart/form-data'}};
+          config.headers.token = this.token;
+          axios.post('http://192.168.1.2:8080/shops/addGoodsSpec.do',
+            data,config)
+            .then((res)=>{
+              console.log(res)
+            }
         ).catch((err)=>{
           console.log(err);
         });
-        this.$router.push({name: 'specifications'})      }
+        this.$router.push({name: 'specifications'})}
     }
   }
 

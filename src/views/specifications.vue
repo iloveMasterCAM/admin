@@ -104,11 +104,23 @@
         //选中数组
         handleSelectionChange(val) {
           this.multipleSelection = val;
-          console.log(this.multipleSelection)
         },
         //批量删除
         delSel(){
             //this.multipleSelectionId
+          var data = new FormData();
+          data.append("ids",JSON.stringify(this.multipleSelectionId));
+          axios.post('http://192.168.1.2:8080/shops/deleteGoodsSpecByIds.do',
+            data)
+            .then((res)=> {
+              console.log(typeof res.data.s);
+              // this.$message({
+              //   message: '删除成功',
+              //   type: 'success'
+              // });
+            }).catch((err)=>{
+            console.log(err);
+          });
         },
         //跳转 修改页面
         handleClick(row) {
@@ -131,10 +143,10 @@
       multipleSelection: function () {
         let arr = [];
         for (let i in this.multipleSelection) {
-          arr.push(this.multipleSelection[i].Title);
+          arr.push(this.multipleSelection[i].ID);
         }
         this.multipleSelectionId=arr;
-        console.log(this.multipleSelectionId);
+        console.log(JSON.stringify(this.multipleSelectionId));
       }
     },
   }
