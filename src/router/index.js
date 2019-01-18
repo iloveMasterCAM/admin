@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import index from '@/views/index'
 import charts from '@/views/charts'
 import elements from '@/views/elements'
-import icons from '@/views/icons'
+import mine from '@/views/mine'
 import lockscreen from '@/views/lockscreen'
 import login from '@/views/login'
 import notifications from '@/views/notifications'
@@ -55,11 +55,11 @@ let Routers = new Router({
     }
     ,
     {
-      path: '/icons',
-      name: 'icons',
-      component: icons,
+      path: '/mine',
+      name: 'mine',
+      component: mine,
       meta:{
-        title:'icons',
+        title:'mine',
         requireAuth:true
       }
     }
@@ -126,10 +126,11 @@ let Routers = new Router({
 })
 Routers.beforeEach((to, from, next) => {
 
-
+  console.log(getCookie('token'))
    const isLogin = getCookie('token');
   if (to.name !== "login") {
     if (!isLogin) {
+      
       next({
         path: "/login"
       });

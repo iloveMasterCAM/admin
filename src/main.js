@@ -10,15 +10,11 @@ import t from './assets/js/token'
 import '../static/assets/scripts/klorofil-common'
 Vue.use(ElementUI);
 /**/
- Vue.prototype.ajax = sever
- Vue.prototype.axios = http
-
- Vue.prototype.token =  new t()
-
+Vue.prototype.ajax = sever
+Vue.prototype.axios = new http()
+Vue.prototype.token = new t()
 Vue.config.productionTip = false
-
-
-let app = new Vue({
+new Vue({
   el: '#wrapper',
   router,
   components: { App },

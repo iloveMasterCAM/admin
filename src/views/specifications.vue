@@ -66,7 +66,7 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  // import axios from 'axios'
   export default {
       data(){
         return{
@@ -91,12 +91,14 @@
         }
       },
       mounted() {
-        axios.post('http://192.168.1.2:8080/shops/goodsSpecList.do').then(
+        this.axios.post('goodsSpecList.do').then(
           (res)=>{
+            console.log(res)
             this.tableData=res.data.goodsSpecList;
             console.log(res.data.goodsSpecList);
           }
         ).catch((err)=>{
+          console.log('err');
           console.log(err);
         });
       },
@@ -110,7 +112,7 @@
             //this.multipleSelectionId
           var data = new FormData();
           data.append("ids",JSON.stringify(this.multipleSelectionId));
-          axios.post('http://192.168.1.2:8080/shops/deleteGoodsSpecByIds.do',
+          this.axios.post('deleteGoodsSpecByIds.do',
             data)
             .then((res)=> {
               console.log(typeof res.data.s);

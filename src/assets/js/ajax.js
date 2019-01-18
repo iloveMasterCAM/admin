@@ -16,15 +16,18 @@ const ajax = {
     baseURL: 'http://192.168.1.8:8080/shops/',
     post(url, data, callback) {
         console.log(getcookie('token'))
+        console.log('post jq ')
         return $.ajax({
             type: 'post',
             data: data,
             dataType: "json",
-            ContentType: "application/json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("token",getcookie('token'));
+            },
             timeout: 3000,
             url: this.baseURL + url,
             complete: function (r) {
-                console.log(r.status)
+                console.log(r)
                 if (r.status == 200) {
                     callback && callback(r.responseJSON)
                 } else {
@@ -41,10 +44,9 @@ const ajax = {
             data: data,
             timeout: 3000,
             dataType: "json",
-            headers: {
-                'Access-Token': getcookie('token')
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("token",getcookie('token'));
             },
-            ContentType: "application/json",
             url: this.baseURL + url,
             complete: function (r) {
                 console.log(r.status)
