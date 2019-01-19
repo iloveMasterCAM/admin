@@ -191,7 +191,7 @@ export default {
     return{
       nav:[
         {path:'/',name:'index',icon:'lnr lnr-home'},
-        {path:'/icons',name:'icons',icon:'lnr lnr-home'},
+        {path:'/mine',name:'mine',icon:'lnr lnr-home'},
         {path:'/tables',name:'tables',icon:'lnr lnr-home'},
         {path:'/profile',name:'profile',icon:'lnr lnr-home'},
         {path:'/panels',name:'panels',icon:'lnr lnr-home'},

@@ -555,13 +555,9 @@
       </div>
     </div>
 
-    <form  method="post" action="http://192.168.1.8:8080/shops/store/storeApplication.do"
-      id="Authentication" onsubmit="return doSubmitCheck();"
-      class="main-content container-fluid"
-      v-show="!isShow"
-      enctype="multipart/form-data"
-    >
-      <div class="wrap">
+    <div v-show="!isShow" id="Authentication" class="main-content container-fluid">
+      <div class="wrap" v-show="!storeVerify && storeVerify != 0">
+      <!-- <div class="wrap" > -->
         <p class="title">企业认证</p>
         <el-row>
           <el-col :span="4">
@@ -571,13 +567,13 @@
           </el-col>
           <el-col :span="10">
             <div class>
-              <el-input name="storeName"   placeholder="输入公司名称"></el-input>
+              <el-input name="storeName" v-model="storeName" placeholder="输入公司名称"></el-input>
             </div>
           </el-col>
           <el-col :span="10">
             <div class="pull-right">
               <div class="logo" ref="logo_img">
-                <input type="file" name="LogoFile" id="logo">
+                <input type="file" name="LogoFile" id="LogoFile" @change="fileImg($event)">
               </div>
             </div>
           </el-col>
@@ -591,8 +587,13 @@
           <el-col :span="20" class="address">
             <div class>
               <el-row>
-                <!-- <el-col :span="6">
-                  <el-select v-model="sheng" name="sheng" @change="choseProvince" placeholder="省级地区">
+                <el-col :span="6">
+                  <el-select
+                    v-model="sheng"
+                    name="sheng"
+                    @change="choseProvince"
+                    placeholder="省级地区"
+                  >
                     <el-option
                       v-for="item in province"
                       :key="item.id"
@@ -620,9 +621,9 @@
                       :value="item.id"
                     ></el-option>
                   </el-select>
-                </el-col> -->
+                </el-col>
                 <el-col :span="6">
-                  <el-input v-model="addressDetail" name='storeAddress' placeholder="输入公司地址"></el-input>
+                  <el-input v-model="storeAddress" name="storeAddress" placeholder="输入公司地址"></el-input>
                 </el-col>
               </el-row>
             </div>
@@ -646,8 +647,7 @@
               </el-select>
             </div>
           </el-col>
-        </el-row> -->
-
+        </el-row>-->
         <el-row>
           <el-col :span="4">
             <div class="name">
@@ -656,7 +656,7 @@
           </el-col>
           <el-col :span="10">
             <div class>
-              <el-input name="storeBehalf"  placeholder="输入法人名称"></el-input>
+              <el-input name="storeBehalf" v-model="storeBehalf" placeholder="输入法人名称"></el-input>
             </div>
           </el-col>
         </el-row>
@@ -668,7 +668,7 @@
           </el-col>
           <el-col :span="10">
             <div class>
-              <el-input name="storeInfo" type="textarea" placeholder="输入企业介绍"></el-input>
+              <el-input name="storeInfo" type="textarea" v-model="storeInfo" placeholder="输入企业介绍"></el-input>
             </div>
           </el-col>
         </el-row>
@@ -678,7 +678,12 @@
           </el-col>
           <el-col :span="10">
             <div class="Authentication_box">
-              <input type="file" name="blicenseForntFile" id="pv" @change="fileImg($event)">
+              <input
+                type="file"
+                name="blicenseForntFile"
+                id="blicenseForntFile"
+                @change="fileImg($event)"
+              >
               <img src="../assets/Authentication.png" ref="pv_img" alt>
             </div>
           </el-col>
@@ -689,7 +694,12 @@
           </el-col>
           <el-col :span="10">
             <div class="Authentication_box">
-              <input type="file" name="blicenseBackFile" id="back" @change="fileImg($event)">
+              <input
+                type="file"
+                name="blicenseBackFile"
+                id="blicenseBackFile"
+                @change="fileImg($event)"
+              >
               <img src="../assets/Authentication.png" ref="back_img" alt>
             </div>
           </el-col>
@@ -699,17 +709,34 @@
             <div>&nbsp;</div>
           </el-col>
           <el-col :span="20" class="name">
-            <p class="confrim"> <el-input type="submit" value="提交表单"></el-input> </p>
+            <!-- <p class="confrim"> <el-input type="submit" value="提交表单"></el-input> </p> -->
+            <p class="confrim" @click="submitF">提交表单</p>
           </el-col>
         </el-row>
       </div>
-    </form>
-    <!-- END MAIN CONTENT -->
+      <!-- <div v-show="storeVerify == 0">
+        <img src="../assets/shen.png" class="shenghe" alt>
+        <p class="shenghe_txt">审核中...</p>
+      </div>
+      <div id class="main-content container-fluid" v-show="storeVerify == 1">
+        <img src="../assets/shen1.png" class="shenghe" alt>
+        <p class="shenghe_txt">审核通过...</p>
+      </div>
+      <div id class="main-content container-fluid" v-show="storeVerify == 2">
+        <img src="../assets/shen2.png" class="shenghe" alt>
+        <p class="shenghe_txt">未通过审核...</p>
+      </div> -->
+    </div>
+
     <div id="left_bg" v-show="!isShow"></div>
     <div id="top_bg" v-show="!isShow"></div>
   </div>
 </template>
 <style>
+/* 0 未审核
+    1 审核通过
+    2 未通过
+ */
 #left_bg {
   width: 260px;
   position: fixed;
@@ -731,7 +758,6 @@
 #Authentication {
   margin-top: 20px;
   margin-left: 20px;
-
   background: #fff;
 }
 #Authentication .logo {
@@ -756,14 +782,24 @@
 }
 #Authentication .confrim {
   width: 270px;
-  /* line-height: 45px;
+  line-height: 45px;
   background: #41b314;
   text-align: center;
-  color: #fff; */
+  color: #fff;
 }
-#Authentication .confrim input{
+#Authentication .shenghe {
+  width: 100px;
+  height: 100px;
+  margin: 200px auto 20px auto;
+  display: block;
+}
+#Authentication .shenghe_txt {
+  text-align: center;
+  margin-bottom: 180px;
+}
+/* #Authentication .confrim input{
   background: transparent;
-}
+} */
 #Authentication .name {
   font-size: 15px;
   color: #616161;
@@ -776,20 +812,7 @@
   font-weight: 500;
   color: #000;
 }
-#Authentication option {
-}
-#Authentication select,
-#Authentication option {
-  line-height: 34px;
-  height: 34px;
-  padding-left: 10px;
-}
 
-#Authentication .bor {
-  border: 1px solid #ccc;
-  padding: 0;
-  border-radius: 3px;
-}
 #Authentication input[type="file"] {
   background: transparent;
   position: absolute;
@@ -812,14 +835,20 @@
 </style>
 
 <script>
+// import axios from "axios";
+import jq from "jquery";
 export default {
   data: function() {
     return {
       isShow: true,
+
       company: "",
       textarea: "",
       addressDetail: "",
       name: "",
+
+      storeVerify: false,
+
       pv: null,
       back: null,
       logo: null,
@@ -830,7 +859,7 @@ export default {
         }
       ],
       poleNumber: "",
-      mapJson: "/ctiy",
+      mapJson: "http://localhost:7007/ctiy",
       province: "",
       sheng: "",
       shi: "",
@@ -840,17 +869,35 @@ export default {
       city: "",
       block: "",
       address: [],
-      inputtext:{
-        company:'212'
-      }
+      storeAddress: "",
+      storeBehalf: "",
+      storeInfo: "",
+      storeName: ""
     };
   },
   mounted: function() {
-   // console.log(this.token.getCookie("token"));
-    console.log(this.token);
-    var data, options;
+    var that = this;
 
-    // headline charts
+    // jq.ajax({
+    //   type: "post",
+    //   url: "http://192.168.1.8:8080/shops/store/selectStatus.do",
+    //   data: {},
+    //   beforeSend: function(xhr) {
+    //     xhr.setRequestHeader("token", that.token.getCookie("token"));
+    //   },
+    //   dataType: "json",
+    //   success: function(r) {
+    //     console.log(r);
+    //   },
+    //   error: function(r) {
+    //     console.log(r);
+    //   }
+    // });
+    // this.axios.post('postJson').then(function(r){
+    //   console.log(r)
+    // })
+
+    var data, options;
     data = {
       labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
       series: [[23, 29, 24, 40, 25, 24, 35], [14, 25, 18, 34, 29, 38, 44]]
@@ -977,20 +1024,29 @@ export default {
     }
   },
   created() {
+    // console.log(this.axios);
+    var that = this;
+    this.axios.post("store/checkVerify", {}, function(r) {
+      console.log(r);
+       that.storeVerify = r.d.store.storeVerify;
+        if(r.d.store.storeVerify == 1){
+          that.isShow = true;
+        }
+    });
+
+    // this.ajax.post('store/checkVerify',{},function(r){
+    //   console.log(r)
+    // })
     this.getCtiyData();
   },
   methods: {
     fileImg(o) {
       var fileObj = o.target.files[0]; // js 获取文件对象
-      var url = this.getObjectURL(fileObj);
-      var formFile = new FormData();
-      formFile.append("action", "UploadVMKImagePath");
-      formFile.append("file", fileObj); //加入文件对象
-      console.log(fileObj);
-      if (o.target.id == "pv") {
+      var url = this.getObjectURL(fileObj); //加入文件对象
+      if (o.target.id == "blicenseForntFile") {
         this.$refs.pv_img.src = url;
         this.pv = fileObj;
-      } else if (o.target.id == "logo") {
+      } else if (o.target.id == "LogoFile") {
         this.$refs.logo_img.style.backgroundImage = "url(" + url + ")";
         this.logo = fileObj;
       } else {
@@ -1003,17 +1059,58 @@ export default {
         return;
       }
     },
-    doSubmitCheck(e) {
-        console.log(this.inputtext);
-        return false;
+    submitF() {
+      // console.log(this.address.join('-'))
+      if (
+        !this.storeName ||
+        !this.storeInfo ||
+        !this.storeAddress ||
+        !this.storeBehalf ||
+        !this.pv ||
+        !this.logo ||
+        !this.back
+      ) {
+        alert("请补全信息");
+        return;
+      }
+      var formFile = new FormData();
+      formFile.append("blicenseForntFile", this.pv);
+      formFile.append("logoFile", this.logo);
+      formFile.append("blicenseBackFile", this.back);
+      formFile.append("storeName", this.storeName);
+      formFile.append("storeInfo", this.storeInfo);
+      formFile.append("storeAddress", this.storeAddress);
+      formFile.append("storeBehalf", this.storeBehalf);
+      // console.log(formFile.get("logoFile"));
+      var that = this;
+      //  jq.ajax({
+      //   type: "post",
+      //   url: "http://192.168.1.8:8080/shops/store/storeApplication.do",
+      //   data: formFile,
+      //   beforeSend: function(xhr) {
+      //     xhr.setRequestHeader("token", that.token.getCookie("token"));
+      //   },
+      //   contentType: false,
+      //   processData: false, //这个很有必要，不然不行
+      //   dataType: "json",
+      //   mimeType: "multipart/form-data",
+      //   success: function(r) {
+      //     console.log(r);
+      //   },
+      //   error: function(r) {
+      //     console.log(r);
+      //   }
+      // });
+
+      this.axios.post("store/storeApplication.do", formFile, function(r) {
+        console.log(r);
+      });
     },
     getCtiyData() {
       var that = this;
       this.axios
-        .get(this.mapJson)
-        .then(function(response) {
-          if (response.status == 200) {
-            var data = response.data;
+        .get(this.mapJson,{},function(response){
+            var data = response;
             that.province = [];
             that.city = [];
             that.block = [];
@@ -1056,13 +1153,9 @@ export default {
                 }
               }
             }
-          } else {
-            console.log(res.status);
-          }
-        })
-        .catch(function(error) {
-          console.log(typeof +error);
-        });
+          })
+
+
     }, // 选省
     choseProvince: function(e) {
       for (var index2 in this.province) {

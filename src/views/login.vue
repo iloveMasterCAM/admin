@@ -225,10 +225,10 @@ export default {
         function(r) {
           //  this.ajax.post('shops/merchant/regist.do',{'username':'16607092387','password':this.passwordVal,'code':this.code},function(r){
           console.log(r);
-          if (r.s) {
-            alert("注册成功");
-            // that.isRegister = true;
-          }
+          // if (r.s) {
+          //   alert("注册成功");
+          //   // that.isRegister = true;
+          // }
           that.isclick = true;
         }
       );
@@ -239,10 +239,10 @@ export default {
       if (!this.isclick) return;
     
       console.log("点击登录");
-      if (!this.phoneLogin) {
-        this.tips("手机号错误");
-        return;
-      }
+      // if (!this.phoneLogin) {
+      //   this.tips("手机号错误");
+      //   return;
+      // }
       if (!this.passwordLongin) {
         this.tips("密码错误！");
         return;
@@ -257,13 +257,15 @@ export default {
             ///alert("登录成功");
             // that.isRegister = true;
             if (that.checkedjz) {
-              that.setCookie("token", r.d.token, 9);
+              that.token.setCookie("token", r.d.token, 9);
             } else {
-              that.setCookie("token", r.d.token, 1);
+              that.token.setCookie("token", r.d.token, 1);
             }
             that.$router.push({
                  path:'/'
             });
+          }else{
+             that.tips("账号或密码错误！");
           }
           that.isclick = true;
         }
@@ -318,12 +320,11 @@ export default {
     let that = this;
     document.onkeydown = function(e) {
       if (!e) e = window.event;
-
       if ((e.keyCode || e.which) == 8) {
         that.tipsShow = false;
       }
     };
-    this.delCookie('token')
+    this.token.delCookie('token')
     /*    var data = new FormData();
     data.append('phone','17750877003')
     this.axios({
@@ -337,7 +338,7 @@ export default {
     //       console.log(r)
 
     //     })
-    if(that.getCookie("token")){
+    if(that.token.getCookie("token")){
       this.$router.push('/')
     }
    

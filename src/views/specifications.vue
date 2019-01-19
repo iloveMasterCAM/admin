@@ -66,10 +66,13 @@
 </template>
 
 <script>
+
   import axios from 'axios'
   // var instance = axios.create({
   // });
   // instance.defaults.headers.common["token"] = "18xTgOQ1DeMjhFHTgapQqlyt7ntBU+RrTDmDuM/7LUpg7Fu0R028DE4qWcbTRggU7EXU+VASrgEBofcDd/KmvA==";
+
+
   export default {
       data(){
         return{
@@ -98,15 +101,20 @@
         }
       },
       mounted() {
+
         let config = {headers: {'Content-Type': 'multipart/form-data','token':this.token}};
        // config.headers.common['Authentication-Token']=this.token;
         axios.post('http://192.168.1.2:8080/shops/goodsSpecList.do').then(
+
+
           (res)=>{
+            console.log(res)
             this.tableData=res.data.goodsSpecList;
             this.total=res.data.pageInfo.totalResult;
             console.log(res.data.goodsSpecList);
           }
         ).catch((err)=>{
+          console.log('err');
           console.log(err);
         });
       },
@@ -119,9 +127,12 @@
         delSel(){
             //this.multipleSelectionId
           var data = new FormData();
+
           data.append("ids",this.multipleSelectionId);
           console.log(data.get('ids'));
           axios.post('http://192.168.1.2:8080/shops/deleteGoodsSpecByIds.do',
+
+
             data)
             .then((res)=> {
               if(res.data.S===1){

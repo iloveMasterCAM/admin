@@ -134,6 +134,8 @@
 </template>
 <script>
   import axios from 'axios'
+
+ // axios.defaults.headers.common['Authorization'] = '18xTgOQ1DeMjhFHTgapQqlyt7ntBU+RrTDmDuM/7LUpg7Fu0R028DE4qWcbTRggU7EXU+VASrgEBofcDd/KmvA=='
   export default {
     data(){
       return{
