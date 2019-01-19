@@ -3,7 +3,7 @@
     <div class="main">
       <div class="main-content">
         <div class="container-fluid">
-          <h3 class="page-title">编辑</h3>
+          <h3 class="page-title">添加</h3>
           <div class="add" style="margin:35px;">
             <el-form ref="form" :model="form" label-width="80px">
               <el-form-item label="规格名称">
@@ -34,7 +34,7 @@
               style="width: 100%">
               <el-table-column
                 fixed
-                prop="name"
+                prop="title"
                 label="文字"
                 width="150">
               </el-table-column>
@@ -43,11 +43,11 @@
                 label="	图片"
                 width="150">
                 <template scope="scope">
-                  <img :src="scope.row.imgURl" width="40" height="40" class="head_pic"/>
+                  <img :src="scope.row.img_url" width="40" height="40" class="head_pic"/>
                 </template>
               </el-table-column>
               <el-table-column
-                prop="sortNum"
+                prop="sort"
                 label="排序"
                 width="200">
               </el-table-column>
@@ -82,23 +82,22 @@
           <el-dialog title="商品规格" :visible.sync="dialogFormVisible">
             <el-form :model="dialogForm">
               <el-form-item label="标题文字" :label-width="formLabelWidth">
-                <el-input v-model="dialogForm.name" autocomplete="off" style="width:600px;" placeholder="请输入内容"></el-input>
+                <el-input v-model="dialogForm.title" autocomplete="off" style="width:600px;" placeholder="请输入内容"></el-input>
               </el-form-item>
               <el-form-item label="规格图片" :label-width="formLabelWidth">
                 <div class="file">
-                  <input type="file" value="" id="file" @change='onUpload($event)' ref="upload" class="fileInput" name="file" accept="image/*">
+                  <input type="file" value="" id="file" name="file"  @change='onUpload()' ref="upload" class="fileInput" accept="image/*">
                 </div>
 
                 <img src="" alt="" class="previewImg" ref="previewImg">
-
               </el-form-item>
               <el-form-item label="排序数字" :label-width="formLabelWidth">
-                <el-input-number v-model="dialogForm.sortNum" @change="handleChangeDia" :min="1" :max="99" label="描述文字" size="small"></el-input-number>
+                <el-input-number v-model="dialogForm.sort" @change="handleChangeDia" :min="1" :max="99" label="描述文字" size="small"></el-input-number>
               </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
               <el-button @click="dialogFormVisible = false">取 消</el-button>
-              <el-button type="primary" @click="diaSubmit">确 定</el-button>
+              <el-button type="primary" @click="diaSubmit" >确 定</el-button>
             </div>
           </el-dialog>
 
@@ -106,7 +105,7 @@
           <el-dialog title="商品规格" :visible.sync="dialogFormVisibleEdit">
             <el-form :model="dialogFormEdit">
               <el-form-item label="标题文字" :label-width="formLabelWidth">
-                <el-input v-model="dialogFormEdit.name" autocomplete="off" style="width:600px;" placeholder="请输入内容"></el-input>
+                <el-input v-model="dialogFormEdit.title" autocomplete="off" style="width:600px;" placeholder="请输入内容"></el-input>
               </el-form-item>
               <el-form-item label="规格图片" :label-width="formLabelWidth">
                 <div class="file">
@@ -117,7 +116,7 @@
 
               </el-form-item>
               <el-form-item label="排序数字" :label-width="formLabelWidth">
-                <el-input-number v-model="dialogFormEdit.sortNum" @change="handleChangeDia" :min="1" :max="99" label="描述文字" size="small"></el-input-number>
+                <el-input-number v-model="dialogFormEdit.sort" @change="handleChangeDia" :min="1" :max="99" label="描述文字" size="small"></el-input-number>
               </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -132,26 +131,28 @@
     </div>
   </transition>
 </template>
-<script scope>
+<script>
   import axios from 'axios'
   export default {
     data(){
       return{
-        id:-1,
         //上面form数据
         form: {
-          name: '',
-          remark: '',
+          name: "",
+          remark: "",
           sortNum:99
         },
         dialogFormVisible: false,
         //dialog数据
         dialogData:[],
+
         dialogForm: {
-          name: '',
-          sortNum:99,
+          title: "",
+          sort:99,
+          img_url:"",
+          formData:null,
+          ID:'',
           imgURl:'',
-          formData:null
 
         },
         formLabelWidth: '120px',
@@ -160,19 +161,37 @@
         imgSrc:'',
         dialogFormVisibleEdit:false,
         dialogFormEdit: {
-          name: '',
-          sortNum:99,
+          title: "",
+          sort:99,
+          img_url:"",
           imgURl:'',
-          formData:null
+          formData:null,
+          ID:''
         },
-
+        token:"18xTgOQ1DeMjhFHTgapQqlyt7ntBU+RrTDmDuM/7LUpg7Fu0R028DE4qWcbTRggU7EXU+VASrgEBofcDd/KmvA==",
+        ID:'',
+        delSubId:[]
       }
     },
     mounted(){
-          console.log(this.$route.params.data);
-          this.form.name=this.$route.params.data.title;
-          this.form.sortNum=this.$route.params.data.sort;
-          this.id=this.$route.params.data.ID;
+        console.log(this.$route.params.data);
+        this.form.name=this.$route.params.data.title;
+        this.form.sortNum=this.$route.params.data.sort;
+        this.form.remark=this.$route.params.data.remark;
+        this.ID=this.$route.params.data.ID;
+        //获取子类
+      console.log(this.ID);
+        var data=new FormData();
+        data.append("ID",this.Id);
+        axios.get('http://192.168.1.2:8080/shops/getGoodsSubSpec?ID='+this.ID).then(
+          (res)=>{
+            console.log(res);
+            this.dialogData=this.dialogData.concat(res.data.list);
+            console.log(this.dialogData)
+          }
+        ).catch((err)=>{
+          console.log(err);
+        });
     },
     methods:{
       //编辑
@@ -181,7 +200,7 @@
         this.dialogFormEdit=JSON.parse(str);
         this.index=index;
         console.log(this.index);
-        this.imgSrc=this.dialogFormEdit.imgURl;
+        this.imgSrc=this.dialogFormEdit.img_url;
         this.dialogFormVisibleEdit = true;
       },
       //提交编辑保存
@@ -195,8 +214,10 @@
       },
       //移除table选项
       deleteRow(index, rows) {
+        console.log(rows[0].ID);
+        this.delSubId.push(rows[0].ID);
         rows.splice(index, 1);
-        console.log(this.dialogData)
+        console.log(this.delSubId);
       },
       handleChange(value) {
         console.log(value);
@@ -204,19 +225,18 @@
       handleChangeDia(value) {
         console.log(value);
       },
-      onUpload(event){
-        console.log(222);
-        console.log(event.target);
+      onUpload(){
         var fileObj=this.$refs.upload;
         var windowURL = window.URL || window.webkitURL;
         var dataURL;
         //fileObj.files[0]   FormData
         dataURL = windowURL.createObjectURL(fileObj.files[0]);//图片临时路径
         this.$refs.previewImg.src=dataURL;
-        this.dialogForm.imgURl=dataURL;
+        this.dialogForm.img_url=dataURL;
         this.dialogForm.formData=new FormData();
         this.dialogForm.formData.append("file", fileObj.files[0],fileObj.files[0].name);
-        console.log(this.dialogForm);
+        console.log(1111);
+        console.log(fileObj.files[0]);
       },
       onUpload1(){
         var fileObj=this.$refs.upload1;
@@ -225,7 +245,7 @@
         //fileObj.files[0]   FormData
         dataURL = windowURL.createObjectURL(fileObj.files[0]);//图片临时路径
         this.$refs.previewImg1.src=dataURL;
-        this.dialogFormEdit.imgURl=dataURL;
+        this.dialogFormEdit.img_url=dataURL;
         this.dialogFormEdit.formData=new FormData();
         this.dialogFormEdit.formData.append("file", fileObj.files[0],fileObj.files[0].name);
       },
@@ -235,50 +255,90 @@
         this.dialogForm.imgURl='';
         this.dialogForm.formData=null;
         this.dialogFormVisible = true;
-        this.$refs.previewImg.src='';
-
+        try{this.$refs.previewImg.src='';}catch (e) {}
       },
       //本地保存
       diaSubmit(){
-        this.dialogFormVisible = false;
-        // var arr=[];
-        // arr.push(this.dialogForm);
-        // // this.dialogData.push(this.dialogForm);
-        // this.dialogData=this.dialogData.concat(arr);
-        var str=JSON.stringify(this.dialogForm);
-        var data=JSON.parse(str);
-        this.dialogData=this.dialogData.concat([].concat(data));
-        console.log(this.dialogData);
+        if(this.dialogForm.title||this.dialogForm.formData){
+          this.dialogFormVisible = false;
+          // var str=JSON.stringify(this.dialogForm);
+          // var data=JSON.parse(str);
+          var data=[];
+          var json={};
+          for (let key in this.dialogForm) {
+            json[key]=this.dialogForm[key];
+          }
+          data.push(json);
+          this.dialogData=this.dialogData.concat(data);
+          //console.log(this.dialogData[0].formData.get('file'))
+          console.log('dialogData');
+          console.log(this.dialogData[0])
+        }else {
+          this.$message({
+            message: '请添加图片或者标题',
+            type: 'warning'
+          });
+          return false;
+        }
+
 
       },
       //取消保存回到上一层
       goSpecifications(){
-        this.$router .push({name: 'specifications'})
+        this.$router.push({name: 'specifications'})
       },
       //提交页面所有数据
       saveAll(){
-        console.log(this.form);
-        console.log(this.dialogData);
         this.$message({
           message: '保存成功',
           type: 'success'
         });
         var data = new FormData();
+        var file=new File(["",""],"");
         data.append("title",this.form.name);
-        data.append("ID",this.id);
+        data.append("remark",this.form.remark);
+        data.append("sort",this.form.sortNum);
+        data.append("ID",this.ID);
+        data.append("delSubId",this.delSubId);
+        console.log(this.token);
+        //console.log(this.dialogData[0].formData.get('file'));
+        //循环数组 单个append
+        console.log(this.dialogData);
+        if(this.dialogData.length>0){
+          for (var key in this.dialogData) {
+            data.append("titleName",this.dialogData[key].title);
+            data.append("sortNum",this.dialogData[key].sort);
+            data.append("subId",this.dialogData[key].ID);
+            if(this.dialogData[key].formData){
+              data.append("imgFile",this.dialogData[key].formData.get('file'));
+            }else {
+              data.append("imgFile",file);
+            }
+          }
+          console.log('eee');
+          console.log(data);
 
+        }else {
+          data.append("titleName","");
+          data.append("sortNum","");
+          data.append("imgFile",file);
+        }
+        console.log(444);
+        console.log(data.getAll('titleName'));
+        let config = {headers: {'Content-Type': 'multipart/form-data'}};
         axios.post('http://192.168.1.2:8080/shops/updateGoodsSpec.do',
-          data)
+          data,config)
           .then((res)=>{
               console.log(res)
             }
+
           ).catch((err)=>{
           console.log(err);
         });
-        this.$router.push({name: 'specifications'})
-      }
+        this.$router.push({name: 'specifications'})}
     }
   }
+
 </script>
 
 

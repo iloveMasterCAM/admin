@@ -14,6 +14,8 @@ import typography from '@/views/typography'
 import specifications from '@/views/specifications'
 import addSpec from '@/views/addSpec'
 import modifySpec from '@/views/modifySpec'
+import mailManage from '@/views/mailManage'
+import addProduct from '@/views/addProduct'
 
  let getCookie = function (c_name) {
   if (document.cookie.length > 0) {
@@ -39,7 +41,7 @@ let Routers = new Router({
       component: index,
       meta:{
         title:'index',
-       
+
       }
     },
     {
@@ -121,9 +123,19 @@ let Routers = new Router({
       path: '/specifications/modifySpec',
       name: 'modifySpec',
       component: modifySpec
-    }
+    },
+    {
+      path: '/mailManage',
+      name: 'mailManage',
+      component: mailManage
+    },
+    {
+      path: '/mailManage/addProduct',
+      name: 'addProduct',
+      component: addProduct
+    },
   ]
-})
+});
 Routers.beforeEach((to, from, next) => {
 
 
@@ -138,7 +150,7 @@ Routers.beforeEach((to, from, next) => {
     }
   } else {
     next();
-  } 
+  }
 });
 
 

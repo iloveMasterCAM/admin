@@ -43,7 +43,7 @@
                 label="	图片"
                 width="150">
                 <template scope="scope">
-                  <img :src="scope.row.imgURl" width="40" height="40" class="head_pic"/>
+                  <img :src="scope.row.img_url" width="40" height="40" class="head_pic"/>
                 </template>
               </el-table-column>
               <el-table-column
@@ -134,7 +134,6 @@
 </template>
 <script>
   import axios from 'axios'
-  axios.defaults.headers.common['Authorization'] = '18xTgOQ1DeMjhFHTgapQqlyt7ntBU+RrTDmDuM/7LUpg7Fu0R028DE4qWcbTRggU7EXU+VASrgEBofcDd/KmvA=='
   export default {
     data(){
       return{
@@ -153,7 +152,6 @@
           sortNum:99,
           imgURl:"",
           formData:null
-
          },
        formLabelWidth: '120px',
         index:0,
@@ -236,8 +234,7 @@
           this.dialogForm.imgURl='';
           this.dialogForm.formData=null;
           this.dialogFormVisible = true;
-          this.$refs.previewImg.src='';
-
+          try{this.$refs.previewImg.src='';}catch (e) {}
       },
       //本地保存
       diaSubmit(){
@@ -295,7 +292,6 @@
               }
             }
             console.log('eee');
-            console.log(data);
             console.log(data.getAll("imgFile"));
 
           }else {
@@ -304,7 +300,6 @@
             data.append("imgFile",file);
         }
           let config = {headers: {'Content-Type': 'multipart/form-data'}};
-          config.headers.token = this.token;
           axios.post('http://192.168.1.2:8080/shops/addGoodsSpec.do',
             data,config)
             .then((res)=>{

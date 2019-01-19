@@ -53,10 +53,10 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="currentPage"
-            :page-sizes="[10, 20, 40]"
+            :page-sizes="[10, 15, 20]"
             :page-size="100"
             layout="total, sizes, prev, pager, next, jumper"
-            :total="100">
+            :total="total">
           </el-pagination>
         </div>
 
@@ -67,33 +67,43 @@
 
 <script>
   import axios from 'axios'
+  // var instance = axios.create({
+  // });
+  // instance.defaults.headers.common["token"] = "18xTgOQ1DeMjhFHTgapQqlyt7ntBU+RrTDmDuM/7LUpg7Fu0R028DE4qWcbTRggU7EXU+VASrgEBofcDd/KmvA==";
   export default {
       data(){
         return{
-          tableData: [{
-            title: '衣服规格',
-            name: [{text:'S'},{text:"M"},{text:"L"}],
-            sort: 10
-          }, {
-            title: '颜色',
-            name: [{text:"女神粉",src:"http://img.hb.aicdn.com/80500376fb2aeb15f7aa506cfef58ff8c32772c815b972-tYqZCj_fw658"},{text:"莲花白",src:"http://img.hb.aicdn.com/ddacc34690a462613d414a694f242cbf8d339cdcab77-ZIqxx0_fw658"},{text:"基佬紫",src:"http://img.hb.aicdn.com/2c75864a8488647d569d5cfe1391c22161f31ad2411f0-xAh884_fw658"}],
-            sort: 20
-          }, {
-            title: '版本',
-            name: [{text:'移动4G'},{text:"联通4G"},{text:"电信4G"},{text:"全网通"}],
-            sort: 200
-          }],
+          // tableData: [{
+          //   title: '衣服规格',
+          //   name: [{text:'S'},{text:"M"},{text:"L"}],
+          //   sort: 10
+          // }, {
+          //   title: '颜色',
+          //   name: [{text:"女神粉",src:"http://img.hb.aicdn.com/80500376fb2aeb15f7aa506cfef58ff8c32772c815b972-tYqZCj_fw658"},{text:"莲花白",src:"http://img.hb.aicdn.com/ddacc34690a462613d414a694f242cbf8d339cdcab77-ZIqxx0_fw658"},{text:"基佬紫",src:"http://img.hb.aicdn.com/2c75864a8488647d569d5cfe1391c22161f31ad2411f0-xAh884_fw658"}],
+          //   sort: 20
+          // }, {
+          //   title: '版本',
+          //   name: [{text:'移动4G'},{text:"联通4G"},{text:"电信4G"},{text:"全网通"}],
+          //   sort: 200
+          // }],
+          tableData:[],
           currentPage:1,
+          total:100,
+          showCount:10,
           //复选框 选中数据
           multipleSelection: [],
           //复选框 选中id
           multipleSelectionId:[],
+          token:"18xTgOQ1DeMjhFHTgapQqlyt7ntBU+RrTDmDuM/7LUpg7Fu0R028DE4qWcbTRggU7EXU+VASrgEBofcDd/KmvA=="
         }
       },
       mounted() {
+        let config = {headers: {'Content-Type': 'multipart/form-data','token':this.token}};
+       // config.headers.common['Authentication-Token']=this.token;
         axios.post('http://192.168.1.2:8080/shops/goodsSpecList.do').then(
           (res)=>{
             this.tableData=res.data.goodsSpecList;
+            this.total=res.data.pageInfo.totalResult;
             console.log(res.data.goodsSpecList);
           }
         ).catch((err)=>{
@@ -109,23 +119,37 @@
         delSel(){
             //this.multipleSelectionId
           var data = new FormData();
-          data.append("ids",JSON.stringify(this.multipleSelectionId));
+          data.append("ids",this.multipleSelectionId);
+          console.log(data.get('ids'));
           axios.post('http://192.168.1.2:8080/shops/deleteGoodsSpecByIds.do',
             data)
             .then((res)=> {
-              console.log(typeof res.data.s);
-              // this.$message({
-              //   message: '删除成功',
-              //   type: 'success'
-              // });
+              if(res.data.S===1){
+                for(var i=0;i<this.multipleSelectionId.length;i++){
+                    for (var j=0;j<this.tableData.length;j++){
+                          if (this.tableData[j].ID==this.multipleSelectionId[i]){
+                              this.tableData.splice(j,1);
+                          }
+                    }
+                }
+                this.$message({
+                  message: '删除成功',
+                  type: 'success'
+                });
+                // setTimeout(()=>{
+                //   this.$router.go(0)
+                // })
+              }
+              console.log(res)
             }).catch((err)=>{
             console.log(err);
           });
         },
         //跳转 修改页面
         handleClick(row) {
-          this.$router.push({name: 'modifySpec',params: {data:row}});
           console.log(row);
+          this.$router.push({name: 'modifySpec',params: {data:row}});
+
         },
         //跳转 添加页面
         goAdd(){
@@ -134,16 +158,47 @@
         //分页
         handleSizeChange(val) {
           console.log(`每页 ${val} 条`);
+          this.showCount=val;
+          var data = new FormData();
+          data.append("currentPage",this.currentPage);
+          data.append("showCount",this.showCount);
+          axios.post('http://192.168.1.2:8080/shops/goodsSpecList.do',
+            data)
+            .then((res)=> {
+              this.tableData=res.data.goodsSpecList;
+              this.total=res.data.pageInfo.totalResult;
+              console.log(res.data.pageInfo.totalResult);
+            }).catch((err)=>{
+            console.log(err);
+          });
         },
+        //点击分页
         handleCurrentChange(val) {
           console.log(`当前页: ${val}`);
+
+          var data = new FormData();
+          //data.append("currentPage",val);
+          data.append("currentPage",val);
+          data.append("showCount",this.showCount);
+          axios.post('http://192.168.1.2:8080/shops/goodsSpecList.do',
+            data)
+            .then((res)=> {
+              this.tableData=res.data.goodsSpecList;
+              this.total=res.data.pageInfo.totalResult;
+              console.log(res.data.pageInfo.totalResult);
+            }).catch((err)=>{
+            console.log(err);
+          });
         }
+
+
     },
     watch: {
       multipleSelection: function () {
         let arr = [];
         for (let i in this.multipleSelection) {
           arr.push(this.multipleSelection[i].ID);
+          //console.log(this.multipleSelection[i].ID);
         }
         this.multipleSelectionId=arr;
         console.log(JSON.stringify(this.multipleSelectionId));

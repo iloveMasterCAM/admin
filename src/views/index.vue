@@ -815,7 +815,7 @@
 export default {
   data: function() {
     return {
-      isShow: false,
+      isShow: true,
       company: "",
       textarea: "",
       addressDetail: "",
@@ -842,7 +842,7 @@ export default {
       address: [],
       inputtext:{
         company:'212'
-      }  
+      }
     };
   },
   mounted: function() {
@@ -1004,7 +1004,7 @@ export default {
       }
     },
     doSubmitCheck(e) {
-        console.log(this.inputtext); 
+        console.log(this.inputtext);
         return false;
     },
     getCtiyData() {

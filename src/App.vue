@@ -193,11 +193,11 @@ export default {
         {path:'/',name:'index',icon:'lnr lnr-home'},
         {path:'/icons',name:'icons',icon:'lnr lnr-home'},
         {path:'/tables',name:'tables',icon:'lnr lnr-home'},
-       
         {path:'/profile',name:'profile',icon:'lnr lnr-home'},
         {path:'/panels',name:'panels',icon:'lnr lnr-home'},
         {path:'/panels',name:'panels',icon:'lnr lnr-home'},
-        {path:'/specifications',name:'specifications',icon:'lnr lnr-home'}
+        {path:'/specifications',name:'specifications',icon:'lnr lnr-home'},
+        {path:'/mailManage',name:'mailManage',icon:'lnr lnr-home'}
 
       ]
     };
@@ -219,7 +219,7 @@ export default {
     },
       /* 切换皮肤 */
     exit(){
-      
+
       if(this.token.delCookie('token')){
         this.$router.push('/login')
       }
