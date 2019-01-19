@@ -7,6 +7,7 @@ import http from './assets/js/axios' // vue axios
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/iconfont/iconfont.css'
 import t from './assets/js/token'
+
 import '../static/assets/scripts/klorofil-common'
 Vue.use(ElementUI);
 /**/

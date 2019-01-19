@@ -239,10 +239,10 @@ export default {
       if (!this.isclick) return;
     
       console.log("点击登录");
-      if (!this.phoneLogin) {
-        this.tips("手机号错误");
-        return;
-      }
+      // if (!this.phoneLogin) {
+      //   this.tips("手机号错误");
+      //   return;
+      // }
       if (!this.passwordLongin) {
         this.tips("密码错误！");
         return;
@@ -264,6 +264,8 @@ export default {
             that.$router.push({
                  path:'/'
             });
+          }else{
+             that.tips("账号或密码错误！");
           }
           that.isclick = true;
         }
@@ -318,7 +320,6 @@ export default {
     let that = this;
     document.onkeydown = function(e) {
       if (!e) e = window.event;
-
       if ((e.keyCode || e.which) == 8) {
         that.tipsShow = false;
       }

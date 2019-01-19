@@ -1,5 +1,5 @@
 import http from 'axios';
-
+import qs from 'qs';
 
 export default class server {
     constructor() {
@@ -9,7 +9,7 @@ export default class server {
     }
     load(url){
         this.headers = {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            // 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
             'token': this.getCookie('token')
         }
         this.isSrt = false;
@@ -23,10 +23,7 @@ export default class server {
             // baseURL: 'http://192.168.1.2:8080/shops/',  // 徐
             // baseURL: 'http://localhost:7007/',
             //timeout: 3000,
-            transformRequest: [function (data) {
-            
-                return that.isSrt?data:JSON.stringify(data);
-            }],
+          
             headers: this.headers,
         })
     }
@@ -48,7 +45,7 @@ export default class server {
                 callback && callback(r.data)
             }
         }).catch(function (err) {
-            new error(url + "接口报错" + err)
+            console.log(url + "接口报错" + err)
         })
     }
     get(url, data,callback) {
@@ -62,8 +59,8 @@ export default class server {
                 }
                
             })
-            .catch(function (error) {
-                new error(url + "接口报错" + err)
+            .catch(function (err) {
+                console.log(url + "接口报错" + err)
             });
     }
 }

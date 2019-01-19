@@ -557,7 +557,7 @@
 
     <div v-show="!isShow" id="Authentication" class="main-content container-fluid">
       <div class="wrap" v-show="!storeVerify && storeVerify != 0">
-      <!-- <div class="wrap" v-show="storeVerify"> -->
+      <!-- <div class="wrap" > -->
         <p class="title">企业认证</p>
         <el-row>
           <el-col :span="4">
@@ -714,7 +714,7 @@
           </el-col>
         </el-row>
       </div>
-      <div v-show="storeVerify == 0">
+      <!-- <div v-show="storeVerify == 0">
         <img src="../assets/shen.png" class="shenghe" alt>
         <p class="shenghe_txt">审核中...</p>
       </div>
@@ -725,7 +725,7 @@
       <div id class="main-content container-fluid" v-show="storeVerify == 2">
         <img src="../assets/shen2.png" class="shenghe" alt>
         <p class="shenghe_txt">未通过审核...</p>
-      </div>
+      </div> -->
     </div>
 
     <div id="left_bg" v-show="!isShow"></div>
@@ -1019,13 +1019,17 @@ export default {
   created() {
     // console.log(this.axios);
     var that = this;
-    this.axios.post("store/selectStatus.do", {}, function(r) {
-      // console.log(r);
+    this.axios.post("store/checkVerify", {}, function(r) {
+      console.log(r);
        that.storeVerify = r.d.store.storeVerify;
         if(r.d.store.storeVerify == 1){
           that.isShow = true;
         }
     });
+
+    // this.ajax.post('store/checkVerify',{},function(r){
+    //   console.log(r)
+    // })
     this.getCtiyData();
   },
   methods: {
