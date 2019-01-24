@@ -1,231 +1,203 @@
 <template>
-	<div class="main">
-			<!-- MAIN CONTENT -->
-			<div class="main-content">
-				<div class="container-fluid">
-					<div class="panel panel-profile">
-						<div class="clearfix">
-							<!-- LEFT COLUMN -->
-							<div class="profile-left">
-								<!-- PROFILE HEADER -->
-								<div class="profile-header">
-									<div class="overlay"></div>
-									<div class="profile-main">
-										<img src="assets/img/user-medium.png" class="img-circle" alt="Avatar">
-										<h3 class="name">Samuel Gold</h3>
-										<span class="online-status status-available">Available</span>
-									</div>
-									<div class="profile-stat">
-										<div class="row">
-											<div class="col-md-4 stat-item">
-												45 <span>Projects</span>
-											</div>
-											<div class="col-md-4 stat-item">
-												15 <span>Awards</span>
-											</div>
-											<div class="col-md-4 stat-item">
-												2174 <span>Points</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- END PROFILE HEADER -->
-								<!-- PROFILE DETAIL -->
-								<div class="profile-detail">
-									<div class="profile-info">
-										<h4 class="heading">Basic Info</h4>
-										<ul class="list-unstyled list-justify">
-											<li>Birthdate <span>24 Aug, 2016</span></li>
-											<li>Mobile <span>(124) 823409234</span></li>
-											<li>Email <span>samuel@mydomain.com</span></li>
-											<li>Website <span><a href="#">www.themeineed.com</a></span></li>
-										</ul>
-									</div>
-									<div class="profile-info">
-										<h4 class="heading">Social</h4>
-										<ul class="list-inline social-icons">
-											<li><a href="#" class="facebook-bg"><i class="fa fa-facebook"></i></a></li>
-											<li><a href="#" class="twitter-bg"><i class="fa fa-twitter"></i></a></li>
-											<li><a href="#" class="google-plus-bg"><i class="fa fa-google-plus"></i></a></li>
-											<li><a href="#" class="github-bg"><i class="fa fa-github"></i></a></li>
-										</ul>
-									</div>
-									<div class="profile-info">
-										<h4 class="heading">About</h4>
-										<p>Interactively fashion excellent information after distinctive outsourcing.</p>
-									</div>
-									<div class="text-center"><a href="#" class="btn btn-primary">Edit Profile</a></div>
-								</div>
-								<!-- END PROFILE DETAIL -->
-							</div>
-							<!-- END LEFT COLUMN -->
-							<!-- RIGHT COLUMN -->
-							<div class="profile-right">
-								<h4 class="heading">Samuel's Awards</h4>
-								<!-- AWARDS -->
-								<div class="awards">
-									<div class="row">
-										<div class="col-md-3 col-sm-6">
-											<div class="award-item">
-												<div class="hexagon">
-													<span class="lnr lnr-sun award-icon"></span>
-												</div>
-												<span>Most Bright Idea</span>
-											</div>
-										</div>
-										<div class="col-md-3 col-sm-6">
-											<div class="award-item">
-												<div class="hexagon">
-													<span class="lnr lnr-clock award-icon"></span>
-												</div>
-												<span>Most On-Time</span>
-											</div>
-										</div>
-										<div class="col-md-3 col-sm-6">
-											<div class="award-item">
-												<div class="hexagon">
-													<span class="lnr lnr-magic-wand award-icon"></span>
-												</div>
-												<span>Problem Solver</span>
-											</div>
-										</div>
-										<div class="col-md-3 col-sm-6">
-											<div class="award-item">
-												<div class="hexagon">
-													<span class="lnr lnr-heart award-icon"></span>
-												</div>
-												<span>Most Loved</span>
-											</div>
-										</div>
-									</div>
-									<div class="text-center"><a href="#" class="btn btn-default">See all awards</a></div>
-								</div>
-								<!-- END AWARDS -->
-								<!-- TABBED CONTENT -->
-								<div class="custom-tabs-line tabs-line-bottom left-aligned">
-									<ul class="nav" role="tablist">
-										<li class="active"><a href="#tab-bottom-left1" role="tab" data-toggle="tab">Recent Activity</a></li>
-										<li><a href="#tab-bottom-left2" role="tab" data-toggle="tab">Projects <span class="badge">7</span></a></li>
-									</ul>
-								</div>
-								<div class="tab-content">
-									<div class="tab-pane fade in active" id="tab-bottom-left1">
-										<ul class="list-unstyled activity-timeline">
-											<li>
-												<i class="fa fa-comment activity-icon"></i>
-												<p>Commented on post <a href="#">Prototyping</a> <span class="timestamp">2 minutes ago</span></p>
-											</li>
-											<li>
-												<i class="fa fa-cloud-upload activity-icon"></i>
-												<p>Uploaded new file <a href="#">Proposal.docx</a> to project <a href="#">New Year Campaign</a> <span class="timestamp">7 hours ago</span></p>
-											</li>
-											<li>
-												<i class="fa fa-plus activity-icon"></i>
-												<p>Added <a href="#">Martin</a> and <a href="#">3 others colleagues</a> to project repository <span class="timestamp">Yesterday</span></p>
-											</li>
-											<li>
-												<i class="fa fa-check activity-icon"></i>
-												<p>Finished 80% of all <a href="#">assigned tasks</a> <span class="timestamp">1 day ago</span></p>
-											</li>
-										</ul>
-										<div class="margin-top-30 text-center"><a href="#" class="btn btn-default">See all activity</a></div>
-									</div>
-									<div class="tab-pane fade" id="tab-bottom-left2">
-										<div class="table-responsive">
-											<table class="table project-table">
-												<thead>
-													<tr>
-														<th>Title</th>
-														<th>Progress</th>
-														<th>Leader</th>
-														<th>Status</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td><a href="#">Spot Media</a></td>
-														<td>
-															<div class="progress">
-																<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-																	<span>60% Complete</span>
-																</div>
-															</div>
-														</td>
-														<td><img src="assets/img/user2.png" alt="Avatar" class="avatar img-circle"> <a href="#">Michael</a></td>
-														<td><span class="label label-success">ACTIVE</span></td>
-													</tr>
-													<tr>
-														<td><a href="#">E-Commerce Site</a></td>
-														<td>
-															<div class="progress">
-																<div class="progress-bar" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100" style="width: 33%;">
-																	<span>33% Complete</span>
-																</div>
-															</div>
-														</td>
-														<td><img src="assets/img/user1.png" alt="Avatar" class="avatar img-circle"> <a href="#">Antonius</a></td>
-														<td><span class="label label-warning">PENDING</span></td>
-													</tr>
-													<tr>
-														<td><a href="#">Project 123GO</a></td>
-														<td>
-															<div class="progress">
-																<div class="progress-bar" role="progressbar" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100" style="width: 68%;">
-																	<span>68% Complete</span>
-																</div>
-															</div>
-														</td>
-														<td><img src="assets/img/user1.png" alt="Avatar" class="avatar img-circle"> <a href="#">Antonius</a></td>
-														<td><span class="label label-success">ACTIVE</span></td>
-													</tr>
-													<tr>
-														<td><a href="#">Wordpress Theme</a></td>
-														<td>
-															<div class="progress">
-																<div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;">
-																	<span>75%</span>
-																</div>
-															</div>
-														</td>
-														<td><img src="assets/img/user2.png" alt="Avatar" class="avatar img-circle"> <a href="#">Michael</a></td>
-														<td><span class="label label-success">ACTIVE</span></td>
-													</tr>
-													<tr>
-														<td><a href="#">Project 123GO</a></td>
-														<td>
-															<div class="progress">
-																<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-																	<span>100%</span>
-																</div>
-															</div>
-														</td>
-														<td><img src="assets/img/user1.png" alt="Avatar" class="avatar img-circle" /> <a href="#">Antonius</a></td>
-														<td><span class="label label-default">CLOSED</span></td>
-													</tr>
-													<tr>
-														<td><a href="#">Redesign Landing Page</a></td>
-														<td>
-															<div class="progress">
-																<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-																	<span>100%</span>
-																</div>
-															</div>
-														</td>
-														<td><img src="assets/img/user5.png" alt="Avatar" class="avatar img-circle" /> <a href="#">Jason</a></td>
-														<td><span class="label label-default">CLOSED</span></td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-									</div>
-								</div>
-								<!-- END TABBED CONTENT -->
-							</div>
-							<!-- END RIGHT COLUMN -->
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- END MAIN CONTENT -->
-		</div>
+  <div class="main">
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+      <div class="container-fluid panel" id="panel">
+        <div class="clearfix saerch">
+          <div class="col-xs-3">
+            <el-input placeholder="输入要搜索的内容"></el-input>
+          </div>
+          <div class="pull-left">
+            <el-button type="primary">搜索</el-button>
+          </div>
+          <div class="pull-left">
+            <el-button @click="show" type="success">添加分类</el-button>
+          </div>
+        </div>
+        <div>
+          <table width="100%">
+            <tr>
+              <th>  <label for="all"><input @change="allSelect" id="all" type="checkbox" name> 全选</label> </th>
+              <th>ID</th>
+              <th>分类名称</th>
+              <th>创建时间</th>
+              <th>分类排序</th>
+              <th>操作</th>
+            </tr>
+
+            <tr v-for="(item,index) in row" :key="index">
+                <td>
+                  <input type="checkbox" :checked="checked" name :id="item.categoryId">
+                </td>
+              <td>{{item.categoryId}}</td>
+              <td> <span v-show="contenteditable != index">{{item.categoryName}}</span> <input type="text" v-show="contenteditable == index" v-model="editVal">   </td>
+              <td>1</td>
+              <td>1</td>
+              <td>
+               
+                <el-button @click="edit(index,item.categoryName)" type="primary" icon="el-icon-edit" circle></el-button>
+                <el-button @click="deletei(item,index)" type="danger" icon="el-icon-delete" circle></el-button>
+                <el-button @click="save(item.categoryId,index)" class="success" v-show="contenteditable == index"  type="success" icon="el-icon-success" circle></el-button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="add" v-show="addBl">
+      <div class="el-row text-center">
+        <el-input class="pull-left" v-model="name" placeholder="请输入分类名称"></el-input>
+        <el-button type="primary" @click="add">添加分类</el-button>
+      </div>
+    </div>
+    <div id="bg" @click="show" v-show="addBl"></div>
+    <!-- END MAIN CONTENT -->
+  </div>
+  <!-- scoped -->
 </template>
+<style scoped>
+.main {
+  position: relative;
+}
+#bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 5;
+}
+#add {
+  position: fixed;
+
+  padding: 20px;
+  background: #fff;
+  top: 50%;
+  left: 50%;
+  margin: -150px 0 0 -200px;
+  z-index: 10;
+  box-shadow: 0 0 20px #eee;
+}
+#add > div > div {
+  margin-bottom: 30px;
+}
+#panel {
+  height: 800px;
+  padding-top: 30px;
+}
+#panel .saerch > div {
+  height: 100px;
+  margin-right: 10px;
+}
+#panel tr {
+  line-height: 40px;
+  border-bottom: 1px solid #eee;
+}
+#panel th {
+  padding-left: 10px;
+}
+#panel td{
+  position: relative;
+}
+#panel td input{
+  position: absolute;
+  top: 13px;
+  left: 0;
+  height: 25px;;
+}
+#panel td, #panel .el-button.is-circle {
+  padding: 6px;
+}
+#panel .success{
+  position:absolute;
+  top: 12px;
+  left: 80px;
+}
+
+</style>
+
+
+<script>
+export default {
+  data() {
+    return {
+      row: [],
+      addBl: false,
+      name:'',
+      checked:false,
+      contenteditable:-1,
+      editVal:''
+    };
+  },
+  methods: {
+    show() {
+      this.addBl = !this.addBl;
+    },
+    allSelect(){
+       this.checked = !this.checked;
+    },
+    add() {
+      let that = this;
+      let len = that.row[that.row.length-1].categoryId+1;
+      if (this.name) {
+        this.axios.post(
+          "productCategory/save",
+          {
+            categoryId: "",
+            categoryName: this.name,
+            categoryParentId: "",
+            categoryParentIdPath: ""
+          },
+          function(r) {
+            console.log(r);
+            that.row.push({ categoryName: that.name,categoryId:len})
+          }
+        );
+      }
+    }, 
+
+    deletei(v,i) {
+      let that = this;
+      var data = [];
+      data.push(v);
+      this.ajax.post("productCategory/delete", JSON.stringify(data), function( r ) {
+      //  console.log(r);
+      that.row.splice(i,1)
+      });
+    },
+    //编辑
+    edit(i,v){
+      this.contenteditable = i
+      this.editVal = v
+      
+    },
+    //修改
+    save(id,i){
+      let that = this;
+      if(id){
+        this.axios.post('productCategory/save',{categoryId:id,categoryName:this.editVal},function(r){
+          console.log(r)
+          that.contenteditable = -1;
+          that.row[i].categoryName  = that.editVal
+        })
+      }
+       
+    },
+  },
+  mounted() {
+    let that = this;
+    //productCategory/categoryByPid
+    this.axios.post(
+      "productCategory/categoryByPid",
+      { categoryParintId: "0" },
+      function(r) {
+        console.log(r);
+        that.row = r.d.categorys;
+      }
+    );
+  }
+};
+</script>
+

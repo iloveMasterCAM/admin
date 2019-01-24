@@ -32,7 +32,20 @@
                   class="aui-padded-r-15"
                   placeholder="请输入6~12位密码"
                 >
-                <i class="iconfont icon-kanjian icon" :class="{'icon-kanjian':kanjian,'icon-bukejian':!kanjian}" @click="kj"></i>
+                <i class="iconfont icon" :class="{'icon-kanjian':!kanjian,'icon-bukejian':kanjian}" @click="kj"></i>
+              </div>
+            </div>
+              <div class="password">
+              <p class="userpassword">校验码</p>
+              <div class="bor aui-row">
+                <div class="aui-col-xs-6"><input ref="code"
+                  type="text"
+                  v-model="logincode"
+                  class="aui-padded-r-15"
+                  placeholder="请输入校验码"
+                ></div>
+                <div class="aui-col-xs-4 aui-pull-right"> <img class="code" @click="upCode" src="http://192.168.1.8:8080/code/lkCode" alt=""></div> 
+               
               </div>
             </div>
             <div class="aui-row jz">
@@ -69,7 +82,7 @@
             </div>
             <div class="password">
               <p class="userpassword">密码</p>
-              <div class="bor">
+              <div class="bor ">
                 <input
                   type="password"
                   @blur="passwordFun"
@@ -127,10 +140,18 @@ export default {
       passwordLongin: "",
       isclick: true,
       kanjian:true,
-     
+     logincode:''
     };
   },
   methods: {
+    // 更新校验码
+    upCode(e){
+      e.target.src ='http://192.168.1.8:8080/code/lkCode?t=' + this.genTimestamp()
+    },
+    genTimestamp() {
+			var time = new Date();
+			return time.getTime();
+		},
     // 判断手机
     isRegisterFun() {
       if (!this.isPhone(this.phone)) return;
@@ -168,10 +189,7 @@ export default {
       }
       //regist/sendMsg.do
       localStorage["now"] = parseInt(new Date().valueOf() / 1000);
-      if (
-        (!this.time && !localStorage["time"]) ||
-        Math.abs(localStorage["now"]) - Math.abs(localStorage["time"]) > 10
-      ) {
+      if ((!this.time && !localStorage["time"]) ||  Math.abs(localStorage["now"]) - Math.abs(localStorage["time"]) > 10 ) {
         console.log(that.phone);
         this.ajax.post(
           "shops/regist/sendMsg.do",
@@ -247,10 +265,15 @@ export default {
         this.tips("密码错误！");
         return;
       }
+        if (!this.logincode) {
+        this.tips("验证码错误");
+        return;
+      }
+      //logincode
       console.log(this.phoneLogin);
       console.log(this.passwordLongin);
       that.isclick = false;
-      this.ajax.post("merchant/login.do",  { username: this.phoneLogin, password: this.passwordLongin },
+      this.axios.post("merchant/login.do",  { username: this.phoneLogin, password: this.passwordLongin ,code:this.logincode},
         function(r) {
           console.log(r);
           if (r.s) {
@@ -274,9 +297,10 @@ export default {
     kj(){
       this.kanjian = ! this.kanjian
       if(this.kanjian){
-        this.$refs.password.type = 'text'
-      }else{
          this.$refs.password.type = 'password'
+      }else{
+        this.$refs.password.type = 'text'
+        
       }
     },
     isPhone(v) {
@@ -351,7 +375,12 @@ export default {
 
 <style scoped>
 @import "../assets/aui/aui.css";
-
+#login .code{
+  width: 100px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
 #main_box {
   position: absolute;
   top: 0;
@@ -454,9 +483,7 @@ export default {
   margin: 30px 0;
   position: relative;
 }
-.wrap.register_box .password {
-  margin: 26px 0;
-}
+
 .wrap .login_btn_box {
   margin: 40px 0 50px;
 }

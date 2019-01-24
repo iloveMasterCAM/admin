@@ -73,7 +73,11 @@ footer {
 #wrapper #sidebar-nav,
 #wrapper .main {
   padding-top: 80px; }
-
+  
+  #sidebar-nav li.active a{
+    background-color: #252c35;
+    border-left-color: #00AAFF;
+  }
 @media screen and (max-width: 767px) {
   #wrapper #sidebar-nav,
   #wrapper .main {

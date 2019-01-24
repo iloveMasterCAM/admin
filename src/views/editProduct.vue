@@ -388,7 +388,7 @@
           this.sizeForm.mPrice=form.oPrice;
           this.sizeForm.selPrice=form.proPrice;
           this.sizeForm.sort=form.sortNum;
-          this.sizeForm.time=this.changeTime(form.addDate);
+          this.sizeForm.time=form.addDate;
           }
         ).catch((err) => {
         console.log(err);

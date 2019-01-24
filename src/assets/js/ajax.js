@@ -21,13 +21,14 @@ const ajax = {
             type: 'post',
             data: data,
             dataType: "json",
+            contentType:'application/json;charset=utf-8',
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("token",getcookie('token'));
             },
             timeout: 3000,
             url: this.baseURL + url,
             complete: function (r) {
-                console.log(r)
+               // console.log(r)
                 if (r.status == 200) {
                     callback && callback(r.responseJSON)
                 } else {

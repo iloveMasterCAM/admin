@@ -164,7 +164,7 @@
         <nav>
           <ul class="nav">
 
-            <router-link v-for="(itme, index) in nav" :key="index" :to="itme.path" tag="li">
+            <router-link v-for="(itme, index) in nav" :key="index" :to="itme.path" tag="li" exact>
               <a v-if="itme.name == 'tables'" class="collapsed">
                 <i :class="itme.icon"></i>
                 <span v-text="itme.name"></span>
@@ -190,11 +190,10 @@ export default {
   data(){
     return{
       nav:[
-        {path:'/',name:'index',icon:'lnr lnr-home'},
-        {path:'/mine',name:'mine',icon:'lnr lnr-home'},
-        {path:'/tables',name:'tables',icon:'lnr lnr-home'},
-        {path:'/profile',name:'profile',icon:'lnr lnr-home'},
-        {path:'/panels',name:'panels',icon:'lnr lnr-home'},
+        {path:'/',name:'首页',icon:'lnr lnr-home'},
+        {path:'/mine',name:'我的',icon:'lnr lnr-home'},
+        {path:'/shop',name:'我的店铺',icon:'lnr lnr-home'},
+        {path:'/profile',name:'商品分类',icon:'lnr lnr-home'},
         {path:'/panels',name:'panels',icon:'lnr lnr-home'},
         {path:'/specifications',name:'specifications',icon:'lnr lnr-home'},
         {path:'/mailManage',name:'mailManage',icon:'lnr lnr-home'}
@@ -225,12 +224,6 @@ export default {
       }
     }
   },
-
-  mounted() {
-    $("head").append(
-      ' <link rel="stylesheet" href="' + localStorage["skin"] + '" id="skin">'
-    );
-  },
   beforeCreate() {
    // console.log("A页面 beforeCreate");
   },
@@ -238,8 +231,11 @@ export default {
   //  console.log("A页面 created");
   },
   mounted() {
+     $("head").append(
+      ' <link rel="stylesheet" href="' + localStorage["skin"] + '" id="skin">'
+    );
       if(!this.token.getCookie("token")){
-        this.$router.push('/login')
+     //   this.$router.push('/login')
       }
       console.log(this.token.getCookie("token"));
    // console.log("A页面 mounted");

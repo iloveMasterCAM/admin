@@ -173,10 +173,11 @@
       this.instance.post('http://192.168.1.2:8080/shops/productList.do').then(
         (res)=>{
           console.log(res);
-          // res.data.productList.forEach((item)=>{
-          //   item.AddDate=this.changeTime(item.AddDate);
-          // });
-          this.tableData=res.data.productList;
+          var data=res.data.productList;
+          data.forEach((item)=>{
+            item.AddDate=this.changeTime(item.AddDate);
+          });
+          this.tableData=data;
           this.total=res.data.pageInfo.totalResult;
           this.optionsTitle=res.data.titleList;
           this.optionsClass=res.data.categoryNameList;
