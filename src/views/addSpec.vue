@@ -43,7 +43,7 @@
                 label="	图片"
                 width="150">
                 <template scope="scope">
-                  <img :src="scope.row.img_url" width="40" height="40" class="head_pic"/>
+                  <img :src="scope.row.imgURl" width="40" height="40" class="head_pic"/>
                 </template>
               </el-table-column>
               <el-table-column
@@ -169,6 +169,14 @@
         token:"18xTgOQ1DeMjhFHTgapQqlyt7ntBU+RrTDmDuM/7LUpg7Fu0R028DE4qWcbTRggU7EXU+VASrgEBofcDd/KmvA=="
       }
     },
+    created(){
+      this.instance = axios.create({
+        headers:{
+          "token":"18xTgOQ1DeMjhFHTgapQqmFoM3vbj3J3C53CthEtA6YnBnp+TPy3/RwdsvCidsZLmjQK5gb48EQquYapxDSLyQ==",
+          "Content-Type": "multipart/form-data"
+        }
+      });
+    },
     methods:{
       //编辑
       editRow(index, rows){
@@ -216,7 +224,7 @@
           this.dialogForm.imgURl=dataURL;
           this.dialogForm.formData=new FormData();
           this.dialogForm.formData.append("file", fileObj.files[0],fileObj.files[0].name);
-          console.log(1111);
+          //console.log(1111);
           console.log(fileObj.files[0]);
       },
       onUpload1(){
@@ -302,7 +310,7 @@
             data.append("imgFile",file);
         }
           let config = {headers: {'Content-Type': 'multipart/form-data'}};
-          axios.post('http://192.168.1.2:8080/shops/addGoodsSpec.do',
+        this.instance.post('http://192.168.1.2:8080/shops/addGoodsSpec.do',
             data,config)
             .then((res)=>{
               console.log(res)

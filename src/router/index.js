@@ -16,6 +16,7 @@ import addSpec from '@/views/addSpec'
 import modifySpec from '@/views/modifySpec'
 import mailManage from '@/views/mailManage'
 import addProduct from '@/views/addProduct'
+import editProduct from '@/views/editProduct'
 
  let getCookie = function (c_name) {
   if (document.cookie.length > 0) {
@@ -134,6 +135,11 @@ let Routers = new Router({
       name: 'addProduct',
       component: addProduct
     },
+    {
+      path: '/mailManage/editProduct',
+      name: 'editProduct',
+      component: editProduct
+    },
   ]
 });
 Routers.beforeEach((to, from, next) => {
@@ -142,7 +148,7 @@ Routers.beforeEach((to, from, next) => {
    const isLogin = getCookie('token');
   if (to.name !== "login") {
     if (!isLogin) {
-      
+
       next({
         path: "/login"
       });

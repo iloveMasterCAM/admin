@@ -3,24 +3,51 @@
     <div class="main-content">
       <div class="container-fluid">
         <h3 class="page-title">商品管理</h3>
-        <el-button plain icon="el-icon-plus" style="margin-bottom: 8px" @click="goAdd">新增</el-button>
-        <el-button plain icon="el-icon-delete" style="margin-bottom: 8px" @click="delSel">删除</el-button>
-        <el-select v-model="titleName" placeholder="所有标题" @change="getTitle">
-          <el-option
-            v-for="item in optionsTitle"
-            :key="item.title"
-            :label="item.title"
-            :value="item.title">
-          </el-option>
-        </el-select>
-        <el-select v-model="classId" placeholder="所有类别" @change="getClassId">
-          <el-option
-            v-for="item in optionsClass"
-            :key="item.classId"
-            :label="item.classId"
-            :value="item.classId">
-          </el-option>
-        </el-select>
+        <!--<el-button plain icon="el-icon-plus" style="margin-bottom: 8px" @click="goAdd">新增</el-button>-->
+        <div class="pl"  @click="goAdd">
+          <i class="iconfont icon-tianjia1"></i>
+          <span>批量添加</span>
+        </div>
+        <div class="pl"  @click="delSel">
+          <i class="iconfont icon-shanchu"></i>
+          <span>批量删除</span>
+        </div>
+        <div class="pl">
+          <i class="iconfont icon-bianji"></i>
+          <span>批量编辑</span>
+        </div>
+        <div class="pl">
+          <i class="iconfont icon-shenhe"></i>
+          <span>批量审核</span>
+        </div>
+        <div class="pl">
+          <i class="iconfont icon-shenhe"></i>
+          <span>取消审核</span>
+        </div>
+        <div class="pl" >
+          <i class="iconfont icon-baocun"></i>
+          <span>批量保存</span>
+        </div>
+        <!--<el-select v-model="titleName" placeholder="所有标题" @change="getTitle" style="margin-left:531px;" size="mini">-->
+          <!--<el-option-->
+            <!--v-for="item in optionsTitle"-->
+            <!--:key="item.title"-->
+            <!--:label="item.title"-->
+            <!--:value="item.title">-->
+          <!--</el-option>-->
+        <!--</el-select>-->
+        <!--<el-select v-model="classId" placeholder="所有类别" @change="getClassId" size="mini">-->
+          <!--<el-option-->
+            <!--v-for="item in optionsClass"-->
+            <!--:key="item.classId"-->
+            <!--:label="item.classId"-->
+            <!--:value="item.classId">-->
+          <!--</el-option>-->
+        <!--</el-select>-->
+        <div class="search">
+          <el-input v-model="search" placeholder="搜索" class="inp" size="mini"></el-input>
+          <i class="el-icon-search" @click="searchData"></i>
+        </div>
         <div class="table">
           <el-table
             :data="tableData"
@@ -40,7 +67,7 @@
             </el-table-column>
             <el-table-column
               prop="ClassID"
-              label="	类别"
+              label="类别"
               width="200">
             </el-table-column>
             <el-table-column
@@ -50,7 +77,7 @@
             </el-table-column>
             <el-table-column
               prop="Sort"
-              label="排序"
+              label="展示排序"
               width="200">
             </el-table-column>
             <el-table-column
@@ -71,7 +98,8 @@
               label="操作"
               width="120">
               <template slot-scope="scope">
-                <el-button @click="handleClick(scope.row)" type="primary" size="mini">编辑</el-button>
+                <!--<el-button @click="handleClick(scope.row)" type="primary" size="mini">编辑</el-button>-->
+                <i class="el-icon-edit-outline" @click="handleClick(scope.row)" style="color:#f3648c;"></i>
               </template>
             </el-table-column>
           </el-table>
@@ -102,7 +130,9 @@
   export default {
     data(){
       return{
-        tableData:[{"title":"aa","category":"办公","data":"2019-1-17","sort":"10"}],
+        isSearch:[],
+        search:'',
+        tableData:[],
         optionsTitle:[],
         optionsClass:[],
         titleName:'',
@@ -127,13 +157,13 @@
         multipleSelection: [],
         //复选框 选中id
         multipleSelectionId:[],
-        token:"18xTgOQ1DeMjhFHTgapQqlyt7ntBU+RrTDmDuM/7LUpg7Fu0R028DE4qWcbTRggU7EXU+VASrgEBofcDd/KmvA=="
+        //token:"18xTgOQ1DeMjhFHTgapQqlyt7ntBU+RrTDmDuM/7LUpg7Fu0R028DE4qWcbTRggU7EXU+VASrgEBofcDd/KmvA=="
       }
     },
     created(){
       this.instance = axios.create({
         headers:{
-          "token":"18xTgOQ1DeMjhFHTgapQqlyt7ntBU+RrTDmDuM/7LUpg7Fu0R028DE4qWcbTRggU7EXU+VASrgEBofcDd/KmvA=="
+          "token":"18xTgOQ1DeMjhFHTgapQqmFoM3vbj3J3C53CthEtA6YnBnp+TPy3/RwdsvCidsZLmjQK5gb48EQquYapxDSLyQ=="
         }
       });
     },
@@ -142,17 +172,51 @@
       // config.headers.common['Authentication-Token']=this.token;
       this.instance.post('http://192.168.1.2:8080/shops/productList.do').then(
         (res)=>{
+          console.log(res);
+          // res.data.productList.forEach((item)=>{
+          //   item.AddDate=this.changeTime(item.AddDate);
+          // });
           this.tableData=res.data.productList;
-          // this.total=res.data.pageInfo.totalResult;
-          //this.optionsTitle=res.data.titleList;
-          //this.optionsClass=res.data.classList;
-          console.log(res.data);
+          this.total=res.data.pageInfo.totalResult;
+          this.optionsTitle=res.data.titleList;
+          this.optionsClass=res.data.categoryNameList;
+
+
         }
       ).catch((err)=>{
         console.log(err);
       });
     },
     methods: {
+      //搜索关键词
+      searchData(){
+          console.log(this.search);
+          let data=new FormData();
+          data.append("title",this.search);
+        this.instance.post('http://192.168.1.2:8080/shops/searchProduct.do',data).then(
+          (res)=>{
+            console.log(res);
+            this.tableData=res.data.searchList;
+            //this.total=res.data.pageInfo.totalResult;
+          }
+        ).catch((err)=>{
+          console.log(err);
+        });
+
+      },
+      changeTime(unixtimestamp){
+        var unixtimestamp = new Date(unixtimestamp);
+        var year = 1900 + unixtimestamp.getYear();
+        var month = "0" + (unixtimestamp.getMonth() + 1);
+        var date = "0" + unixtimestamp.getDate();
+        var hour = "0" + unixtimestamp.getHours();
+        var minute = "0" + unixtimestamp.getMinutes();
+        var second = "0" + unixtimestamp.getSeconds();
+        return year + "-" + month.substring(month.length-2, month.length)  + "-" + date.substring(date.length-2, date.length)
+          + " " + hour.substring(hour.length-2, hour.length) + ":"
+          + minute.substring(minute.length-2, minute.length) + ":"
+          + second.substring(second.length-2, second.length);
+      },
       //标题查询
       getTitle(){
           console.log(this.title)
@@ -170,17 +234,15 @@
         var data = new FormData();
         data.append("ids",this.multipleSelectionId);
         console.log(data.get('ids'));
-        axios.post('http://192.168.1.2:8080/shops/deleteGoodsSpecByIds.do',
+        this.instance.post('http://192.168.1.2:8080/shops/deleteProduct.do',
           data)
           .then((res)=> {
-            if(res.data.S===1){
-              for(var i=0;i<this.multipleSelectionId.length;i++){
-                for (var j=0;j<this.tableData.length;j++){
+              for(var i=this.multipleSelectionId.length-1;i>=0;i--){
+                for (var j=this.tableData.length-1;j>=0;j--){
                   if (this.tableData[j].ID==this.multipleSelectionId[i]){
                     this.tableData.splice(j,1);
                   }
                 }
-              }
               this.$message({
                 message: '删除成功',
                 type: 'success'
@@ -197,12 +259,14 @@
       //跳转 修改页面
       handleClick(row) {
         console.log(row);
-        this.$router.push({name: 'modifySpec',params: {data:row}});
+        this.$router.push({name: 'editProduct',params: {id:row.ID,classList:this.optionsClass}});
 
       },
       //跳转 添加页面
       goAdd(){
-        this.$router.push({name: 'addProduct'});
+        console.log("000");
+        console.log(this.optionsClass);
+        this.$router.push({name: "addProduct",params: {classList:this.optionsClass}});
       },
       //分页
       handleSizeChange(val) {
@@ -211,12 +275,12 @@
         var data = new FormData();
         data.append("currentPage",this.currentPage);
         data.append("showCount",this.showCount);
-        axios.post('http://192.168.1.2:8080/shops/goodsSpecList.do',
+        this.instance.post('http://192.168.1.2:8080/shops/productList.do',
           data)
           .then((res)=> {
-            this.tableData=res.data.goodsSpecList;
+            this.tableData=res.data.productList;
             this.total=res.data.pageInfo.totalResult;
-            console.log(res.data.pageInfo.totalResult);
+            console.log(res);
           }).catch((err)=>{
           console.log(err);
         });
@@ -229,12 +293,12 @@
         //data.append("currentPage",val);
         data.append("currentPage",val);
         data.append("showCount",this.showCount);
-        axios.post('http://192.168.1.2:8080/shops/goodsSpecList.do',
+        this.instance.post('http://192.168.1.2:8080/shops/productList.do',
           data)
           .then((res)=> {
-            this.tableData=res.data.goodsSpecList;
+            this.tableData=res.data.productList;
             this.total=res.data.pageInfo.totalResult;
-            console.log(res.data.pageInfo.totalResult);
+            console.log(res.data);
           }).catch((err)=>{
           console.log(err);
         });
@@ -263,16 +327,47 @@
   }
   .container-fluid{
     background-color:#fff;
-    padding:20px;
+    padding:40px;
     margin-left: 12px;
   }
   .box i{
-    border:1px solid #ddd;
+    -border:1px solid #ddd;
     padding:2px;
     cursor:pointer;
     font-size:14px;
   }
   .box i.active{
     color:#ccc;
+  }
+  .pl{
+    display: inline-block;
+    cursor: pointer;
+    margin-bottom:26px;
+    margin-right:18px;
+  }
+  .pl i{
+    font-size:16px;
+    margin-right:4px;
+  }
+  .pl span{
+    font-size:14px;
+  }
+  .search{
+    float:right;
+    position:relative;
+    width:158px;
+    height:28px;
+    margin-right:50px;
+  }
+  .search .inp{
+    width:100%;
+    height:100%;
+  }
+  .search i{
+    position:absolute;
+    right:8px;
+    top:6px;
+    cursor: pointer;
+    z-index: 999;
   }
 </style>

@@ -3,8 +3,16 @@
     <div class="main-content">
       <div class="container-fluid">
         <h3 class="page-title">规格管理</h3>
-        <el-button plain icon="el-icon-plus" style="margin-bottom: 8px" @click="goAdd">新增</el-button>
-        <el-button plain icon="el-icon-delete" style="margin-bottom: 8px" @click="delSel">删除</el-button>
+        <!--<el-button plain icon="el-icon-plus" style="margin-bottom: 8px" @click="goAdd">新增</el-button>-->
+        <!--<el-button plain icon="el-icon-delete" style="margin-bottom: 8px" @click="delSel">删除</el-button>-->
+        <div class="pl"  @click="goAdd">
+          <i class="iconfont icon-tianjia1"></i>
+          <span>批量添加</span>
+        </div>
+        <div class="pl"  @click="delSel">
+          <i class="iconfont icon-shanchu"></i>
+          <span>批量删除</span>
+        </div>
             <div class="table">
               <el-table
                 :data="tableData"
@@ -100,15 +108,21 @@
           token:"18xTgOQ1DeMjhFHTgapQqlyt7ntBU+RrTDmDuM/7LUpg7Fu0R028DE4qWcbTRggU7EXU+VASrgEBofcDd/KmvA=="
         }
       },
+    created(){
+      this.instance = axios.create({
+        headers:{
+          "token":"18xTgOQ1DeMjhFHTgapQqmFoM3vbj3J3C53CthEtA6YnBnp+TPy3/RwdsvCidsZLmjQK5gb48EQquYapxDSLyQ==",
+          "Content-Type": "multipart/form-data"
+        }
+      });
+    },
       mounted() {
 
-        let config = {headers: {'Content-Type': 'multipart/form-data','token':this.token}};
+        //let config = {headers: {'Content-Type': 'multipart/form-data','token':this.token}};
        // config.headers.common['Authentication-Token']=this.token;
-        axios.post('http://192.168.1.2:8080/shops/goodsSpecList.do').then(
-
-
+        this.instance.post('http://192.168.1.2:8080/shops/goodsSpecList.do').then(
           (res)=>{
-            console.log(res)
+            console.log(res);
             this.tableData=res.data.goodsSpecList;
             this.total=res.data.pageInfo.totalResult;
             console.log(res.data.goodsSpecList);
@@ -136,8 +150,8 @@
             data)
             .then((res)=> {
               if(res.data.S===1){
-                for(var i=0;i<this.multipleSelectionId.length;i++){
-                    for (var j=0;j<this.tableData.length;j++){
+                for(var i=this.multipleSelectionId.length-1;i>=0;i--){
+                    for (var j=this.tableData.length-1;j>=0;j--){
                           if (this.tableData[j].ID==this.multipleSelectionId[i]){
                               this.tableData.splice(j,1);
                           }
@@ -241,5 +255,18 @@
       background-color:#fff;
       padding:20px;
       margin-left: 12px;
+  }
+  .pl{
+    display: inline-block;
+    cursor: pointer;
+    margin-bottom:26px;
+    margin-right:18px;
+  }
+  .pl i{
+    font-size:16px;
+    margin-right:4px;
+  }
+  .pl span{
+    font-size:14px;
   }
 </style>

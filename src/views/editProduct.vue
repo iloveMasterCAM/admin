@@ -3,20 +3,20 @@
     <div class="main">
       <div class="main-content">
         <div class="container-fluid">
-          <h3 class="page-title">添加商品</h3>
+          <h3 class="page-title">修改商品</h3>
           <el-tabs v-model="activeName" type="card">
             <el-tab-pane label="基本信息" name="first">
               <div class="tabFirst">
                 <el-form ref="form" :model="sizeForm" label-width="80px" size="mini">
                   <el-form-item label="所属类别">
-                  <el-select v-model="classId" placeholder="请选择所属类别" @change="getClassId">
-                    <el-option
-                      v-for="item in optionsClass"
-                      :key="item.classId"
-                      :label="item.classId"
-                      :value="item.classId">
-                    </el-option>
-                  </el-select>
+                    <el-select v-model="classId" placeholder="请选择所属类别" @change="getClassId">
+                      <el-option
+                        v-for="item in optionsClass"
+                        :key="item.classId"
+                        :label="item.classId"
+                        :value="item.classId">
+                      </el-option>
+                    </el-select>
                   </el-form-item>
                   <el-form-item label="是否发布" prop="delivery">
                     <el-switch v-model="sizeForm.release"></el-switch>
@@ -34,10 +34,10 @@
                     <el-input v-model="sizeForm.cName" style="width:400px;"></el-input>
                   </el-form-item>
                   <!--<el-form-item label="副标题">-->
-                    <!--<el-input v-model="sizeForm.subName" style="width:400px;"></el-input>-->
+                  <!--<el-input v-model="sizeForm.subName" style="width:400px;"></el-input>-->
                   <!--</el-form-item>-->
                   <!--<el-form-item label="Tags标签">-->
-                    <!--<el-input v-model="sizeForm.tagLab" style="width:400px;"></el-input>-->
+                  <!--<el-input v-model="sizeForm.tagLab" style="width:400px;"></el-input>-->
                   <!--</el-form-item>-->
                   <el-form-item label="封面图片">
                     <div class="file">
@@ -62,7 +62,7 @@
                     <label>元</label>
                   </el-form-item>
                   <!--<el-form-item label="交易积分">-->
-                    <!--<el-input v-model="sizeForm.integral" style="width:130px;"></el-input>-->
+                  <!--<el-input v-model="sizeForm.integral" style="width:130px;"></el-input>-->
                   <!--</el-form-item>-->
                   <el-form-item label="商品规格">
                     <el-button plain icon="el-icon-circle-plus-outline" @click="addSel()" size="small">设置规格</el-button>
@@ -77,54 +77,54 @@
                       style="width: 100%">
                       <el-table-column
                         fixed
-                        prop="proNo"
+                        prop="Pro_No"
                         label="货号"
                         width="220">
                         <template slot-scope="scope">
-                          <el-input v-model="scope.row.proNo" size="small"></el-input>
+                          <el-input v-model="scope.row.Pro_No" size="small"></el-input>
                         </template>
                       </el-table-column>
                       <el-table-column
-                        prop="proMPrice"
+                        prop="Pro_MPrice"
                         label="市场价(元)"
                         width="150">
                         <template slot-scope="scope">
-                          <el-input-number v-model="scope.row.proMPrice" :precision="2" :step="1" :min="0" size="small"></el-input-number>
+                          <el-input-number v-model="scope.row.Pro_MPrice" :precision="2" :step="1" :min="0" size="small"></el-input-number>
                         </template>
                       </el-table-column>
                       <el-table-column
-                        prop="proSPrice"
+                        prop="Pro_SPrice"
                         label="销售价(元)"
                         width="150">
                         <template slot-scope="scope">
-                          <el-input-number v-model="scope.row.proSPrice" :precision="2" :step="1" :min="0" size="small"></el-input-number>
+                          <el-input-number v-model="scope.row.Pro_SPrice" :precision="2" :step="1" :min="0" size="small"></el-input-number>
                         </template>
                       </el-table-column>
                       <el-table-column
-                        prop="proNum"
+                        prop="Pro_Num"
                         label="库存(件)"
                         width="160">
                         <template slot-scope="scope">
-                          <el-input-number v-model="scope.row.proNum"  :min="0" :max="9999" label="描述文字" size="small"></el-input-number>
+                          <el-input-number v-model="scope.row.Pro_Num"  :min="0" :max="9999" label="描述文字" size="small"></el-input-number>
                         </template>
                       </el-table-column>
                       <el-table-column
-                        prop="specText"
+                        prop="Spec_Text"
                         label="规格"
                         width="800">
                       </el-table-column>
                       <!--<el-table-column-->
-                        <!--fixed="right"-->
-                        <!--label="操作"-->
-                        <!--width="190">-->
-                        <!--<template slot-scope="scope">-->
-                          <!--<el-button-->
-                            <!--type="primary"-->
-                            <!--@click.native.prevent="editRow(scope.row)"-->
-                            <!--size="mini">-->
-                            <!--编辑-->
-                          <!--</el-button>-->
-                        <!--</template>-->
+                      <!--fixed="right"-->
+                      <!--label="操作"-->
+                      <!--width="190">-->
+                      <!--<template slot-scope="scope">-->
+                      <!--<el-button-->
+                      <!--type="primary"-->
+                      <!--@click.native.prevent="editRow(scope.row)"-->
+                      <!--size="mini">-->
+                      <!--编辑-->
+                      <!--</el-button>-->
+                      <!--</template>-->
                       <!--</el-table-column>-->
                     </el-table>
                   </div>
@@ -132,7 +132,7 @@
                     <el-input-number v-model="sizeForm.sortNum"  :min="0" :max="99" label="描述文字" size="small"></el-input-number>
                   </el-form-item>
                   <!--<el-form-item label="浏览次数">-->
-                    <!--<el-input-number v-model="sizeForm.lookNum"  :min="0" :max="999" label="描述文字" size="small"></el-input-number>-->
+                  <!--<el-input-number v-model="sizeForm.lookNum"  :min="0" :max="999" label="描述文字" size="small"></el-input-number>-->
                   <!--</el-form-item>-->
                   <el-form-item label="发布时间">
                     <div class="block">
@@ -147,10 +147,16 @@
                   <el-form-item label="图片相册">
                     <label for="uploadMFile" style="padding:0 14px;font-size:12px;border-radius: 3px;color: #606266;border: 1px solid #dcdfe6;font-weight:normal;cursor:pointer;"><i class="el-icon-document" style="padding-right:6px;"></i>批量上传</label>
                     <input type="file" name="file" id="uploadMFile" style="opacity: 0;position:absolute;left:-999px;"  accept="image/*" multiple @change="addImg()" ref="inputer"><br>
-                    <div class="imgBox" v-for="(value, index) in imgs" :key="index">
+                    <div class="imgBox" v-for="(value, index) in imgs" :key="index" v-show="imgs">
                       <img :src="getObjectURL(value)" alt="" style="width:120px;height:120px;">
                       <div class="button">
                         <span @click="delImg(index)">删除</span>
+                      </div>
+                    </div>
+                    <div class="imgBox" v-for="(value, index) in imgsUrl" :key="index" v-show="!imgs">
+                      <img :src="value.imagesPath" alt="" style="width:120px;height:120px;">
+                      <div class="button">
+                        <span @click="delImgUrl(value.id)">删除</span>
                       </div>
                     </div>
                   </el-form-item>
@@ -162,62 +168,62 @@
               </div>
             </el-tab-pane>
             <el-tab-pane label="详细描述" name="second">
-                <div class="tabSecond">
-                  <el-form  :model="secondForm" label-width="80px" size="mini">
-                    <el-form-item label="调用别名">
-                      <el-input v-model="secondForm.name" style="width:400px;"></el-input>
-                    </el-form-item>
-                    <el-form-item label="URL链接">
-                      <el-input v-model="secondForm.link" style="width:400px;"></el-input>
-                    </el-form-item>
-                    <el-form-item label="内容摘要">
-                      <el-input type="textarea" v-model="secondForm.abstract" style="width:400px;"></el-input>
-                    </el-form-item>
-                    <el-form-item label="内容描述">
-                      <quill-editor
-                        v-model="content"
-                        ref="myQuillEditor"
-                        :options="editorOption"
-                        @ready="onEditorReady($event)"
-                        @blur="onEditorBlur($event)" @focus="onEditorFocus($event)"
-                        @change="onEditorChange($event)">
-                      </quill-editor>
-                    </el-form-item>
-                    <el-form-item>
-                      <el-button type="primary" @click="onSubmit">立即添加</el-button>
-                      <el-button @click="cancal">取消</el-button>
-                    </el-form-item>
-                  </el-form>
-                </div>
+              <div class="tabSecond">
+                <el-form  :model="secondForm" label-width="80px" size="mini">
+                  <el-form-item label="调用别名">
+                    <el-input v-model="secondForm.name" style="width:400px;"></el-input>
+                  </el-form-item>
+                  <el-form-item label="URL链接">
+                    <el-input v-model="secondForm.link" style="width:400px;"></el-input>
+                  </el-form-item>
+                  <el-form-item label="内容摘要">
+                    <el-input type="textarea" v-model="secondForm.abstract" style="width:400px;"></el-input>
+                  </el-form-item>
+                  <el-form-item label="内容描述">
+                    <quill-editor
+                      v-model="content"
+                      ref="myQuillEditor"
+                      :options="editorOption"
+                      @ready="onEditorReady($event)"
+                      @blur="onEditorBlur($event)" @focus="onEditorFocus($event)"
+                      @change="onEditorChange($event)">
+                    </quill-editor>
+                  </el-form-item>
+                  <el-form-item>
+                    <el-button type="primary" @click="onSubmit">立即添加</el-button>
+                    <el-button @click="cancal">取消</el-button>
+                  </el-form-item>
+                </el-form>
+              </div>
             </el-tab-pane>
             <el-tab-pane label="SEO选项" name="third">
-                <div class="tabThird">
-                  <el-form  :model="thirdForm" label-width="80px" size="mini">
-                    <el-form-item label="SEO标题">
-                      <el-input v-model="thirdForm.title" style="width:400px;"></el-input>
-                    </el-form-item>
-                    <el-form-item label="SEO关健字">
-                      <el-input type="textarea" v-model="thirdForm.key" style="width:400px;"></el-input>
-                    </el-form-item>
-                    <el-form-item label="SEO描述">
-                      <el-input type="textarea" v-model="thirdForm.des" style="width:400px;"></el-input>
-                    </el-form-item>
-                    <el-form-item>
-                      <el-button type="primary" @click="onSubmit">立即添加</el-button>
-                      <el-button @click="cancal">取消</el-button>
-                    </el-form-item>
-                  </el-form>
-                </div>
+              <div class="tabThird">
+                <el-form  :model="thirdForm" label-width="80px" size="mini">
+                  <el-form-item label="SEO标题">
+                    <el-input v-model="thirdForm.title" style="width:400px;"></el-input>
+                  </el-form-item>
+                  <el-form-item label="SEO关健字">
+                    <el-input type="textarea" v-model="thirdForm.key" style="width:400px;"></el-input>
+                  </el-form-item>
+                  <el-form-item label="SEO描述">
+                    <el-input type="textarea" v-model="thirdForm.des" style="width:400px;"></el-input>
+                  </el-form-item>
+                  <el-form-item>
+                    <el-button type="primary" @click="onSubmit">立即添加</el-button>
+                    <el-button @click="cancal">取消</el-button>
+                  </el-form-item>
+                </el-form>
+              </div>
             </el-tab-pane>
           </el-tabs>
           <!--dialog-->
           <el-dialog title="商品规格" :visible.sync="dialogFormVisible">
             <div class="item" v-for="item in diaData">
-                <span class="left" v-html="item.title"></span>
-                <div class="right">
-                  <span v-show="!text.src" :title="text.title" v-html="text.title" v-for="text in item.subList" @click="text.state=!text.state" :class="{active:text.state}"></span>
-                  <img  v-show="img.src"   :src="img.src" :title="img.title" v-for="img in item.subList" @click="img.state=!img.state">
-                </div>
+              <span class="left" v-html="item.title"></span>
+              <div class="right">
+                <span v-show="!text.src" :title="text.title" v-html="text.title" v-for="text in item.subList" @click="text.state=!text.state" :class="{active:text.state}"></span>
+                <img  v-show="img.src"   :src="img.src" :title="img.title" v-for="img in item.subList" @click="img.state=!img.state">
+              </div>
             </div>
             <div slot="footer" class="dialog-footer">
               <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -253,8 +259,8 @@
         activeName: 'first',
 
         tableData: [],
-        specIdss:[],
         sizeForm: {
+          id:'',
           name: '',
           release: false,
           title: '',
@@ -285,6 +291,8 @@
         subTable: [],
         //多图片上传
         imgs: {},
+        //url
+        imgsUrl:[],
         //描述索引
         mIndex:0,
         //描述弹框
@@ -309,9 +317,6 @@
         arr:[],
         results:[],
         result:[],
-        //ids
-        aId:[],
-        aIds:[]
       }
     },
     created(){
@@ -323,23 +328,67 @@
       });
     },
     mounted() {
-      //http://192.168.1.2:8080/shops/addProduct.do
+      var id=this.$route.params.id;
       this.optionsClass=this.$route.params.classList;
-      //console.log(this.$route.params.classList);
+      // alert(id);
       let data=new FormData();
-      data.append("storeId","15");
-      this.instance.post('http://192.168.1.2:8080/shops/getGoodsSpec.do',data)
+      data.append("id",id);
+      this.instance.post('http://192.168.1.2:8080/shops/getProductById.do',data)
         .then((res) => {
-          console.log(res);
-            var data=res.data;
-            data.forEach((item)=>{
-               item.subList.forEach((item)=>{
-                  item.state=false;
-               })
-            });
-            this.diaData=data;
-            this.diaDataOld=data;
-            console.log(this.diaData)
+          console.log("修改商品");
+          console.log(res.data);
+          var selectData=res.data.selectedspec;//选中数据
+          var data=res.data.allspec;//全部规格数据
+          this.tableData=res.data.sepclist;//规格详情
+          this.imgsUrl=res.data.imggroup;
+          var form=res.data.allspec[0];//页面数据
+          data.splice(0,1);
+          data.forEach((item)=>{
+            item.subList.forEach((item)=>{
+              item.state=false;
+            })
+          });
+          data.forEach((item)=>{
+            selectData.forEach((val)=>{
+                if(item.ID===val.Spec_ID){
+                  item.subList.forEach((it)=>{
+                    val.subList.forEach((va)=>{
+                       if(it.ID===va.Spec_ID){
+                         it.state=true;
+                       }
+                    })
+                  })
+                }
+            })
+          });
+          this.diaData=data;
+
+
+
+          var type=[];
+          if(form.isRecommend){
+              type.push("推荐")
+          }
+          if(form.isHot){
+            type.push("热门")
+          }
+          if(form.isTop){
+            type.push("置顶")
+          }
+          if(form.isComment){
+            type.push("允许评论")
+          }
+          this.sizeForm.id=form.id;
+          this.sizeForm.release=!!form.verify;
+          this.sizeForm.type=type;
+          this.sizeForm.cName=form.title;
+          //this.sizeForm.imgURl=form.title;
+          this.sizeForm.pCode=form.artNo;
+          this.sizeForm.pNum=form.proNums;
+          this.sizeForm.mPrice=form.oPrice;
+          this.sizeForm.selPrice=form.proPrice;
+          this.sizeForm.sort=form.sortNum;
+          this.sizeForm.time=this.changeTime(form.addDate);
           }
         ).catch((err) => {
         console.log(err);
@@ -382,9 +431,12 @@
         }
       },
       getObjectURL(file) {
-          var windowURL = window.URL || window.webkitURL;
-          var dataUrl = windowURL.createObjectURL(file);//图片临时路径
+        var windowURL = window.URL || window.webkitURL;
+        var dataUrl = windowURL.createObjectURL(file);//图片临时路径
         return dataUrl ;
+      },
+      delImgUrl(id){
+        console.log(id);
       },
       delImg(key){
         this.$delete(this.imgs,key);
@@ -406,21 +458,35 @@
         }
       },
       getType(){
-          console.log(this.sizeForm.type);
+        console.log(this.sizeForm.type);
         this.sizeForm.type.forEach((item)=>{
-            if(item==='允许评论'){
-                this.sizeForm.IsComment=1;
-            }
-            if(item==='置顶'){
-              this.sizeForm.IsTop=1;
-            }
-            if(item==='推荐'){
-              this.sizeForm.IsRecommend=1;
-            }
-            if(item==='热门'){
-              this.sizeForm.IsHot=1;
-            }
+          if(item==='允许评论'){
+            this.sizeForm.IsComment=1;
+          }
+          if(item==='置顶'){
+            this.sizeForm.IsTop=1;
+          }
+          if(item==='推荐'){
+            this.sizeForm.IsRecommend=1;
+          }
+          if(item==='热门'){
+            this.sizeForm.IsHot=1;
+          }
         })
+      },
+      //时间戳转yy-mm-dd hh::mm:ss
+      changeTime(unixtimestamp){
+        var unixtimestamp = new Date(unixtimestamp);
+        var year = 1900 + unixtimestamp.getYear();
+        var month = "0" + (unixtimestamp.getMonth() + 1);
+        var date = "0" + unixtimestamp.getDate();
+        var hour = "0" + unixtimestamp.getHours();
+        var minute = "0" + unixtimestamp.getMinutes();
+        var second = "0" + unixtimestamp.getSeconds();
+        return year + "-" + month.substring(month.length-2, month.length)  + "-" + date.substring(date.length-2, date.length)
+          + " " + hour.substring(hour.length-2, hour.length) + ":"
+          + minute.substring(minute.length-2, minute.length) + ":"
+          + second.substring(second.length-2, second.length);
       },
       //设置规格
       addSel() {
@@ -449,67 +515,50 @@
         console.log(222);
         console.log(this.diaData);
         this.arr=[];
-        this.specIdss=[];
         this.diaData.forEach((item)=>{
-            var title=item.title+":";
-            var t=[];
-            var s=[];
-            var ids=[];
-            var flag=true;
-            item.subList.forEach((val)=>{
-                if(val.state){
-                  s.push(val.title);
-                  ids.push(val.ID);
-                  if(flag){
-                    t.push(title);
-                    flag=false;
-                  }
-                }
-            });
-            if(s){
-              this.arr.push(t);
-              this.arr.push(s);
-              this.specIdss.push(ids);
-
+          var title=item.title+":";
+          var t=[];
+          var s=[];
+          var flag=true;
+          item.subList.forEach((val)=>{
+            if(val.state){
+              s.push(val.title);
+              if(flag){
+                t.push(title);
+                flag=false;
+              }
             }
+          });
+          if(s){
+            this.arr.push(t);
+            this.arr.push(s);
+          }
         });
-        //清除空数组
         for(let i=this.arr.length-1;i>=0;i--){
-            if(this.arr[i].length===0){
-                this.arr.splice(i,1)
-            }
-        }
-        for(let i=this.specIdss.length-1;i>=0;i--){
-            if(this.specIdss[i].length===0){
-                this.specIdss.splice(i,1);
-            }
+          if(this.arr[i].length===0){
+            this.arr.splice(i,1)
+          }
         }
         console.log(this.arr);
         this.result=[];
         this.results=[];
-
-        this.aId=[];
-        this.aIds=[];
-        this.doExchangeID(this.specIdss,0);
         this.doExchange(this.arr, 0);
-        console.log("aids");
-        console.log(this.aIds);
+        console.log(this.results);
         this.tableData=[];
         var code=this.getRandomCode(16);
         this.results.forEach((item,index)=>{
-            var obj={};
-            if(this.sizeForm.pCode){
-              obj.proNo=this.sizeForm.pCode+"-"+(index+1);
-            }else{
-              obj.proNo=code+"-"+(index+1);
-            }
+          var obj={};
+          if(this.sizeForm.pCode){
+            obj.Pro_No=this.sizeForm.pCode+"-"+(index+1);
+          }else{
+            obj.Pro_No=code+"-"+(index+1);
+          }
 
-            obj.proMPrice=0; //市场价
-            obj.proSPrice=0;//销售价
-            obj.proNum=0;//库存
-            obj.specText=item;
-            obj.specIds=this.aIds[index];
-            this.tableData.push(obj);
+          obj.Pro_MPrice=0; //市场价
+          obj.Pro_SPrice=0;//销售价
+          obj.Pro_Num=0;//库存
+          obj.Spec_Text=item;
+          this.tableData.push(obj);
         })
 
       },
@@ -522,17 +571,17 @@
 
         //选中数据
         if(this.isChange){
-            var leng=this.diaData.length;
-            for(let i=leng-1;i>=0;i--){
-                for(let j=this.diaData[i].subList.length-1;j>=0;j--){
-                    if(!this.diaData[i].subList[j].state){
-                      this.diaData[i].subList.splice(j,1);
-                    }
-                }
-                if(this.diaData[i].subList.length===0){
-                    this.diaData.splice(i,1);
-                }
+          var leng=this.diaData.length;
+          for(let i=leng-1;i>=0;i--){
+            for(let j=this.diaData[i].subList.length-1;j>=0;j--){
+              if(!this.diaData[i].subList[j].state){
+                this.diaData[i].subList.splice(j,1);
+              }
             }
+            if(this.diaData[i].subList.length===0){
+              this.diaData.splice(i,1);
+            }
+          }
         }
         console.log(this.diaData);
         //发送数据1 URLSearchParams
@@ -564,14 +613,15 @@
         //   data.append('images',this.imgs[key],name);//图片相册
         // }
         data.append("goodsSelect",JSON.stringify(this.diaData));//-选中规格数据
-        //数据3
-        data.append("seoTitle",this.thirdForm.title);
-        data.append("seoKeyWords",this.thirdForm.key);
-        data.append("seoDescribe",this.thirdForm.des);
+        //数据2
+        // alert(data.get("addDate"));
+        // let config = {
+        //   headers:{'Content-Type':'multipart/form-data'}
+        // };
         this.instance.post('http://192.168.1.2:8080/shops/addProduct.do',data)
           .then((res) => {
               console.log(res);
-            this.$router.push({name: 'mailManage'})
+              this.$router.push({name: 'mailManage'})
             }
           ).catch((err) => {
           console.log(err);
@@ -584,16 +634,6 @@
             this.doExchange(arr, index + 1)
           } else {
             this.results.push(this.result.join(' '))
-          }
-        }
-      },
-      doExchangeID(arr, index){
-        for (var i = 0; i<arr[index].length; i++) {
-          this.aId[index] = arr[index][i];
-          if (index !== arr.length - 1) {
-            this.doExchangeID(arr, index + 1)
-          } else {
-            this.aIds.push(this.aId.join(','))
           }
         }
       },
@@ -650,9 +690,9 @@
     padding:20px;
   }
   .item .left{
-      width:110px;
-      text-align: right;
-      margin-right:15px;
+    width:110px;
+    text-align: right;
+    margin-right:15px;
   }
   .item .right span{
     border:1px solid #eee;
