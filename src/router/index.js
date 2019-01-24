@@ -2,14 +2,14 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import index from '@/views/index'
 import charts from '@/views/charts'
-import elements from '@/views/elements'
+import Authentication from '@/views/Authentication'
 import mine from '@/views/mine'
 import lockscreen from '@/views/lockscreen'
 import login from '@/views/login'
 import notifications from '@/views/notifications'
 import panels from '@/views/panels'
 import profile from '@/views/profile'
-import tables from '@/views/tables'
+import shop from '@/views/shop'
 import typography from '@/views/typography'
 import specifications from '@/views/specifications'
 import addSpec from '@/views/addSpec'
@@ -51,9 +51,9 @@ let Routers = new Router({
 
     },
     {
-      path: '/elements',
-      name: 'elements',
-      component: elements
+      path: '/Authentication',
+      name: 'Authentication',
+      component: Authentication
     }
     ,
     {
@@ -83,9 +83,9 @@ let Routers = new Router({
     ,
 
     {
-      path: '/tables',
-      name: 'tables',
-      component: tables
+      path: '/shop',
+      name: 'shop',
+      component: shop
     }
     ,
     {
@@ -138,14 +138,15 @@ let Routers = new Router({
 });
 Routers.beforeEach((to, from, next) => {
 
-  console.log(getCookie('token'))
+  //console.log(to.name)
    const isLogin = getCookie('token');
   if (to.name !== "login") {
     if (!isLogin) {
-      
-      next({
-        path: "/login"
-      });
+
+      // next({
+      //   path: "/login"
+      // });
+      next();
     } else {
       next();
     }
