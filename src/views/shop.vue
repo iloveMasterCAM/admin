@@ -33,7 +33,6 @@
                     <span class="child color1">电商</span>
                     <span class="child color2">电ff商</span>
                     <span class="child color3">电商</span>
-                    
                   </div>
                   <div class="bottom">
                     <span>电商</span>

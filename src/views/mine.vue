@@ -159,7 +159,7 @@
           </div>
         </div>
         <div class="cneter pull-left phone tips_box" v-show="isShow == 2">
-          <span class="tips" v-show="tipsShow" v-text="tipsVal"></span>
+          <span class="tips" v-show="tipsShowPhone" v-text="tipsValPhone"></span>
 
           <div class="status">
             <div>
@@ -180,7 +180,7 @@
                 <el-input v-model="setPhone.oldPhone" placeholder="请输入姓名"></el-input>
               </div>
               <div class="col-xs-3">
-                <span class="send" @click="send1" v-text="setPhone.codeMsg"></span>
+                <span class="send" @click="send" v-text="setPhone.codeMsg"></span>
               </div>
             </div>
             <p>验证码</p>
@@ -190,7 +190,7 @@
               </div>
             </div>
             <div class="confim">
-              <span class="save" @click="step1">下一步</span>
+              <span class="save" @click="next">下一步</span>
             </div>
           </div>
           <div class="new" v-show="step == 1">
@@ -200,7 +200,7 @@
                 <el-input v-model="setPhone.newPhone" placeholder="请输入绑定新手机"></el-input>
               </div>
               <div class="col-xs-3">
-                <span class="send" v-text="setPhone.codeMsg"  @click="send1"></span>
+                <span class="send" v-text="setPhone.codeMsg"  @click="send"></span>
               </div>
             </div>
             <p>验证码</p>
@@ -210,7 +210,7 @@
               </div>
             </div>
             <div class="confim">
-              <span class="save"  @click="step1">确定修改</span>
+              <span class="save"  @click="next">确定修改</span>
             </div>
           </div>
           <div class="success text-center" v-show="step == 2">
@@ -562,7 +562,9 @@ export default {
       newPasw: "",
       confrimPasw: "",
       tipsVal: "密码错误！",
+      tipsValPhone: "",
       tipsShow: false,
+      tipsShowPhone:false,
       setPhone: {
         oldPhone: "",
         newPhone: "",
@@ -678,7 +680,7 @@ export default {
       }
     },
     //给旧手机号 发胆信
-    send1() {
+    send() {
       let that = this;
       let timeKey = 'time';
       let phone = this.setPhone.oldPhone
@@ -711,7 +713,7 @@ export default {
       }
     },
     //给旧手机号 发胆信 后 下一步 
-    step1(){
+    next(){
       //regist/
       let phone = this.setPhone.oldPhone
       if(this.step == 1){
@@ -756,7 +758,7 @@ export default {
     isPhone(v) {
       var reg = /^1[2,3,4,5,6,7,8,9][0-9]{9}$/;
       if (!reg.test(v)) {
-        this.tips("手机号错误！");
+        this.tipsPhone("手机号错误！");
         return false;
       } else {
         return true;
@@ -766,6 +768,10 @@ export default {
     tips(v) {
       this.tipsShow = true;
       this.tipsVal = v;
+    },
+     tipsPhone(v) {
+      this.tipsShowPhone = true;
+      this.tipsValPhone = v;
     }
   },
   created() {
