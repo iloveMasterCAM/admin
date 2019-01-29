@@ -196,7 +196,9 @@ export default {
         {path:'/profile',name:'商品分类',icon:'lnr lnr-home'},
         {path:'/panels',name:'panels',icon:'lnr lnr-home'},
         {path:'/specifications',name:'specifications',icon:'lnr lnr-home'},
-        {path:'/mailManage',name:'mailManage',icon:'lnr lnr-home'}
+        {path:'/mailManage',name:'mailManage',icon:'lnr lnr-home'},
+        {path:'/groupBuy',name:'groupBuy',icon:'lnr lnr-home'},
+        {path:'/activity',name:'activity',icon:'lnr lnr-home'}
 
       ]
     };
@@ -244,4 +246,15 @@ export default {
 </script>
 
 <style>
+  #addProduct .el-form-item__label {
+    color:#647787;
+    font-size:14px;
+    font-weight: normal;
+  }
+  #addProduct label{
+    color:#647787;
+    font-size:14px;
+    font-weight: normal;
+  }
+
 </style>
