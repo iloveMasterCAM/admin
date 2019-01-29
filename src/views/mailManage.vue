@@ -28,27 +28,40 @@
           <i class="iconfont icon-baocun"></i>
           <span>批量保存</span>
         </div>
-        <!--<el-select v-model="titleName" placeholder="所有标题" @change="getTitle" style="margin-left:531px;" size="mini">-->
-          <!--<el-option-->
-            <!--v-for="item in optionsTitle"-->
-            <!--:key="item.title"-->
-            <!--:label="item.title"-->
-            <!--:value="item.title">-->
-          <!--</el-option>-->
-        <!--</el-select>-->
-        <!--<el-select v-model="classId" placeholder="所有类别" @change="getClassId" size="mini">-->
-          <!--<el-option-->
-            <!--v-for="item in optionsClass"-->
-            <!--:key="item.classId"-->
-            <!--:label="item.classId"-->
-            <!--:value="item.classId">-->
-          <!--</el-option>-->
-        <!--</el-select>-->
+        <div class="groupIcon">
+          <div class="item">
+            <i class="iconfont icon-dayinji"></i>
+          </div>
+          <div class="line">
+            |
+          </div>
+          <div class="item">
+            <i class="iconfont icon-daoru"></i>
+          </div>
+          <div class="line">
+            |
+          </div>
+          <div class="item" style="-webkit-transform: rotate(180deg) translateY(-6px);width:18px;height:18px;">
+            <i class="iconfont icon-daoru"></i>
+          </div>
+          <div class="line">
+            |
+          </div>
+          <div class="item">
+            <i class="iconfont icon-export"></i>
+          </div>
+          <div class="line">
+            |
+          </div>
+          <div class="item">
+            <i class="iconfont icon-shuaxin"></i>
+          </div>
+        </div>
         <div class="search">
           <el-input v-model="search" placeholder="搜索" class="inp" size="mini"></el-input>
           <i class="el-icon-search" @click="searchData"></i>
         </div>
-        <div class="table">
+        <div class="table" style="margin-top:20px;">
           <el-table
             :data="tableData"
             border
@@ -66,7 +79,7 @@
               width="450">
             </el-table-column>
             <el-table-column
-              prop="ClassID"
+              prop="category_name"
               label="类别"
               width="200">
             </el-table-column>
@@ -179,8 +192,8 @@
           });
           this.tableData=data;
           this.total=res.data.pageInfo.totalResult;
-          this.optionsTitle=res.data.titleList;
-          this.optionsClass=res.data.categoryNameList;
+          //this.optionsTitle=res.data.titleList;
+          this.optionsClass=res.data.categoryAllNameList;
 
 
         }
@@ -199,6 +212,7 @@
             console.log(res);
             this.tableData=res.data.searchList;
             //this.total=res.data.pageInfo.totalResult;
+            this.total=res.data.searchList.length;
           }
         ).catch((err)=>{
           console.log(err);
@@ -260,14 +274,14 @@
       //跳转 修改页面
       handleClick(row) {
         console.log(row);
-        this.$router.push({name: 'editProduct',params: {id:row.ID,classList:this.optionsClass}});
+        this.$router.push({name: 'editProduct',params: {id:row.ID,classList:this.optionsClass,categoryId:row.ClassID}});
 
       },
       //跳转 添加页面
       goAdd(){
         console.log("000");
         console.log(this.optionsClass);
-        this.$router.push({name: "addProduct",params: {classList:this.optionsClass}});
+        this.$router.push({name: "addProduct",params: {catList:this.optionsClass}});
       },
       //分页
       handleSizeChange(val) {
@@ -324,12 +338,16 @@
 
 <style scoped>
   .page-title{
-    font-size:18px;
+    font-size:16px;
+    color:#647787;
+    margin-bottom:40px;
+    margin-left:28px;
   }
   .container-fluid{
     background-color:#fff;
     padding:40px;
     margin-left: 12px;
+    position:relative;
   }
   .box i{
     -border:1px solid #ddd;
@@ -343,8 +361,9 @@
   .pl{
     display: inline-block;
     cursor: pointer;
-    margin-bottom:26px;
+    margin-bottom:20px;
     margin-right:18px;
+    margin-left:28px;
   }
   .pl i{
     font-size:16px;
@@ -352,6 +371,7 @@
   }
   .pl span{
     font-size:14px;
+    color:#647787;
   }
   .search{
     float:right;
@@ -371,4 +391,26 @@
     cursor: pointer;
     z-index: 999;
   }
+
+
+  .groupIcon{
+    display:flex;
+    position:absolute;
+    top:40px;
+    right:50px;
+  }
+  .groupIcon div{
+    color:#a8afbb;
+    margin:0 6px;
+  }
+  .groupIcon .line{
+    -webkit-transform: scale(0.4,0.8);
+    text-align: center;
+  }
+  .groupIcon .item i{
+    font-size:18px;
+    color:#a8afbb;
+    cursor:pointer;
+  }
+
 </style>

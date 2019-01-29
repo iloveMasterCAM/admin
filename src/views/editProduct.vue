@@ -12,10 +12,11 @@
                     <el-select v-model="classId" placeholder="请选择所属类别" @change="getClassId">
                       <el-option
                         v-for="item in optionsClass"
-                        :key="item.classId"
-                        :label="item.classId"
-                        :value="item.classId">
+                        :key="item.categoryId"
+                        :label="item.categoryName"
+                        :value="item.categoryId">
                       </el-option>
+                      <!--categoryId-->
                     </el-select>
                   </el-form-item>
                   <el-form-item label="是否发布" prop="delivery">
@@ -170,12 +171,12 @@
             <el-tab-pane label="详细描述" name="second">
               <div class="tabSecond">
                 <el-form  :model="secondForm" label-width="80px" size="mini">
-                  <el-form-item label="调用别名">
-                    <el-input v-model="secondForm.name" style="width:400px;"></el-input>
-                  </el-form-item>
-                  <el-form-item label="URL链接">
-                    <el-input v-model="secondForm.link" style="width:400px;"></el-input>
-                  </el-form-item>
+                  <!--<el-form-item label="调用别名">-->
+                    <!--<el-input v-model="secondForm.name" style="width:400px;"></el-input>-->
+                  <!--</el-form-item>-->
+                  <!--<el-form-item label="URL链接">-->
+                    <!--<el-input v-model="secondForm.link" style="width:400px;"></el-input>-->
+                  <!--</el-form-item>-->
                   <el-form-item label="内容摘要">
                     <el-input type="textarea" v-model="secondForm.abstract" style="width:400px;"></el-input>
                   </el-form-item>
@@ -284,7 +285,7 @@
           IsHot:0,
         },
         optionsClass: [],
-        classId: '',
+        classId: null,
         subName: '',
 
         dialogForm: [],
@@ -330,6 +331,7 @@
     mounted() {
       var id=this.$route.params.id;
       this.optionsClass=this.$route.params.classList;
+      this.classId=this.$route.params.categoryId;
       // alert(id);
       let data=new FormData();
       data.append("id",id);
@@ -387,8 +389,8 @@
           this.sizeForm.pNum=form.proNums;
           this.sizeForm.mPrice=form.oPrice;
           this.sizeForm.selPrice=form.proPrice;
-          this.sizeForm.sort=form.sortNum;
-          this.sizeForm.time=form.addDate;
+          this.sizeForm.sortNum=form.sort;
+          this.sizeForm.time=this.changeTime(form.addDate);
           }
         ).catch((err) => {
         console.log(err);
@@ -607,17 +609,21 @@
         data.append("goodsDetail",JSON.stringify(this.tableData));//-规格内容
         data.append("sort",this.sizeForm.sortNum);//排序
         // data.append("isComment",this.sizeForm.lookNum);//浏览次数
-        data.append("addDate",this.sizeForm.time);//时间
-        // for(let key in this.imgs){
-        //   let name=key;
-        //   data.append('images',this.imgs[key],name);//图片相册
-        // }
+        //data.append("addDate",this.sizeForm.time);//时间
+        for(let key in this.imgs){
+          let name=key;
+          data.append('images',this.imgs[key],name);//图片相册
+        }
+        data.append("goodsSelect",JSON.stringify(this.diaData));//-选中规格数据
         data.append("goodsSelect",JSON.stringify(this.diaData));//-选中规格数据
         //数据2
-        // alert(data.get("addDate"));
-        // let config = {
-        //   headers:{'Content-Type':'multipart/form-data'}
-        // };
+        data.append("proDetail",this.secondForm.abstract);
+        data.append("proInfo",this.content);
+        //数据3
+        data.append("seoTitle",this.thirdForm.title);
+        data.append("seoKeyWords",this.thirdForm.key);
+        data.append("seoDescribe",this.thirdForm.des);
+        this.instance.post('http://192.168.1.2:8080/shops/addProduct.do',data)
         this.instance.post('http://192.168.1.2:8080/shops/addProduct.do',data)
           .then((res) => {
               console.log(res);

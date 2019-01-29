@@ -17,6 +17,11 @@ import modifySpec from '@/views/modifySpec'
 import mailManage from '@/views/mailManage'
 import addProduct from '@/views/addProduct'
 import editProduct from '@/views/editProduct'
+import groupBuy from '@/views/groupBuy'
+import addGroupGoods from '@/views/addGroupGoods'
+import editGroup from '@/views/editGroup'
+import activity from '@/views/activity'
+
 
  let getCookie = function (c_name) {
   if (document.cookie.length > 0) {
@@ -139,6 +144,26 @@ let Routers = new Router({
       path: '/mailManage/editProduct',
       name: 'editProduct',
       component: editProduct
+    },
+    {
+      path: '/groupBuy',
+      name: 'groupBuy',
+      component: groupBuy
+    },
+    {
+      path: '/groupBuy/addGroupGoods',
+      name: 'addGroupGoods',
+      component: addGroupGoods
+    },
+    {
+      path: '/groupBuy/editGroup',
+      name: 'editGroup',
+      component: editGroup
+    },
+    {
+      path: '/activity',
+      name: 'activity',
+      component: activity
     },
   ]
 });
