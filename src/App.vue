@@ -194,7 +194,7 @@ export default {
         {path:'/mine',name:'我的',icon:'lnr lnr-home'},
         {path:'/shop',name:'我的店铺',icon:'lnr lnr-home'},
         {path:'/profile',name:'商品分类',icon:'lnr lnr-home'},
-        {path:'/panels',name:'panels',icon:'lnr lnr-home'},
+        {path:'/panels',name:'配送模板1',icon:'lnr lnr-home'},
         {path:'/specifications',name:'specifications',icon:'lnr lnr-home'},
         {path:'/mailManage',name:'mailManage',icon:'lnr lnr-home'}
 

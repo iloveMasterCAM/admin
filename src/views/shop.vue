@@ -5,9 +5,9 @@
       <div class="heading">修改店铺信息</div>
       <div class="nav">
         <ul class="clearfix" @click="tabNav">
-          <li class="pull-left " num='0' :class="{'active':navIndex == 0}">修改认证信息</li>
-          <li class="pull-left" num='1' :class="{'active':navIndex == 1}">联系方式</li>
-          <li class="pull-left" num='2' :class="{'active':navIndex == 2}">详细信息</li>
+          <li class="pull-left" num="0" :class="{'active':navIndex == 0}">修改认证信息</li>
+          <li class="pull-left" num="1" :class="{'active':navIndex == 1}">联系方式</li>
+          <li class="pull-left" num="2" :class="{'active':navIndex == 2}">详细信息</li>
         </ul>
       </div>
       <div class="clearfix" id="wrap">
@@ -63,7 +63,7 @@
             </div>
           </div>
         </div>
-        <div  v-show="navIndex == 1" class="addressBox" id="addressBox">
+        <div v-show="navIndex == 1" class="addressBox" id="addressBox">
           <div class="heading">联系方式</div>
           <!-- el-col el-col-5  el-row -->
           <div class="el-row">
@@ -162,7 +162,7 @@
             </div>
           </div>
         </div>
-        <div id="detail"  v-show="navIndex == 2">
+        <div id="detail" v-show="navIndex == 2">
           <div>
             <div class="heading">填写信息</div>
             <div class="el-row box">
@@ -201,10 +201,11 @@
             </div>
           </div>
           <div>
-            <div class="heading bor">店铺环境
+            <div class="heading bor">
+              店铺环境
               <span>注：不要在图片上放置设计师商业推广信息（除案例信息外），不超过100张，支持批量上传。</span>
             </div>
-            <div class="el-row box">
+            <div class="el-row box" ref="environment">
               <div class="img_box imgFile text-center">
                 <p>
                   <i class="iconfont icon-xianshi_tianjiatianchong"></i>
@@ -212,18 +213,20 @@
                 <p>点此添加图片</p>
                 <p>支持JPG/PNG/GIF格式</p>
                 <p>RGB模式，不超过10M</p>
-                <input type="file" name id>
+                <input @change="addImg($event)" type="file" name="environment">
               </div>
-              <div class="img_box">
-                <i class="el-icon-error"></i>
+              <!--  :style="'background-image:url(require('./../assets/banner_top2.png'))'" -->
+              <div class="img_box" v-for="(item,index) in environment" :key="index" v-bind:style="{backgroundImage:'url(' + item.img + ')'}">
+                <i  @click="delImg(index,'environment')" class="el-icon-error"></i>
               </div>
             </div>
           </div>
           <div>
-            <div class="heading bor">轮播图
+            <div class="heading bor">
+              轮播图
               <span>注：不要在图片上放置设计师商业推广信息（除案例信息外），不超过100张，支持批量上传。</span>
             </div>
-            <div class="el-row box">
+            <div class="el-row box" ref="bg">
               <div class="img_box imgFile text-center">
                 <p>
                   <i class="iconfont icon-xianshi_tianjiatianchong"></i>
@@ -231,14 +234,16 @@
                 <p>点此添加图片</p>
                 <p>支持JPG/PNG/GIF格式</p>
                 <p>RGB模式，不超过10M</p>
-                <input type="file" name id>
+                <input @change="addImg($event)" type="file" name="bg">
               </div>
-              <div class="img_box">
-                <i class="el-icon-error"></i>
+             <div class="img_box" v-for="(item,index) in bg" :key="index" v-bind:style="{backgroundImage:'url(' + item.img + ')'}">
+                <i @click="delImg(index,'bg')" class="el-icon-error"></i>
               </div>
             </div>
           </div>
-          <p class="confrim">  <span>确认保存</span> </p>
+          <p class="confrim">
+            <span>确认保存</span>
+          </p>
         </div>
       </div>
     </div>
@@ -281,16 +286,13 @@
   height: 166px;
   position: relative;
   float: left;
+  margin-bottom: 10px;
   border-radius: 7px;
   background: #eee;
   margin-right: 15px;
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  background-image: url(
-    https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3797826289,
-    4154926392&fm=27&gp=0.jpg
-  );
 }
 #detail .imgFile {
   padding-top: 20px;
@@ -438,7 +440,7 @@
   margin-right: 50px;
   color: #a8afbb;
   border-bottom: 2px solid transparent;
-  transition: all .5s;
+  transition: all 0.5s;
   cursor: pointer;
 }
 #shopinfo .nav li.active {
@@ -505,10 +507,11 @@
   line-height: 60px;
   text-align: center;
 }
-#detail  .confrim{
+#detail .confrim {
   padding-left: 50px;
 }
-#shopinfo .info .confrim span,#detail  .confrim span {
+#shopinfo .info .confrim span,
+#detail .confrim span {
   color: #fff;
   background: #328ffe;
   padding: 7px 13px;
@@ -529,22 +532,6 @@ export default {
         {
           value: "选项1",
           label: "黄金糕"
-        },
-        {
-          value: "选项2",
-          label: "双皮奶"
-        },
-        {
-          value: "选项3",
-          label: "蚵仔煎"
-        },
-        {
-          value: "选项4",
-          label: "龙须面"
-        },
-        {
-          value: "选项5",
-          label: "北京烤鸭"
         }
       ],
       value: "",
@@ -552,20 +539,44 @@ export default {
       endTime: "",
       checkedjz: false,
       textarea: "",
-      navIndex:0
-    }
+      navIndex: 0,
+      environment: [],
+      bg: [],
+    };
   },
-  methods:{
-    tabNav(e){
+  methods: {
+    tabNav(e) {
       let that = this;
-       if (e.target.nodeName.toLowerCase() === 'li') {
+      if (e.target.nodeName.toLowerCase() === "li") {
         // console.log()
-         that.navIndex = e.target.getAttribute('num')
-           // const index = parseInt(e.target.dataset.index)
-            // 获得引索后，只需要修改data数据就能改变UI了
-           // console.log( e.target.getAttribute('num'))
-            //this.doSomething(index)
-          }
+        that.navIndex = e.target.getAttribute("num");
+        // const index = parseInt(e.target.dataset.index)
+        // 获得引索后，只需要修改data数据就能改变UI了
+        // console.log( e.target.getAttribute('num'))
+        //this.doSomething(index)
+      }
+    },
+    addImg(o) {
+      var fileObj = o.target.files[0]; // js 获取文件对象
+      var url = this.getObjectURL(fileObj); //加入文件对象
+      this[o.target.name].push({ file: fileObj, img: url });
+      if (typeof fileObj == "undefined" || fileObj.size <= 0) {
+        alert("请选择图片");
+        return;
+      }
+    },
+    delImg(i,key){ this[key].splice(i,1) },
+    //图片路径转换
+    getObjectURL(file) {
+      var url = null;
+      if (window.createObjectURL != undefined) {
+        url = window.createObjectURL(file);
+      } else if (window.URL != undefined) {
+        url = window.URL.createObjectURL(file);
+      } else if (window.webkitURL != undefined) {
+        url = window.webkitURL.createObjectURL(file);
+      }
+      return url;
     }
   }
 };

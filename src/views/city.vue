@@ -1,4 +1,7 @@
-﻿<el-form :model="dialogForm" :rules="rules" ref="dialogForm" class="demo-ruleForm" >
+﻿
+
+<template>
+    <el-form :model="dialogForm" :rules="rules" ref="dialogForm" class="demo-ruleForm" >
 
     <el-form-item label="名称"  prop="name">
         <el-input v-model="dialogForm.name"  placeholder="名称" type="text"  auto-complete="off"></el-input>
@@ -33,9 +36,6 @@
 
     </el-form-item>
 </el-form>
-
-<template>
-    
 </template>
 
 

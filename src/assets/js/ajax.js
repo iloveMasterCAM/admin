@@ -21,7 +21,7 @@ const ajax = {
             type: 'post',
             data: data,
             dataType: "json",
-            contentType:'application/json;charset=utf-8',
+            //  contentType:'application/json;charset=utf-8',
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("token",getcookie('token'));
             },

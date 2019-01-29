@@ -447,7 +447,7 @@ export default {
       });
     }, // 选省
     choseProvince: function(e) {
-    //  console.log(e)
+      console.log(e)
       this.s_province(e)
     },
     s_province(e){
@@ -483,7 +483,6 @@ export default {
       
     },
     s_Block(e){
-      
     for (var index in this.block) {
         if (e == this.block[index].id) {
           this.address[2] = this.block[index].id;
